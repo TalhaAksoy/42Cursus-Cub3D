@@ -40,6 +40,9 @@ typedef enum keys{
   key_rt =124
 } keys;
 
+https://www.youtube.com/watch?v=gYRrGTC7GtA
+https://eastmanreference.com/complete-list-of-applescript-key-codes
+https://github.com/Saxsori/ray-cast
 
 typedef struct s_player{
   double px;
