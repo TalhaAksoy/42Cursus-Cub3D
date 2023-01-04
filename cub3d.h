@@ -33,16 +33,25 @@ typedef enum keys{
   Key_A = 0,
   Key_S = 1,
   Key_D = 2,
-  Key_ESC = 53
+  Key_ESC = 53,
   key_up=126,
   key_dn=125,
   key_lt =123,
   key_rt =124
 } keys;
 
-https://www.youtube.com/watch?v=gYRrGTC7GtA
-https://eastmanreference.com/complete-list-of-applescript-key-codes
-https://github.com/Saxsori/ray-cast
+//https://www.youtube.com/watch?v=gYRrGTC7GtA
+//https://eastmanreference.com/complete-list-of-applescript-key-codes
+//https://github.com/Saxsori/ray-cast
+
+typedef struct s_imgdata
+{
+  void		*img;
+  char		*addr;
+  int			bpp;
+  int			line_len;
+  int			endian;
+}				t_imgdata;
 
 typedef struct s_player{
   double px;
@@ -56,6 +65,7 @@ typedef struct s_player{
 typedef struct s_data{
 	void*	mlx;
 	void*	win;
+        t_imgdata img;
         t_player player;
 }	t_data;
 #endif

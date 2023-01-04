@@ -1,6 +1,6 @@
 NAME		= Cub3D
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror 
+CFLAGS		= -Wall -Wextra -Werror -g
 MFLAGS		= -I./mlx ./mlx/libmlx.a -I./libft ./libft/libft.a
 SRCS		= $(wildcard ./*.c)
 OBJS		= $(SRCS:%.c=%.o)
@@ -10,6 +10,7 @@ all:$(MFLAGS) $(NAME)
 
 $(MFLAGS):
 	make -C ./libft
+	make -C ./mlx
 
 $(NAME): $(OBJS) 
 	$(CC) $(CFLAGS) $(MFLAGS) $(SRCS) -framework OpenGL -framework AppKit -o $(NAME)
@@ -21,8 +22,18 @@ clean:
 fclean: clean
 	$(RM) ./libft/libft.a
 	$(RM) $(NAME)
+	$(RM) ./mlx/*.o
+	$(RM) ./mlx/*.a
 
 re: fclean all
+
+M = "UPDATE"
+
+git:
+	git add .
+	git status
+	git commit -m M
+	git push
 
 .PHONY: all clean fclean re
 

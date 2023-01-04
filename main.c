@@ -1,4 +1,13 @@
 #include "cub3d.h"
+
+void	ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color)
+{
+  char	*dst;
+
+  dst = img_data->addr + (y * img_data->line_len + x * (img_data->bpp / 8));
+  *(unsigned int *)dst = color;
+}
+
 void draw_square(int x, int y, t_data * data)
 {
 
@@ -12,7 +21,7 @@ void draw_square(int x, int y, t_data * data)
   {
     while (y < 107)
     {
-      mlx_pixel_put(data->mlx,data->win,x + start_x, y + start_y, 0xff0000);
+      ft_my_put_pixel(&data->img, x + start_x,y + start_y, 0xff0000);
       y++;
     }
     y=0;
@@ -54,7 +63,6 @@ while (i < 5)
 {
   while (j < 5)
   {
-     mlx_pixel_put(data->mlx, data->win, start_x + i, start_y + j, 0x00ff00);
     ++j;
   }
   j = 0;
@@ -74,33 +82,71 @@ line = data->player.py;
 line  = round(line)+ start_y;
 ++line;
 while(i < 1000){
-  mlx_pixel_put(data->mlx, data->win, (start_x + (i * cos(data->player.viewAngle))),(start_y + (i * sin(data->player.viewAngle))), 0xffffff);
+
+  ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle)
+                                                          * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle) * (M_PI / 180))), 0xff0000);
+  ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle + \
+                                                           30) * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle + 30) * (M_PI / 180))), 0x00ff00);
+  ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle - \
+                                                           30) * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle - 30) * (M_PI / 180))), 0xff);
   i++;
   rayY = data->player.py + (line - data->player.py);
   rayX = (data->player.py - rayY) / -tan(data->player.viewAngle) + data->player.px;
   oX = 1;
   oY = oX * tan(data->player.viewAngle);
 
-  mlx_pixel_put(data->mlx, data->win, rayX+i, rayY, 0xffffff);
 
 
 }
 
 }
+
+
+void clear_img(t_data * data)
+{
+  int i =0 , j = 0;
+
+  while (i< HEIGHT)
+  {
+    while (j < WIDTH)
+    {
+      ft_my_put_pixel(&data->img, j,i, 0x0);
+    j++;
+    }
+    j=0;
+    i++;
+  }
+}
+
 
 int keyPressFunc(int keycode , t_data * data){
-  if (keycode == Key_W)
-    data->player.py -= 0.05;
-  if (keycode == Key_S)
-    data->player.py -= 0.05;
-  if (keycode == Key_A)
-    data->player.px -= 0.05;
-  if (keycode == Key_D)
-    data->player.px += 0.05;
+  if (keycode == Key_W) {
+    data->player.py -= 0.05 * sin((-data->player.viewAngle) * (M_PI / 180));
+    data->player.px += 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
+  }
+  if (keycode == Key_S){
+    data->player.py += 0.05 * sin((-data->player.viewAngle) * (M_PI / 180));
+    data->player.px -= 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
+  }
+  if (keycode == Key_A){
+    data->player.py -= 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
+    data->player.px += 0.05 * sin((data->player.viewAngle) * (M_PI / 180));
+  }
+  if (keycode == Key_D){
+    data->player.py += 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
+    data->player.px -= 0.05 * sin((data->player.viewAngle) * (M_PI / 180));
+  }
+  if (keycode == key_rt)
+    data->player.viewAngle += 1;
+  if (keycode == key_lt)
+    data->player.viewAngle -= 1;
   mlx_clear_window(data->mlx, data->win);
+  clear_img(data);
   draw_outlines(data);
   draw_player(data);
   draw_ray(data);
+  mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+
   return (INT32_MAX - INT32_MAX);
 }
 
@@ -109,14 +155,16 @@ int main(){
   data.player.px = PX;
   data.player.py = PY;
   data.player.pov = 30;
-  data.player.viewAngle = M_PI / 3;
+  data.player.viewAngle = 270;
 
   data.mlx = mlx_init();
   data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "UwU");
+  data.img.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
+  data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bpp, &data.img.line_len, &data.img.endian);
   draw_outlines(&data);
   draw_player(&data);
   draw_ray(&data);
-  mlx_key_hook(data.win, keyPressFunc, &data);
+  mlx_hook(data.win, 2, 0, keyPressFunc, &data);
 
 
   mlx_loop(data.mlx);
