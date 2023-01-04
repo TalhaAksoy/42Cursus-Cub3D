@@ -27,7 +27,7 @@ fclean: clean
 
 re: fclean all
 
-M = "UPDATE"
+M = "Auto Commit (I'm lazy for write commit :D)"
 
 git:
 	git add .
