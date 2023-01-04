@@ -68,22 +68,41 @@ start_x = data->player.px * (WIDTH / 10);
 start_y = data->player.py * (HEIGHT / 10);
 int i = 0;
 int oX = 0, oY = 0;
-while(i < 10000){
+double rayY ,  rayX;
+double line;
+line = data->player.py;
+line  = round(line)+ start_y;
+++line;
+while(i < 1000){
   mlx_pixel_put(data->mlx, data->win, (start_x + (i * cos(data->player.viewAngle))),(start_y + (i * sin(data->player.viewAngle))), 0xffffff);
   i++;
+  rayY = data->player.py + (line - data->player.py);
+  rayX = (data->player.py - rayY) / -tan(data->player.viewAngle) + data->player.px;
+  oX = 1;
+  oY = oX * tan(data->player.viewAngle);
 
-  oY = data->player.py * tan(data->player.viewAngle);
-  printf("%d = x , %d = y\n", oX, oY);
-  mlx_pixel_put(data->mlx, data->win, start_x, oY, 0xbc00fb);
-  mlx_pixel_put(data->mlx, data->win, start_x+1, oY+1, 0xbc00fb);
-  mlx_pixel_put(data->mlx, data->win, start_x+2, oY+2, 0xbc00fb);
-  mlx_pixel_put(data->mlx, data->win, start_x+3, oY+3, 0xbc00fb);
-  mlx_pixel_put(data->mlx, data->win, start_x+4, oY+4, 0xbc00fb);
-  mlx_pixel_put(data->mlx, data->win, start_x+5, oY+5, 0xbc00fb);
-  mlx_pixel_put(data->mlx, data->win, start_x+6, oY+6, 0xbc00fb);
-}
+  mlx_pixel_put(data->mlx, data->win, rayX+i, rayY, 0xffffff);
+
+
 }
 
+}
+
+int keyPressFunc(int keycode , t_data * data){
+  if (keycode == Key_W)
+    data->player.py -= 0.05;
+  if (keycode == Key_S)
+    data->player.py -= 0.05;
+  if (keycode == Key_A)
+    data->player.px -= 0.05;
+  if (keycode == Key_D)
+    data->player.px += 0.05;
+  mlx_clear_window(data->mlx, data->win);
+  draw_outlines(data);
+  draw_player(data);
+  draw_ray(data);
+  return (INT32_MAX - INT32_MAX);
+}
 
 int main(){
   t_data data;
@@ -97,6 +116,7 @@ int main(){
   draw_outlines(&data);
   draw_player(&data);
   draw_ray(&data);
+  mlx_key_hook(data.win, keyPressFunc, &data);
 
 
   mlx_loop(data.mlx);

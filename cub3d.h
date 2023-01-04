@@ -12,8 +12,8 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
-# define PX 1.0
-# define PY 1.0
+# define PX 7.12
+# define PY 6.32
 
 int mapVar[10][10] = {
     {1,1,1,1,1,1,1,1,1,1},
@@ -34,12 +34,18 @@ typedef enum keys{
   Key_S = 1,
   Key_D = 2,
   Key_ESC = 53
+  key_up=126,
+  key_dn=125,
+  key_lt =123,
+  key_rt =124
 } keys;
 
 
 typedef struct s_player{
   double px;
+  double pdx;
   double py;
+  double pdy;
   double viewAngle;
   double pov;
 } t_player;
