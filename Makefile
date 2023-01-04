@@ -32,7 +32,7 @@ M = "Auto Commit (I'm lazy for write commit :D)"
 git:
 	git add .
 	git status
-	git commit -m M
+	git commit -m $(M)
 	git push
 
 .PHONY: all clean fclean re
