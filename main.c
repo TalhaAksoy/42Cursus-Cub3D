@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color)
+void	ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color) // image adresine pixel basmak icin
 {
   char	*dst;
 
@@ -8,7 +8,7 @@ void	ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color)
   *(unsigned int *)dst = color;
 }
 
-void draw_square(int x, int y, t_data * data)
+void draw_square(int x, int y, t_data * data) // kirmizi kutular icin
 {
 
   int start_x, start_y;
@@ -29,7 +29,7 @@ void draw_square(int x, int y, t_data * data)
   }
 }
 
-void draw_outlines(t_data * data)
+void draw_outlines(t_data * data) // kirmizi kutularin tamami icin
 {
   int i;
   int j;
@@ -52,7 +52,7 @@ while (i < 10) {
 
 }
 
-void draw_player(t_data * data)
+void draw_player(t_data * data) // playeri ciziyor
 {
 int start_x, start_y, i, j;
 start_x = data->player.px * (WIDTH / 10);
@@ -70,7 +70,7 @@ while (i < 5)
 }
 }
 
-void draw_ray(t_data * data){
+void draw_ray(t_data * data){ // isinlar icin
 int start_x, start_y;
 start_x = data->player.px * (WIDTH / 10);
 start_y = data->player.py * (HEIGHT / 10);
@@ -102,7 +102,7 @@ while(i < 1000){
 }
 
 
-void clear_img(t_data * data)
+void clear_img(t_data * data) // ekrani temizlemek icin
 {
   int i =0 , j = 0;
 
@@ -119,7 +119,7 @@ void clear_img(t_data * data)
 }
 
 
-int keyPressFunc(int keycode , t_data * data){
+int keyPressFunc(int keycode , t_data * data){ // tus basma fonksiyonu
   if (keycode == Key_W) {
     data->player.py -= 0.05 * sin((-data->player.viewAngle) * (M_PI / 180));
     data->player.px += 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
