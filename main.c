@@ -81,10 +81,10 @@ double line;
 line = data->player.py;
 line  = round(line)+ start_y;
 ++line;
-while(i < 1000){
+while(i < 59){
 
   ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle)
-                                                          * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle) * (M_PI / 180))), 0xff0000);
+                                                          * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle) * (M_PI / 180))), 0xff0000); // orta pixel
   ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle + \
                                                            30) * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle + 30) * (M_PI / 180))), 0x00ff00);
   ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle - \
@@ -98,7 +98,7 @@ while(i < 1000){
 
 
 }
-
+printf("%f angle\n", data->player.viewAngle);
 }
 
 
@@ -140,6 +140,13 @@ int keyPressFunc(int keycode , t_data * data){ // tus basma fonksiyonu
     data->player.viewAngle += 1;
   if (keycode == key_lt)
     data->player.viewAngle -= 1;
+  if (data->player.viewAngle >= 360)
+    data->player.viewAngle = abs((int)data->player.viewAngle % 360);
+    if (data->player.viewAngle < 0)
+    data->player.viewAngle = 359;
+  if (keycode == Key_ESC)
+    exit(1);
+
   mlx_clear_window(data->mlx, data->win);
   clear_img(data);
   draw_outlines(data);
