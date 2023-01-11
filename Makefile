@@ -1,6 +1,6 @@
 NAME		= Cub3D
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -g #-Wall -Wextra -Werror -g
 MFLAGS		= -I./mlx ./mlx/libmlx.a -I./libft ./libft/libft.a
 SRCS		= $(wildcard ./*.c)
 OBJS		= $(SRCS:%.c=%.o)

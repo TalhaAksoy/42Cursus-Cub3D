@@ -70,7 +70,7 @@ while (i < 5)
 }
 }
 
-void draw_ray(t_data * data){ // isinlar icin
+void draw_ray(t_data * data, double angle){ // isinlar icin
 int start_x, start_y;
 start_x = data->player.px * (WIDTH / 10);
 start_y = data->player.py * (HEIGHT / 10);
@@ -81,19 +81,16 @@ double line;
 line = data->player.py;
 line  = round(line)+ start_y;
 ++line;
-while(i < 59){
-
-  ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle)
-                                                          * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle) * (M_PI / 180))), 0xff0000); // orta pixel
-  ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle + \
-                                                           30) * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle + 30) * (M_PI / 180))), 0x00ff00);
-  ft_my_put_pixel(&data->img, (start_x) + (i * cos((data->player.viewAngle - \
-                                                           30) * (M_PI / 180))), (start_y) + (i * sin((data->player.viewAngle - 30) * (M_PI / 180))), 0xff);
+while(1){
+  rayY = (start_y) + (i * sin((angle + data->player.viewAngle) * (M_PI / 180)));
+  rayX = (start_x) + (i * cos((angle + data->player.viewAngle) * (M_PI / 180)));
+  printf("%lf = ry, %lf = rx\n", rayY, rayX);
+  ft_my_put_pixel(&data->img, rayX, rayY, 0xffffff);
   i++;
-  rayY = data->player.py + (line - data->player.py);
-  rayX = (data->player.py - rayY) / -tan(data->player.viewAngle) + data->player.px;
   oX = 1;
   oY = oX * tan(data->player.viewAngle);
+    if (mapVar[(int)rayX / (WIDTH / 10)][(int)rayY/ (HEIGHT / 10)] )
+      break;
 
 
 
@@ -146,12 +143,13 @@ int keyPressFunc(int keycode , t_data * data){ // tus basma fonksiyonu
     data->player.viewAngle = 359;
   if (keycode == Key_ESC)
     exit(1);
-
+double angle = 120;
   mlx_clear_window(data->mlx, data->win);
   clear_img(data);
   draw_outlines(data);
   draw_player(data);
-  draw_ray(data);
+  while (angle--)
+    draw_ray(data, angle);
   mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 
   return (INT32_MAX - INT32_MAX);
@@ -162,7 +160,7 @@ int main(){
   data.player.px = PX;
   data.player.py = PY;
   data.player.pov = 30;
-  data.player.viewAngle = 270;
+  data.player.viewAngle = 360;
 
   data.mlx = mlx_init();
   data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "UwU");
@@ -170,9 +168,6 @@ int main(){
   data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bpp, &data.img.line_len, &data.img.endian);
   draw_outlines(&data);
   draw_player(&data);
-  draw_ray(&data);
   mlx_hook(data.win, 2, 0, keyPressFunc, &data);
-
-
   mlx_loop(data.mlx);
 }
