@@ -15,18 +15,6 @@
 # define PX 7.12
 # define PY 6.32
 
-int mapVar[10][10] = {
-    {1,1,1,1,1,1,1,1,1,1},
-    {1,0,0,0,0,0,0,0,0,1},
-    {1,0,1,0,0,1,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,1,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,1},
-    {1,0,0,1,0,1,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,1},
-    {1,0,0,1,0,1,0,0,0,1},
-    {1,1,1,1,1,1,1,1,1,1},
-};
 
 typedef enum keys{
   Key_W = 13,
@@ -68,4 +56,12 @@ typedef struct s_data{
         t_imgdata img;
         t_player player;
 }	t_data;
+
+int keyPressFunc(int keycode, t_data *data);
+void clear_img(t_data *data);
+void draw_ray(t_data *data, double angle);
+void draw_player(t_data *data);
+void draw_outlines(t_data *data);
+void draw_square(int x, int y, t_data *data);
+void ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color);
 #endif
