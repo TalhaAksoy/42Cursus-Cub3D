@@ -21,10 +21,14 @@ all:$(MFLAGS) $(NAME)
 
 ifeq ($(OS), Darwin)
 $(MFLAGS):
+	ls
 	test -f ./mlx || wget https://projects.intra.42.fr/uploads/document/document/12900/minilibx_opengl.tgz
+	ls
 	tar -xf minilibx_opengl.tgz
 	$(RM) minilibx_opengl.tgz
-	mv ./minilibx_opengl ./mlx
+	ls
+	mv ./minilibx_opengl_20191021 ./mlx
+	ls
 	make -C ./libft
 	make -C ./mlx
 	make -C ./mathlib
