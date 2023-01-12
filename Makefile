@@ -10,7 +10,7 @@ else
 endif
 MFLAGS		= -I./mlx ./mlx/libmlx.a -I./libft ./libft/libft.a -I./mathlib ./mathlib/mathlib.a
 SRCS_FILE		= utils.c main.c get_next_line.c get_next_line_utils.c draw.c
-OBJS_FILE		= $(SRCS_FILE:%.c=%.o)
+OBJS_FILE		= $(SRCS_FILE:.c=.o)
 OBJS_DIR		= ./obj/
 OBJS			= $(addprefix $(OBJS_DIR), $(OBJS_FILE))
 
@@ -19,12 +19,27 @@ REMOVEME = -g
 
 all:$(MFLAGS) $(NAME)
 
+ifeq ($(OS), Darwin)
 $(MFLAGS):
+	wget https://projects.intra.42.fr/uploads/document/document/12900/minilibx_opengl.tgz
+	tar -xf minilibx_opengl.tgz
+	$(RM) minilibx_opengl.tgz
+	mv ./minilibx_opengl ./mlx
 	make -C ./libft
 	make -C ./mlx
 	make -C ./mathlib
+else
+$(MFLAGS):
+	wget https://projects.intra.42.fr/uploads/document/document/12154/minilibx-linux.tgz
+	tar -xf minilibx-linux.tgz
+	$(RM) minilibx-linux.tgz
+	mv ./minilibx-linux ./mlx
+	make -C ./libft
+	make -C ./mlx
+	make -C ./mathlib
+endif
 
-$(NAME): $(OBJS) 
+$(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(REMOVEME) $(OUTFILE) $(MFLAGS) $(MLXFLAGS)
 
 $(OBJS_DIR)%.o:%.c
@@ -32,15 +47,13 @@ $(OBJS_DIR)%.o:%.c
 	$(CC) -c $(CFLAGS) $^ -o $@ $(REMOVEME)
 
 clean:
-	$(RM) $(OBJSDIR)
+	$(RM) $(OBJS_DIR)
 	$(RM) ./libft/*.o
-	$(RM)  ./*.o
 
 fclean: clean
 	$(RM) ./libft/libft.a
 	$(RM) $(NAME)
-	$(RM) ./mlx/*.o
-	$(RM) ./mlx/*.a
+	$(RM) ./mlx
 	make fclean -C ./mathlib
 
 re: fclean all
