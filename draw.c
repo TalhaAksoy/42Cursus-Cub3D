@@ -72,6 +72,7 @@ void draw_ray(t_data *data, double angle)
 			ft_my_put_pixel(&data->img, rayX, rayY, 0xffffff);
 		i++;
 	}
+	
 	printf("%lf => deltaDistX |  %lf => deltaDistY\n", sideDistX, sideDistY);
 	// printf("ray_len = %f\n", sqrt(1 + (rayY * rayY) / (rayX * rayX)));
 	// printf("%f angle\n", data->player.viewAngle);

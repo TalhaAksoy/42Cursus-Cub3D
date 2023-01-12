@@ -2,13 +2,14 @@
 # define CUBD3D_H
 
 # include <stdio.h>
-# include "./mlx/mlx.h"
+# include "mlx/mlx.h"
 # include <stddef.h>
 # include <stdlib.h>
 # include <math.h>
 # include <unistd.h>
 # include <stdarg.h>
 # include <fcntl.h>
+# include "mathlib/mathlib.h"
 
 # define WIDTH 1920
 # define HEIGHT 1080

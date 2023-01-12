@@ -15,6 +15,7 @@ int main()
 {
 	t_data data;
 
+	printf("%d\n", ft_abs(-1));
 	init_var(&data);
 	draw_outlines(&data);
 	draw_player(&data);
