@@ -30,8 +30,8 @@ void draw_ray(t_data *data, double angle)
 
 	int mapX = (int)start_x;
 	int mapY = (int)start_y;
-	int stepX = 0;
-	int stepY = 0;
+	// int stepX = 0;
+	// int stepY = 0;
 	double rayY, rayX;
 	double deltaDistX = 0;
 	double deltaDistY = 0;
@@ -47,22 +47,22 @@ void draw_ray(t_data *data, double angle)
 		rayX = (start_x) + (i * cos((angle + data->player.viewAngle - 180) * (M_PI / 180)));
 		if (rayX < 0)
 		{
-			stepX = -1;
+			// stepX = -1;
 			sideDistX = (start_x - mapX) * deltaDistX;
 		}
 		else
 		{
-			stepX = 1;
+			// stepX = 1;
 			sideDistX = (mapX + 1.0 - start_x) * deltaDistX;
 		}
 		if (rayY < 0)
 		{
-			stepY = -1;
+			// stepY = -1;
 			sideDistY = (start_y - mapY) * deltaDistY;
 		}
 		else
 		{
-			stepY = 1;
+			// stepY = 1;
 			sideDistY = (mapY + 1.0 - start_y) * deltaDistY;
 		}
 		// printf("%lf = ry, %lf = rx, %f =ddx\n", rayY, rayX, sqrt(1 + (rayY * rayY) / (rayX * rayX)));
@@ -83,11 +83,13 @@ void draw_ray(t_data *data, double angle)
  * 
  * @param data This is the data structure that holds all the information about the game.
  */
-void draw_player(t_data *data) // playeri ciziyor
+// void draw_player(t_data *data) // playeri ciziyor
+void draw_player(void) // playeri ciziyor
 {
-	int start_x, start_y, i, j;
-	start_x = data->player.px * (WIDTH / 10);
-	start_y = data->player.py * (HEIGHT / 10);
+	//int start_x, start_y; 
+	int i, j;
+	//start_x = data->player.px * (WIDTH / 10);
+	//start_y = data->player.py * (HEIGHT / 10);
 	i = 0;
 	j = 0;
 	while (i < 5)
@@ -105,10 +107,10 @@ void draw_outlines(t_data *data) // kirmizi kutularin tamami icin
 {
 	int i;
 	int j;
-	int k;
+	// int k;
 	i = 0;
 	j = 0;
-	k = 0;
+	// k = 0;
 
 	while (i < 10)
 	{

@@ -16,6 +16,22 @@
 # define PX 7.12
 # define PY 6.32
 
+# ifdef __linux__
+
+typedef enum keys{
+  Key_W = 119,
+  Key_A = 97,
+  Key_S = 115,
+  Key_D = 100,
+  Key_ESC = 65307,
+  key_up=65362,
+  key_dn=65364,
+  key_lt =65361,
+  key_rt =65365
+} keys;
+
+
+#  else
 
 typedef enum keys{
   Key_W = 13,
@@ -28,6 +44,8 @@ typedef enum keys{
   key_lt =123,
   key_rt =124
 } keys;
+
+# endif
 
 //https://www.youtube.com/watch?v=gYRrGTC7GtA
 //https://eastmanreference.com/complete-list-of-applescript-key-codes
@@ -61,7 +79,8 @@ typedef struct s_data{
 int keyPressFunc(int keycode, t_data *data);
 void clear_img(t_data *data);
 void draw_ray(t_data *data, double angle);
-void draw_player(t_data *data);
+// void draw_player(t_data *data);
+void draw_player(void);
 void draw_outlines(t_data *data);
 void draw_square(int x, int y, t_data *data);
 void ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color);

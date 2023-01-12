@@ -57,5 +57,5 @@ int keyPressFunc(int keycode, t_data *data)
 		draw_ray(data, angle);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 
-	return (INT32_MAX - INT32_MAX);
+	return (0);
 }
