@@ -21,7 +21,7 @@ all:$(MFLAGS) $(NAME)
 
 ifeq ($(OS), Darwin)
 $(MFLAGS):
-	wget https://projects.intra.42.fr/uploads/document/document/12900/minilibx_opengl.tgz
+	test -f ./mlx || wget https://projects.intra.42.fr/uploads/document/document/12900/minilibx_opengl.tgz
 	tar -xf minilibx_opengl.tgz
 	$(RM) minilibx_opengl.tgz
 	mv ./minilibx_opengl ./mlx
@@ -30,7 +30,7 @@ $(MFLAGS):
 	make -C ./mathlib
 else
 $(MFLAGS):
-	wget https://projects.intra.42.fr/uploads/document/document/12154/minilibx-linux.tgz
+	test -f ./mlx || wget https://projects.intra.42.fr/uploads/document/document/12154/minilibx-linux.tgz
 	tar -xf minilibx-linux.tgz
 	$(RM) minilibx-linux.tgz
 	mv ./minilibx-linux ./mlx
