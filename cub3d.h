@@ -16,22 +16,7 @@
 # define PX 7.12
 # define PY 6.32
 
-# ifdef __linux__
-
-typedef enum keys{
-  Key_W = 119,
-  Key_A = 97,
-  Key_S = 115,
-  Key_D = 100,
-  Key_ESC = 65307,
-  key_up=65362,
-  key_dn=65364,
-  key_lt =65361,
-  key_rt =65365
-} keys;
-
-
-#  else
+# ifdef __APPLE__
 
 typedef enum keys{
   Key_W = 13,
@@ -39,10 +24,22 @@ typedef enum keys{
   Key_S = 1,
   Key_D = 2,
   Key_ESC = 53,
-  key_up=126,
-  key_dn=125,
+  key_up = 126,
+  key_dn = 125,
   key_lt =123,
   key_rt =124
+} keys;
+# else
+typedef enum keys{
+  Key_W = 119,
+  Key_A = 97,
+  Key_S = 115,
+  Key_D = 100,
+  Key_ESC = 65307,
+  key_up = 65362,
+  key_dn = 65364,
+  key_lt = 65361,
+  key_rt = 65365
 } keys;
 
 # endif

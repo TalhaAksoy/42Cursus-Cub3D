@@ -52,7 +52,7 @@ int keyPressFunc(int keycode, t_data *data)
 	mlx_clear_window(data->mlx, data->win);
 	clear_img(data);
 	draw_outlines(data);
-	draw_player(data);
+	draw_player();
 	while (angle--)
 		draw_ray(data, angle);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);

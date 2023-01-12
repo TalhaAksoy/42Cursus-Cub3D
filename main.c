@@ -18,7 +18,7 @@ int main()
 	printf("%d\n", ft_abs(-1));
 	init_var(&data);
 	draw_outlines(&data);
-	draw_player(&data);
+	draw_player();
 	mlx_hook(data.win, 2, 0, keyPressFunc, &data);
 	mlx_loop(data.mlx);
 }

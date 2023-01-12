@@ -2,7 +2,7 @@ NAME		= Cub3D
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 OUTFILE		= -o $(NAME)
-
+OS := $(shell uname)
 ifeq ($(OS), Darwin)
 	MLXFLAGS = -framework OpenGL -framework AppKit
 else
@@ -32,6 +32,7 @@ $(OBJS_DIR)%.o:%.c
 	$(CC) -c $(CFLAGS) $^ -o $@ $(REMOVEME)
 
 clean:
+	$(RM) $(OBJSDIR)
 	$(RM) ./libft/*.o
 	$(RM)  ./*.o
 
