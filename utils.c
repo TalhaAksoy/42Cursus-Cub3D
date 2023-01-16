@@ -40,7 +40,7 @@ void clear_img(t_data *data) // ekrani temizlemek icin
 		j = 0;
 		i++;
 	}
-	
+
 }
 
 int draw_wall(int angle, double distance, t_data *data)
@@ -88,7 +88,7 @@ int keyPressFunc(int keycode, t_data *data)
 	t_vector2 ray[600];
 	int i = 599;
 	double tmp, tmp2;
-
+	printf("keycode: %d, key_w: %d, key_s: %d, key_a: %d, key_d: %d\n", keycode, Key_W, Key_S, Key_A, Key_D);
 	if (keycode == Key_W)
 	{
 		tmp = data->player.py - 0.1 * sin((-data->player.viewAngle) * (M_PI / 180));
@@ -97,7 +97,7 @@ int keyPressFunc(int keycode, t_data *data)
 			return (0);
 		data->player.py -= 0.05 * sin((-data->player.viewAngle) * (M_PI / 180));
 		data->player.px += 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
-		 
+
 	}
 	if (keycode == Key_S)
 	{

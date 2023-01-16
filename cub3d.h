@@ -32,6 +32,7 @@ typedef enum keys{
 } keys;
 
 # else
+
 typedef enum keys{
   Key_W = 119,
   Key_A = 97,

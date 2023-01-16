@@ -29,7 +29,7 @@ int main()
 	init_var(&data);
 	draw_outlines(&data);
 	draw_player();
-	mlx_hook(data.win, 2, 0, keyPressFunc, &data);
-	mlx_hook(data.win2, 2, 0, keyPressFunc, &data);
+	mlx_hook(data.win, 2, 1, keyPressFunc, &data);
+	mlx_hook(data.win2, 2, 1, keyPressFunc, &data);
 	mlx_loop(data.mlx);
 }
