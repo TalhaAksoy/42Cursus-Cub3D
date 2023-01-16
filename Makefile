@@ -1,6 +1,6 @@
 NAME			= Cub3D
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -Wall -Wextra -Werror -O3
 OUTFILE			= -o $(NAME)
 OS 				:= $(shell uname)
 

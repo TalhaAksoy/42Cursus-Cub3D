@@ -11,10 +11,11 @@
 # include <fcntl.h>
 # include "mathlib/mathlib.h"
 
-# define WIDTH 1920
-# define HEIGHT 1080
+
 # define PX 7.12
 # define PY 6.32
+
+
 
 # ifdef __APPLE__
 
@@ -29,6 +30,7 @@ typedef enum keys{
   key_lt =123,
   key_rt =124
 } keys;
+
 # else
 typedef enum keys{
   Key_W = 119,
@@ -48,6 +50,12 @@ typedef enum keys{
 //https://eastmanreference.com/complete-list-of-applescript-key-codes
 //https://github.com/Saxsori/ray-cast
 
+typedef struct s_vector2
+{
+  double x;
+  double y;
+} t_vector2;
+
 typedef struct s_imgdata
 {
   void		*img;
@@ -66,16 +74,27 @@ typedef struct s_player{
   double pov;
 } t_player;
 
+typedef struct s_mapdata{
+  int		map_height;
+  int		map_width;
+} t_mapdata;
+
 typedef struct s_data{
 	void*	mlx;
 	void*	win;
+	void*	mlx2;
+	void*	win2;
         t_imgdata img;
+        t_imgdata img2;
         t_player player;
+		t_mapdata m_data;
+	int width;
+	int height;
 }	t_data;
 
 int keyPressFunc(int keycode, t_data *data);
 void clear_img(t_data *data);
-void draw_ray(t_data *data, double angle);
+t_vector2 draw_ray(t_data *data, double angle);
 // void draw_player(t_data *data);
 void draw_player(void);
 void draw_outlines(t_data *data);
