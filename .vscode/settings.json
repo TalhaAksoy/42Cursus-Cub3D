@@ -5,6 +5,7 @@
         "string": "c",
         "string_view": "c",
         "vector": "c",
-        "complex": "c"
+        "complex": "c",
+        "cub3d.h": "c"
     }
 }

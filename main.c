@@ -14,10 +14,10 @@ void init_var(t_data *data){
 	data->width = 	data->m_data.map_width * 64;
 	data->height = 	data->m_data.map_height * 64;
 	data->win = mlx_new_window(data->mlx, data->width, data->height, "UwU");
-	data->win2 = mlx_new_window(data->mlx, data->width, data->height, "Lil Dicks");
+	data->win2 = mlx_new_window(data->mlx, 600, 600, "Lil Dicks");
 	data->img.img = mlx_new_image(data->mlx, data->width, data->height);
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp, &data->img.line_len, &data->img.endian);
-	data->img2.img = mlx_new_image(data->mlx, data->width, data->height);
+	data->img2.img = mlx_new_image(data->mlx, 600, 600);
 	data->img2.addr = mlx_get_data_addr(data->img2.img, &data->img2.bpp, &data->img2.line_len, &data->img2.endian);
 }
 
@@ -30,5 +30,6 @@ int main()
 	draw_outlines(&data);
 	draw_player();
 	mlx_hook(data.win, 2, 0, keyPressFunc, &data);
+	mlx_hook(data.win2, 2, 0, keyPressFunc, &data);
 	mlx_loop(data.mlx);
 }
