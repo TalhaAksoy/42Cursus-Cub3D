@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int mapVar[10][10] = {
+int mapVar[mapHeight][mapWidth] = {
     {1,1,1,1,1,1,1,1,1,1},
     {1,0,0,0,0,0,0,0,0,1},
     {1,0,1,0,0,1,0,0,0,1},
@@ -25,8 +25,8 @@ int mapVar[10][10] = {
 t_vector2 draw_ray(t_data *data, double angle)
 { // isinlar icin
 	int start_x, start_y;
-	start_x = data->player.px * (data->width / 10);
-	start_y = data->player.py * (data->height / 10);
+	start_x = data->player.px * (data->width / mapWidth);
+	start_y = data->player.py * (data->height / mapHeight);
 	int i = 0;
 
 	// int mapX = (int)start_x;
@@ -40,7 +40,7 @@ t_vector2 draw_ray(t_data *data, double angle)
 	// double sideDistY = 0;
 	rayY = (start_y) + (i * sin((angle + data->player.viewAngle - 45) * (M_PI / 180)));
 	rayX = (start_x) + (i * cos((angle + data->player.viewAngle - 45) * (M_PI / 180)));
-	while (!mapVar[(int)rayX / (data->width / 10)][(int)rayY / (data->height / 10)])
+	while (!mapVar[(int)rayX / (data->width / mapWidth)][(int)rayY / (data->height / mapHeight)])
 	{
 		rayY = (start_y) + (i * sin((angle + data->player.viewAngle - 45) * (M_PI / 180)));
 		rayX = (start_x) + (i * cos((angle + data->player.viewAngle - 45) * (M_PI / 180)));
@@ -91,9 +91,9 @@ void draw_outlines(t_data *data) // kirmizi kutularin tamami icin
 	j = 0;
 	// k = 0;
 
-	while (i < 10)
+	while (i < mapHeight)
 	{
-		while (j < 10)
+		while (j < mapWidth)
 		{
 			if (mapVar[i][j] == 1)
 				draw_square(i, j, data);

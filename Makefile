@@ -1,6 +1,6 @@
 NAME			= Cub3D
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror 
+CFLAGS			= -Wall -Wextra -Werror -O3
 OUTFILE			= -o $(NAME)
 OS 				:= $(shell uname)
 
@@ -66,7 +66,7 @@ re: fclean all
 
 M = "Auto Commit (I'm lazy for write commit :D)"
 
-git:
+git: fclean
 	git add .
 	git status
 	git commit -m $(M)

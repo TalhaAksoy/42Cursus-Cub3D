@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int mapVar2[10][10] = {
+int mapVar2[mapHeight][mapWidth] = {
     {1,1,1,1,1,1,1,1,1,1},
     {1,0,0,0,0,0,0,0,0,1},
     {1,0,1,0,0,1,0,0,0,1},
@@ -28,12 +28,25 @@ void clear_img(t_data *data) // ekrani temizlemek icin
 		j = 0;
 		i++;
 	}
+	i = 0;
+	j = 0;
+	while (i < 600)
+	{
+		while (j < 600)
+		{
+			ft_my_put_pixel(&data->img2, j, i, 0x0);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	
 }
 
 int draw_wall(int angle, double distance, t_data *data)
 {
 	// draw wall
-	int height = (int)((20 / distance) * 600);
+	int height = (int)((60 / distance) * 600);
 	int start = (600 - height) / 2;
 	int end = (600 + height) / 2;
 	int i = 0;

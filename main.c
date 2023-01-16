@@ -9,8 +9,8 @@ void init_var(t_data *data){
 	data->player.pov = 30;
 	data->player.viewAngle = 90;
 	data->mlx = mlx_init();
-	data->m_data.map_height = 10;
-	data->m_data.map_width = 10;
+	data->m_data.map_height = mapHeight;
+	data->m_data.map_width = mapWidth;
 	data->width = 	data->m_data.map_width * 64;
 	data->height = 	data->m_data.map_height * 64;
 	data->win = mlx_new_window(data->mlx, data->width, data->height, "UwU");

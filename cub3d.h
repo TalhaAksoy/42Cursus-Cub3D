@@ -15,7 +15,8 @@
 # define PX 7.12
 # define PY 6.32
 
-
+# define mapWidth 10
+# define mapHeight 10
 # ifdef __APPLE__
 
 typedef enum keys{
