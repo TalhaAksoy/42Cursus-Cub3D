@@ -42,7 +42,7 @@ typedef enum keys{
   key_up = 65362,
   key_dn = 65364,
   key_lt = 65361,
-  key_rt = 65365
+  key_rt = 65363
 } keys;
 
 # endif
@@ -51,11 +51,26 @@ typedef enum keys{
 //https://eastmanreference.com/complete-list-of-applescript-key-codes
 //https://github.com/Saxsori/ray-cast
 
+
+
 typedef struct s_vector2
 {
   double x;
   double y;
 } t_vector2;
+
+typedef struct s_llocation
+{
+  int x;
+  int y;
+} t_llocation;
+
+typedef struct s_ray_data
+{
+  t_vector2   ray_location;
+  t_llocation last_location;
+
+} t_ray_data;
 
 typedef struct s_imgdata
 {
@@ -95,7 +110,7 @@ typedef struct s_data{
 
 int keyPressFunc(int keycode, t_data *data);
 void clear_img(t_data *data);
-t_vector2 draw_ray(t_data *data, double angle);
+t_ray_data draw_ray(t_data *data, double angle);
 // void draw_player(t_data *data);
 void draw_player(void);
 void draw_outlines(t_data *data);

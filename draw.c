@@ -22,12 +22,13 @@ int mapVar[mapHeight][mapWidth] = {
  * @param data the data structure that holds all the information about the game.
  * @param angle the angle of the ray in degrees
  */
-t_vector2 draw_ray(t_data *data, double angle)
+t_ray_data draw_ray(t_data *data, double angle)
 { // isinlar icin
 	int start_x, start_y;
 	start_x = data->player.px * (data->width / mapWidth);
 	start_y = data->player.py * (data->height / mapHeight);
 	int i = 0;
+	t_llocation last_location;
 
 	// int mapX = (int)start_x;
 	// int mapY = (int)start_y;
@@ -40,19 +41,22 @@ t_vector2 draw_ray(t_data *data, double angle)
 	// double sideDistY = 0;
 	rayY = (start_y) + (i * sin((angle + data->player.viewAngle - 45) * (M_PI / 180)));
 	rayX = (start_x) + (i * cos((angle + data->player.viewAngle - 45) * (M_PI / 180)));
-	while (!mapVar[(int)rayX / (data->width / mapWidth)][(int)rayY / (data->height / mapHeight)])
+	last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
+	
+	while (!mapVar[last_location.x][last_location.y])
 	{
 		rayY = (start_y) + (i * sin((angle + data->player.viewAngle - 45) * (M_PI / 180)));
 		rayX = (start_x) + (i * cos((angle + data->player.viewAngle - 45) * (M_PI / 180)));
 		// printf("%lf = ry, %lf = rx, %f =ddx\n", rayY, rayX, sqrt(1 + (rayY * rayY) / (rayX * rayX)));
-		if (angle == 45)
+		if (angle >= 44.5 && angle <=45.5)
 			ft_my_put_pixel(&data->img, rayX, rayY, 0xfff);
 		else
 			ft_my_put_pixel(&data->img, rayX, rayY, 0xffffff);
 		i++;
+		last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
 	}
-	return ((t_vector2){.x = ft_fabs(rayX - start_x), .y = (rayY - start_y)});
-	// printf("%lf => deltaDistX |  %lf => deltaDistY\n", sideDistX, sideDistY);
+	return ((t_ray_data){.last_location = last_location, .ray_location = (t_vector2){.x = ft_fabs(rayX - start_x), .y = (rayY - start_y)}});
+	//	 printf("%lf => deltaDistX |  %lf => deltaDistY\n", sideDistX, sideDistY);
 	// printf("ray_len = %f\n", sqrt(1 + (rayY * rayY) / (rayX * rayX)));
 	// printf("%f angle\n", data->player.viewAngle);
 }

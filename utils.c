@@ -43,9 +43,14 @@ void clear_img(t_data *data) // ekrani temizlemek icin
 
 }
 
-int draw_wall(int angle, double distance, t_data *data)
+int draw_wall_n();
+int draw_wall_e();
+int draw_wall_w();
+int draw_wall_s();
+
+int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
 {
-	// draw wall
+	(void)ray_data;
 	int height = (int)((60 / distance) * 600);
 	int start = (600 - height) / 2;
 	int end = (600 + height) / 2;
@@ -70,25 +75,25 @@ int draw_wall(int angle, double distance, t_data *data)
 	return (0);
 }
 
-int draw_screen2(t_data *data, t_vector2 *ray)
+int draw_screen2(t_data *data, t_ray_data *ray_data)
 {
 	int i = 0;
 	while (i < 600)
 	{
-		draw_wall(i, ft_sqrt(ft_pow(ray[i].x, 2) + ft_pow(ray[i].y, 2)) , data);
+		draw_wall(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2) + ft_pow(ray_data[i].ray_location.y, 2)) ,data, ray_data);
 		i++;
 	}
 	mlx_put_image_to_window(data->mlx, data->win2, data->img2.img, 0, 0);
-	return (0);
+	return (0); 
 }
 
 int keyPressFunc(int keycode, t_data *data)
 {
 	double angle = 90;
-	t_vector2 ray[600];
+	t_ray_data ray[600];
 	int i = 599;
 	double tmp, tmp2;
-	printf("keycode: %d, key_w: %d, key_s: %d, key_a: %d, key_d: %d\n", keycode, Key_W, Key_S, Key_A, Key_D);
+	printf("keycode: %d, key_w: %d, key_s: %d, key_a: %d, key_d: %d, key_lt: %d, key_rt: %d\n", keycode, Key_W, Key_S, Key_A, Key_D, key_lt, key_rt);
 	if (keycode == Key_W)
 	{
 		tmp = data->player.py - 0.1 * sin((-data->player.viewAngle) * (M_PI / 180));
