@@ -4,10 +4,10 @@
 
 void init_var(t_data *data){
 
-	data->player.px = PX;
-	data->player.py = PY;
-	data->player.pov = 30;
-	data->player.viewAngle = 90;
+	data->player.pos.x = PX;
+	data->player.pos.y = PY;
+	data->player.fov = 30;
+	data->player.direction = 60;
 	data->mlx = mlx_init();
 	data->m_data.map_height = mapHeight;
 	data->m_data.map_width = mapWidth;

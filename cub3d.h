@@ -17,6 +17,8 @@
 
 # define mapWidth 10
 # define mapHeight 10
+# define CELLSIZE 64
+
 # ifdef __APPLE__
 
 typedef enum keys{
@@ -82,12 +84,9 @@ typedef struct s_imgdata
 }				t_imgdata;
 
 typedef struct s_player{
-  double px;
-  double pdx;
-  double py;
-  double pdy;
-  double viewAngle;
-  double pov;
+  t_vector2 pos;
+  double direction;
+  double fov;
 } t_player;
 
 typedef struct s_mapdata{

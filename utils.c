@@ -1,7 +1,7 @@
 #include "cub3d.h"
 
 int mapVar2[mapHeight][mapWidth] = {
-    {1,1,1,1,1,1,1,1,1,1},
+    {1,1,1,1,1,0,1,1,1,1},
     {1,0,0,0,0,0,0,0,0,1},
     {1,0,1,0,0,1,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,1},
@@ -55,6 +55,7 @@ int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
 	int start = (600 - height) / 2;
 	int end = (600 + height) / 2;
 	int i = 0;
+	printf("%d s, %d e\n", start, end);
 	while (i < start)
 	{
 		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
@@ -89,66 +90,66 @@ int draw_screen2(t_data *data, t_ray_data *ray_data)
 
 int keyPressFunc(int keycode, t_data *data)
 {
-	double angle = 90;
+	double angle = 60;
 	t_ray_data ray[600];
 	int i = 599;
 	double tmp, tmp2;
 	printf("keycode: %d, key_w: %d, key_s: %d, key_a: %d, key_d: %d, key_lt: %d, key_rt: %d\n", keycode, Key_W, Key_S, Key_A, Key_D, key_lt, key_rt);
 	if (keycode == Key_W)
 	{
-		tmp = data->player.py - 0.1 * sin((-data->player.viewAngle) * (M_PI / 180));
-		tmp2 = data->player.px + 0.1 * cos((data->player.viewAngle) * (M_PI / 180));
+		tmp = data->player.pos.y - 0.1 * sin((-data->player.direction) * (M_PI / 180));
+		tmp2 = data->player.pos.x + 0.1 * cos((data->player.direction) * (M_PI / 180));
 		if (mapVar2[(int)tmp2][(int)tmp] == 1)
 			return (0);
-		data->player.py -= 0.05 * sin((-data->player.viewAngle) * (M_PI / 180));
-		data->player.px += 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
+		data->player.pos.y -= 0.05 * sin((-data->player.direction) * (M_PI / 180));
+		data->player.pos.x += 0.05 * cos((data->player.direction) * (M_PI / 180));
 
 	}
 	if (keycode == Key_S)
 	{
-		tmp = data->player.py + 0.1 * sin((-data->player.viewAngle) * (M_PI / 180));
-		tmp2 = data->player.px - 0.1 * cos((data->player.viewAngle) * (M_PI / 180));
+		tmp = data->player.pos.y + 0.1 * sin((-data->player.direction) * (M_PI / 180));
+		tmp2 = data->player.pos.x - 0.1 * cos((data->player.direction) * (M_PI / 180));
 		if (mapVar2[(int)tmp2][(int)tmp] == 1)
 			return (0);
-		data->player.py += 0.05 * sin((-data->player.viewAngle) * (M_PI / 180));
-		data->player.px -= 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
+		data->player.pos.y += 0.05 * sin((-data->player.direction) * (M_PI / 180));
+		data->player.pos.x -= 0.05 * cos((data->player.direction) * (M_PI / 180));
 	}
 	if (keycode == Key_A)
 	{
-		tmp = data->player.py - 0.1 * cos((data->player.viewAngle) * (M_PI / 180));
-		tmp2 = data->player.px + 0.1 * sin((data->player.viewAngle) * (M_PI / 180));
+		tmp = data->player.pos.y - 0.1 * cos((data->player.direction) * (M_PI / 180));
+		tmp2 = data->player.pos.x + 0.1 * sin((data->player.direction) * (M_PI / 180));
 		if (mapVar2[(int)tmp2][(int)tmp] == 1)
 			return (0);
-		data->player.py -= 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
-		data->player.px += 0.05 * sin((data->player.viewAngle) * (M_PI / 180));
+		data->player.pos.y -= 0.05 * cos((data->player.direction) * (M_PI / 180));
+		data->player.pos.x += 0.05 * sin((data->player.direction) * (M_PI / 180));
 	}
 	if (keycode == Key_D)
 	{
-		tmp = data->player.py + 0.1 * cos((data->player.viewAngle) * (M_PI / 180));
-		tmp2 = data->player.px - 0.1 * sin((data->player.viewAngle) * (M_PI / 180));
+		tmp = data->player.pos.y + 0.1 * cos((data->player.direction) * (M_PI / 180));
+		tmp2 = data->player.pos.x - 0.1 * sin((data->player.direction) * (M_PI / 180));
 		if (mapVar2[(int)tmp2][(int)tmp] == 1)
 			return (0);
-		data->player.py += 0.05 * cos((data->player.viewAngle) * (M_PI / 180));
-		data->player.px -= 0.05 * sin((data->player.viewAngle) * (M_PI / 180));
+		data->player.pos.y += 0.05 * cos((data->player.direction) * (M_PI / 180));
+		data->player.pos.x -= 0.05 * sin((data->player.direction) * (M_PI / 180));
 	}
 	if (keycode == key_rt)
-		data->player.viewAngle += 1;
+		data->player.direction += 1;
 	if (keycode == key_lt)
-		data->player.viewAngle -= 1;
-	if (data->player.viewAngle >= 360)
-		data->player.viewAngle = abs((int)data->player.viewAngle % 360);
-	if (data->player.viewAngle < 0)
-		data->player.viewAngle = 359;
+		data->player.direction -= 1;
+	if (data->player.direction >= 360)
+		data->player.direction = abs((int)data->player.direction % 360);
+	if (data->player.direction < 0)
+		data->player.direction = 359;
 	if (keycode == Key_ESC)
 		exit(1);
 	mlx_clear_window(data->mlx, data->win);
 	clear_img(data);
 	draw_outlines(data);
 	draw_player();
-	while (angle>= 0)
+	while (angle >= 0)
 	{
 		ray[i] = draw_ray(data, angle);
-		angle -= .15;
+		angle -= .1;
 		i--;
 	}
 	draw_screen2(data, ray);

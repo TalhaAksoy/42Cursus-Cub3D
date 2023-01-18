@@ -1,7 +1,7 @@
 #include "cub3d.h"
 
 int mapVar[mapHeight][mapWidth] = {
-    {1,1,1,1,1,1,1,1,1,1},
+    {1,1,1,1,1,0,1,1,1,1},
     {1,0,0,0,0,0,0,0,0,1},
     {1,0,1,0,0,1,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,1},
@@ -25,8 +25,8 @@ int mapVar[mapHeight][mapWidth] = {
 t_ray_data draw_ray(t_data *data, double angle)
 { // isinlar icin
 	int start_x, start_y;
-	start_x = data->player.px * (data->width / mapWidth);
-	start_y = data->player.py * (data->height / mapHeight);
+	start_x = data->player.pos.x * (data->width / mapWidth);
+	start_y = data->player.pos.y * (data->height / mapHeight);
 	int i = 0;
 	t_llocation last_location;
 
@@ -39,16 +39,16 @@ t_ray_data draw_ray(t_data *data, double angle)
 	// double deltaDistY = 0;
 	// double sideDistX = 0;
 	// double sideDistY = 0;
-	rayY = (start_y) + (i * sin((angle + data->player.viewAngle - 45) * (M_PI / 180)));
-	rayX = (start_x) + (i * cos((angle + data->player.viewAngle - 45) * (M_PI / 180)));
+	rayY = (start_y) + (i * sin((angle + data->player.direction - 30) * (M_PI / 180)));
+	rayX = (start_x) + (i * cos((angle + data->player.direction - 30) * (M_PI / 180)));
 	last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
 	
 	while (!mapVar[last_location.x][last_location.y])
 	{
-		rayY = (start_y) + (i * sin((angle + data->player.viewAngle - 45) * (M_PI / 180)));
-		rayX = (start_x) + (i * cos((angle + data->player.viewAngle - 45) * (M_PI / 180)));
+		rayY = (start_y) + (i * sin((angle + data->player.direction - 30) * (M_PI / 180)));
+		rayX = (start_x) + (i * cos((angle + data->player.direction - 30) * (M_PI / 180)));
 		// printf("%lf = ry, %lf = rx, %f =ddx\n", rayY, rayX, sqrt(1 + (rayY * rayY) / (rayX * rayX)));
-		if (angle >= 44.5 && angle <=45.5)
+		if (angle >= 29.5 && angle <=30.5)
 			ft_my_put_pixel(&data->img, rayX, rayY, 0xfff);
 		else
 			ft_my_put_pixel(&data->img, rayX, rayY, 0xffffff);
@@ -58,7 +58,7 @@ t_ray_data draw_ray(t_data *data, double angle)
 	return ((t_ray_data){.last_location = last_location, .ray_location = (t_vector2){.x = ft_fabs(rayX - start_x), .y = (rayY - start_y)}});
 	//	 printf("%lf => deltaDistX |  %lf => deltaDistY\n", sideDistX, sideDistY);
 	// printf("ray_len = %f\n", sqrt(1 + (rayY * rayY) / (rayX * rayX)));
-	// printf("%f angle\n", data->player.viewAngle);
+	// printf("%f angle\n", data->player.direction);
 }
 
 /**
@@ -71,8 +71,8 @@ void draw_player(void) // playeri ciziyor
 {
 	//int start_x, start_y; 
 	int i, j;
-	//start_x = data->player.px * (data->width / 10);
-	//start_y = data->player.py * (data->height / 10);
+	//start_x = data->player.pos.x * (data->width / 10);
+	//start_y = data->player.pos.y * (data->height / 10);
 	i = 0;
 	j = 0;
 	while (i < 5)
