@@ -43,6 +43,11 @@ void clear_img(t_data *data) // ekrani temizlemek icin
 
 }
 
+double deg2rad(int deg)
+{
+	return(deg * (M_PI / 180));
+}
+
 int draw_wall_n();
 int draw_wall_e();
 int draw_wall_w();
@@ -50,14 +55,18 @@ int draw_wall_s();
 
 int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
 {
-	(void)ray_data;
-	int height = (int)((60 / distance) * 600);
+	(void)ray_data; 
+	printf(">> %f -> %f", data->player.direction, (((double)angle * 0.1) - 30.0));
+	distance = distance * cos(deg2rad((((double)angle * 0.1) - 30.0)));
+	int height = (int)(50000 / distance);
 	int start = (600 - height) / 2;
 	int end = (600 + height) / 2;
 	int i = 0;
 	printf("%d s, %d e\n", start, end);
 	while (i < start)
 	{
+		if (i > 600)
+			break;
 		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
 		i++;
 	}
@@ -70,6 +79,8 @@ int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
 	}
 	while (i < data->height)
 	{
+		if (i > 600)
+			break;
 		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
 		i++;
 	}

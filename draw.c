@@ -27,9 +27,9 @@ t_ray_data draw_ray(t_data *data, double angle)
 	int start_x, start_y;
 	start_x = data->player.pos.x * (data->width / mapWidth);
 	start_y = data->player.pos.y * (data->height / mapHeight);
-	int i = 0;
+	int wall;
+	wall = 0;
 	t_llocation last_location;
-
 	// int mapX = (int)start_x;
 	// int mapY = (int)start_y;
 	// int stepX = 0;
@@ -39,21 +39,24 @@ t_ray_data draw_ray(t_data *data, double angle)
 	// double deltaDistY = 0;
 	// double sideDistX = 0;
 	// double sideDistY = 0;
-	rayY = (start_y) + (i * sin((angle + data->player.direction - 30) * (M_PI / 180)));
-	rayX = (start_x) + (i * cos((angle + data->player.direction - 30) * (M_PI / 180)));
+	double sinus, cosinus;
+	sinus = sin((angle + data->player.direction - 30) * (M_PI / 180));
+	cosinus = cos((angle + data->player.direction - 30) * (M_PI / 180));
+	rayY = (start_y);
+	rayX = (start_x); 
 	last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
 	
-	while (!mapVar[last_location.x][last_location.y])
+	while (!wall)
 	{
-		rayY = (start_y) + (i * sin((angle + data->player.direction - 30) * (M_PI / 180)));
-		rayX = (start_x) + (i * cos((angle + data->player.direction - 30) * (M_PI / 180)));
+		rayY += sinus;
+		rayX += cosinus;
 		// printf("%lf = ry, %lf = rx, %f =ddx\n", rayY, rayX, sqrt(1 + (rayY * rayY) / (rayX * rayX)));
 		if (angle >= 29.5 && angle <=30.5)
 			ft_my_put_pixel(&data->img, rayX, rayY, 0xfff);
 		else
 			ft_my_put_pixel(&data->img, rayX, rayY, 0xffffff);
-		i++;
 		last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
+		wall = mapVar[(int)floor(last_location.x)][(int)floor(last_location.y)];
 	}
 	return ((t_ray_data){.last_location = last_location, .ray_location = (t_vector2){.x = ft_fabs(rayX - start_x), .y = (rayY - start_y)}});
 	//	 printf("%lf => deltaDistX |  %lf => deltaDistY\n", sideDistX, sideDistY);
