@@ -71,6 +71,8 @@ typedef struct s_ray_data
 {
   t_vector2   ray_location;
   t_llocation last_location;
+  t_llocation wall_location;
+
 
 } t_ray_data;
 
@@ -97,12 +99,13 @@ typedef struct s_mapdata{
 typedef struct s_data{
 	void*	mlx;
 	void*	win;
-	void*	mlx2;
 	void*	win2;
-        t_imgdata img;
-        t_imgdata img2;
-        t_player player;
-		t_mapdata m_data;
+	void*	win3;
+  t_imgdata img; 
+  t_imgdata img2;
+  t_imgdata img3;
+  t_player player;
+	t_mapdata m_data;
 	int width;
 	int height;
 }	t_data;

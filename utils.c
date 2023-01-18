@@ -48,21 +48,140 @@ double deg2rad(int deg)
 	return(deg * (M_PI / 180));
 }
 
-int draw_wall_n();
-int draw_wall_e();
-int draw_wall_w();
-int draw_wall_s();
-
-int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
+int draw_wall_n(int angle, double distance, t_data *data, t_ray_data *ray_data)
 {
-	(void)ray_data; 
-	printf(">> %f -> %f", data->player.direction, (((double)angle * 0.1) - 30.0));
-	distance = distance * cos(deg2rad((((double)angle * 0.1) - 30.0)));
+		(void)ray_data; 
+	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
 	int height = (int)(50000 / distance);
 	int start = (600 - height) / 2;
 	int end = (600 + height) / 2;
 	int i = 0;
-	printf("%d s, %d e\n", start, end);
+
+	while (i < start)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x000000);
+		i++;
+	}
+	while (i < end)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0xff0000); // kirmizi
+		i++;
+	}
+	while (i < data->height)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x000000);
+		i++;
+	}
+	return(321);
+};
+int draw_wall_e(int angle, double distance, t_data *data, t_ray_data *ray_data){
+	(void)ray_data; 
+	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
+	int height = (int)(50000 / distance);
+	int start = (600 - height) / 2;
+	int end = (600 + height) / 2;
+	int i = 0;
+
+	while (i < start)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x000000);
+		i++;
+	}
+	while (i < end)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x00ff00); // yesil
+		i++;
+	}
+	while (i < data->height)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x000000);
+		i++;
+	}
+	return(44242);
+};
+int draw_wall_w(int angle, double distance, t_data *data, t_ray_data *ray_data){
+	(void)ray_data; 
+	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
+	int height = (int)(50000 / distance);
+	int start = (600 - height) / 2;
+	int end = (600 + height) / 2;
+	int i = 0;
+
+	while (i < start)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x000000);
+		i++;
+	}
+	while (i < end)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x0000ff); // mavi
+		i++;
+	}
+	while (i < data->height)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x000000);
+		i++;
+	}
+	return (443323);
+};
+int draw_wall_s(int angle, double distance, t_data *data, t_ray_data *ray_data){
+	(void)ray_data; 
+	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
+	int height = (int)(50000 / distance);
+	int start = (600 - height) / 2;
+	int end = (600 + height) / 2;
+	int i = 0;
+
+	while (i < start)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x000000);
+		i++;
+	}
+	while (i < end)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x151515); // acik gri
+		i++;
+	}
+	while (i < data->height)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img3, angle, i, 0x000000);
+		i++;
+	}
+	return (123);
+};
+
+int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
+{
+	(void)ray_data; 
+	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
+	int height = (int)(50000 / distance);
+	int start = (600 - height) / 2;
+	int end = (600 + height) / 2;
+	int i = 0;
 	while (i < start)
 	{
 		if (i > 600)
@@ -87,6 +206,7 @@ int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
 	return (0);
 }
 
+
 int draw_screen2(t_data *data, t_ray_data *ray_data)
 {
 	int i = 0;
@@ -99,56 +219,72 @@ int draw_screen2(t_data *data, t_ray_data *ray_data)
 	return (0); 
 }
 
+int draw_screen3(t_data *data, t_ray_data *ray_data)
+{
+	int i = 0;
+	printf("%d = lx, %d = ly\n%d = rx, %d = ry\n", ray_data[i].last_location.x, ray_data[i].last_location.y, ray_data[i].wall_location.x, ray_data[i].wall_location.y);
+	while (i < 600)
+	{
+		if (ray_data[i].last_location.x == ray_data[i].wall_location.x + 1 && ray_data[i].last_location.y == ray_data[i].wall_location.y)
+			draw_wall_e(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2) + ft_pow(ray_data[i].ray_location.y, 2)) ,data, ray_data);
+		i++;
+	}
+	mlx_put_image_to_window(data->mlx, data->win3, data->img3.img, 0, 0);
+	return (0); 
+}
+
 int keyPressFunc(int keycode, t_data *data)
 {
-	double angle = 60;
-	t_ray_data ray[600];
-	int i = 599;
-	double tmp, tmp2;
-	printf("keycode: %d, key_w: %d, key_s: %d, key_a: %d, key_d: %d, key_lt: %d, key_rt: %d\n", keycode, Key_W, Key_S, Key_A, Key_D, key_lt, key_rt);
+	double angle;
+	t_ray_data *ray;
+	int i = data->width;
+	t_vector2 w_check;
+
+	angle = data->player.fov;
+	ray = (t_ray_data *)malloc(sizeof(t_ray_data) * data->width); // leak
 	if (keycode == Key_W)
 	{
-		tmp = data->player.pos.y - 0.1 * sin((-data->player.direction) * (M_PI / 180));
-		tmp2 = data->player.pos.x + 0.1 * cos((data->player.direction) * (M_PI / 180));
-		if (mapVar2[(int)tmp2][(int)tmp] == 1)
-			return (0);
-		data->player.pos.y -= 0.05 * sin((-data->player.direction) * (M_PI / 180));
-		data->player.pos.x += 0.05 * cos((data->player.direction) * (M_PI / 180));
+		w_check.y = data->player.pos.y - 0.1 * sin(deg2rad(-data->player.direction));
+		w_check.x = data->player.pos.x + 0.1 * cos(deg2rad(data->player.direction));
+		if (mapVar2[(int)w_check.x][(int)w_check.y] == 1)
+			return (1);
+		data->player.pos.y -= 0.05 * sin(deg2rad(-data->player.direction));
+		data->player.pos.x += 0.05 * cos(deg2rad(data->player.direction));
 
 	}
 	if (keycode == Key_S)
 	{
-		tmp = data->player.pos.y + 0.1 * sin((-data->player.direction) * (M_PI / 180));
-		tmp2 = data->player.pos.x - 0.1 * cos((data->player.direction) * (M_PI / 180));
-		if (mapVar2[(int)tmp2][(int)tmp] == 1)
-			return (0);
-		data->player.pos.y += 0.05 * sin((-data->player.direction) * (M_PI / 180));
-		data->player.pos.x -= 0.05 * cos((data->player.direction) * (M_PI / 180));
+		w_check.y = data->player.pos.y + 0.1 * sin(deg2rad(-data->player.direction));
+		w_check.x = data->player.pos.x - 0.1 * cos(deg2rad(data->player.direction));
+		if (mapVar2[(int)w_check.x][(int)w_check.y] == 1)
+			return (1);
+		data->player.pos.y += 0.05 * sin(deg2rad(-data->player.direction));
+		data->player.pos.x -= 0.05 * cos(deg2rad(data->player.direction));
 	}
 	if (keycode == Key_A)
 	{
-		tmp = data->player.pos.y - 0.1 * cos((data->player.direction) * (M_PI / 180));
-		tmp2 = data->player.pos.x + 0.1 * sin((data->player.direction) * (M_PI / 180));
-		if (mapVar2[(int)tmp2][(int)tmp] == 1)
-			return (0);
-		data->player.pos.y -= 0.05 * cos((data->player.direction) * (M_PI / 180));
-		data->player.pos.x += 0.05 * sin((data->player.direction) * (M_PI / 180));
+		w_check.y = data->player.pos.y - 0.1 * cos(deg2rad(data->player.direction));
+		w_check.x = data->player.pos.x + 0.1 * sin(deg2rad(data->player.direction));
+		if (mapVar2[(int)w_check.x][(int)w_check.y] == 1)
+			return (1);
+		data->player.pos.y -= 0.05 * cos(deg2rad(data->player.direction));
+		data->player.pos.x += 0.05 * sin(deg2rad(data->player.direction));
 	}
 	if (keycode == Key_D)
 	{
-		tmp = data->player.pos.y + 0.1 * cos((data->player.direction) * (M_PI / 180));
-		tmp2 = data->player.pos.x - 0.1 * sin((data->player.direction) * (M_PI / 180));
-		if (mapVar2[(int)tmp2][(int)tmp] == 1)
-			return (0);
-		data->player.pos.y += 0.05 * cos((data->player.direction) * (M_PI / 180));
-		data->player.pos.x -= 0.05 * sin((data->player.direction) * (M_PI / 180));
+		w_check.y = data->player.pos.y + 0.1 * cos(deg2rad(data->player.direction));
+		w_check.x = data->player.pos.x - 0.1 * sin(deg2rad(data->player.direction));
+		if (mapVar2[(int)w_check.x][(int)w_check.y] == 1)
+			return (1);
+		data->player.pos.y += 0.05 * cos(deg2rad(data->player.direction));
+		data->player.pos.x -= 0.05 * sin(deg2rad(data->player.direction));
 	}
 	if (keycode == key_rt)
 		data->player.direction += 1;
 	if (keycode == key_lt)
 		data->player.direction -= 1;
 	if (data->player.direction >= 360)
-		data->player.direction = abs((int)data->player.direction % 360);
+		data->player.direction = ft_abs((int)data->player.direction % 360);
 	if (data->player.direction < 0)
 		data->player.direction = 359;
 	if (keycode == Key_ESC)
@@ -157,13 +293,13 @@ int keyPressFunc(int keycode, t_data *data)
 	clear_img(data);
 	draw_outlines(data);
 	draw_player();
-	while (angle >= 0)
+	while (i--)
 	{
 		ray[i] = draw_ray(data, angle);
-		angle -= .1;
-		i--;
+		angle -= data->player.fov / data->width;
 	}
 	draw_screen2(data, ray);
+	draw_screen3(data, ray);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 
 	return (0);

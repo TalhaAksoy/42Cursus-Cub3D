@@ -30,6 +30,7 @@ t_ray_data draw_ray(t_data *data, double angle)
 	int wall;
 	wall = 0;
 	t_llocation last_location;
+	t_llocation ret;
 	// int mapX = (int)start_x;
 	// int mapY = (int)start_y;
 	// int stepX = 0;
@@ -40,14 +41,15 @@ t_ray_data draw_ray(t_data *data, double angle)
 	// double sideDistX = 0;
 	// double sideDistY = 0;
 	double sinus, cosinus;
-	sinus = sin((angle + data->player.direction - 30) * (M_PI / 180));
-	cosinus = cos((angle + data->player.direction - 30) * (M_PI / 180));
+	sinus = sin((angle + data->player.direction - (data->player.fov / 2)) * (M_PI / 180)); // add func deg2rad
+	cosinus = cos((angle + data->player.direction - (data->player.fov / 2)) * (M_PI / 180));
 	rayY = (start_y);
 	rayX = (start_x); 
 	last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
 	
 	while (!wall)
 	{
+		ret = last_location;
 		rayY += sinus;
 		rayX += cosinus;
 		// printf("%lf = ry, %lf = rx, %f =ddx\n", rayY, rayX, sqrt(1 + (rayY * rayY) / (rayX * rayX)));
@@ -58,7 +60,7 @@ t_ray_data draw_ray(t_data *data, double angle)
 		last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
 		wall = mapVar[(int)floor(last_location.x)][(int)floor(last_location.y)];
 	}
-	return ((t_ray_data){.last_location = last_location, .ray_location = (t_vector2){.x = ft_fabs(rayX - start_x), .y = (rayY - start_y)}});
+	return ((t_ray_data){.wall_location = last_location, .last_location = ret, .ray_location = (t_vector2){.x = ft_fabs(rayX - start_x), .y = (rayY - start_y)}});
 	//	 printf("%lf => deltaDistX |  %lf => deltaDistY\n", sideDistX, sideDistY);
 	// printf("ray_len = %f\n", sqrt(1 + (rayY * rayY) / (rayX * rayX)));
 	// printf("%f angle\n", data->player.direction);
@@ -66,7 +68,7 @@ t_ray_data draw_ray(t_data *data, double angle)
 
 /**
  * It draws the player
- * 
+ *  
  * @param data This is the data structure that holds all the information about the game.
  */
 // void draw_player(t_data *data) // playeri ciziyor
