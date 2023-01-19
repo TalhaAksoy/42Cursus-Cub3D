@@ -23,7 +23,6 @@ t_ray_data	draw_ray(t_data *data, double angle)
 	t_vector2	start;
 	t_vector2	sin_cos;
 
-	printf("%fangggle\n", angle);
 	wall = 0;
 	start = (t_vector2){.x = data->player.pos.x * (data->width / mapWidth),
 		data->player.pos.y * (data->height / mapHeight)};

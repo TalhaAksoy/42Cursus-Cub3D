@@ -234,7 +234,7 @@ int draw_screen2(t_data *data, t_ray_data *ray_data)
 int draw_screen3(t_data *data, t_ray_data *ray_data)
 {
 	int i = 0;
-	printf("%d = lx, %d = ly\n%d = rx, %d = ry\n", ray_data[i].last_location.x, ray_data[i].last_location.y, ray_data[i].wall_location.x, ray_data[i].wall_location.y);
+	//printf("%d = lx, %d = ly\n%d = rx, %d = ry\n", ray_data[i].last_location.x, ray_data[i].last_location.y, ray_data[i].wall_location.x, ray_data[i].wall_location.y);
 	while (i < 600)
 	{
 		if (ray_data[i].last_location.x == ray_data[i].wall_location.x + 1 && ray_data[i].last_location.y == ray_data[i].wall_location.y)
@@ -322,9 +322,9 @@ int keyPressFunc(int keycode, t_data *data)
 	if (keycode == Key_W || keycode == Key_A || keycode == Key_S || keycode == Key_D)
 		ft_move(keycode, data);
 	if (keycode == key_rt)
-		data->player.direction += 1;
+		data->player.direction += 6;
 	if (keycode == key_lt)
-		data->player.direction -= 1;
+		data->player.direction -= 6;
 	if (data->player.direction >= 360)
 		data->player.direction = ft_abs((int)data->player.direction % 360);
 	if (data->player.direction < 0)
