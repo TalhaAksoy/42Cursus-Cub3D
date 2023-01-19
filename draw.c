@@ -1,83 +1,62 @@
 #include "cub3d.h"
 
-int mapVar[mapHeight][mapWidth] = {
-    {1,1,1,1,1,0,1,1,1,1},
-    {1,0,0,0,0,0,0,0,0,1},
-    {1,0,1,0,0,1,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,1,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,1},
-    {1,0,0,1,0,1,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,1},
-    {1,0,0,1,0,1,0,0,0,1},
-    {1,1,1,1,1,1,1,1,1,1},
+double		deg2rad(int deg);
+
+int			mapVar[mapHeight][mapWidth] = {
+	{1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 1, 0, 0, 1, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 };
 
+t_ray_data	draw_ray(t_data *data, double angle)
+{
+	int			wall;
+	t_ray_data	ray_data;
+	t_vector2	ray;
+	t_vector2	start;
+	t_vector2	sin_cos;
 
-
-
-/**
- * It draws a ray from the player's position to the wall
- * 
- * @param data the data structure that holds all the information about the game.
- * @param angle the angle of the ray in degrees
- */
-t_ray_data draw_ray(t_data *data, double angle)
-{ // isinlar icin
-	int start_x, start_y;
-	start_x = data->player.pos.x * (data->width / mapWidth);
-	start_y = data->player.pos.y * (data->height / mapHeight);
-	int wall;
+	printf("%fangggle\n", angle);
 	wall = 0;
-	t_llocation last_location;
-	t_llocation ret;
-	// int mapX = (int)start_x;
-	// int mapY = (int)start_y;
-	// int stepX = 0;
-	// int stepY = 0;
-	double rayY, rayX;
-	// double deltaDistX = 0;
-	// double deltaDistY = 0;
-	// double sideDistX = 0;
-	// double sideDistY = 0;
-	double sinus, cosinus;
-	sinus = sin((angle + data->player.direction - (data->player.fov / 2)) * (M_PI / 180)); // add func deg2rad
-	cosinus = cos((angle + data->player.direction - (data->player.fov / 2)) * (M_PI / 180));
-	rayY = (start_y);
-	rayX = (start_x); 
-	last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
-	
+	start = (t_vector2){.x = data->player.pos.x * (data->width / mapWidth),
+		data->player.pos.y * (data->height / mapHeight)};
+	sin_cos = (t_vector2){.x = cos((angle + data->player.direction
+				- (data->player.fov / 2)) * M_PI / 180), .y = sin((angle
+				+ data->player.direction - (data->player.fov / 2)) * M_PI / 180)};
+	ray = (t_vector2){.y = start.y, .x = start.x};
+	ray_data.wall_location = (t_llocation){.x = (int)ray.x / (data->width
+			/ mapWidth), .y = (int)ray.y / (data->height / mapHeight)};
 	while (!wall)
 	{
-		ret = last_location;
-		rayY += sinus;
-		rayX += cosinus;
-		// printf("%lf = ry, %lf = rx, %f =ddx\n", rayY, rayX, sqrt(1 + (rayY * rayY) / (rayX * rayX)));
-		if (angle >= 29.5 && angle <=30.5)
-			ft_my_put_pixel(&data->img, rayX, rayY, 0xfff);
+		ray_data.last_location = ray_data.wall_location;
+		ray.y += sin_cos.y;
+		ray.x += sin_cos.x;
+		if (angle <= 2)
+			ft_my_put_pixel(&data->img, ray.x, ray.y, 0xfff);
 		else
-			ft_my_put_pixel(&data->img, rayX, rayY, 0xffffff);
-		last_location = (t_llocation){.x = (int) rayX / (data->width / mapWidth), .y = (int) rayY / (data->height / mapHeight)};
-		wall = mapVar[(int)floor(last_location.x)][(int)floor(last_location.y)];
+			ft_my_put_pixel(&data->img, ray.x, ray.y, 0xffffff);
+		ray_data.wall_location = (t_llocation){.x = (int)ray.x / (data->width
+				/ mapWidth),
+												.y = (int)ray.y / (data->height
+														/ mapHeight)};
+		wall = mapVar[(int)floor(ray_data.wall_location.x)][(int)floor(ray_data.wall_location.y)];
 	}
-	return ((t_ray_data){.wall_location = last_location, .last_location = ret, .ray_location = (t_vector2){.x = ft_fabs(rayX - start_x), .y = (rayY - start_y)}});
-	//	 printf("%lf => deltaDistX |  %lf => deltaDistY\n", sideDistX, sideDistY);
-	// printf("ray_len = %f\n", sqrt(1 + (rayY * rayY) / (rayX * rayX)));
-	// printf("%f angle\n", data->player.direction);
+	return ((t_ray_data){.wall_location = ray_data.wall_location,
+		.last_location = ray_data.last_location,
+		.ray_location = (t_vector2){.x = ft_fabs(ray.x - start.x), .y = (ray.y
+			- start.y)}});
 }
 
-/**
- * It draws the player
- *  
- * @param data This is the data structure that holds all the information about the game.
- */
-// void draw_player(t_data *data) // playeri ciziyor
-void draw_player(void) // playeri ciziyor
+void	draw_player(void) // playeri ciziyor
 {
-	//int start_x, start_y; 
 	int i, j;
-	//start_x = data->player.pos.x * (data->width / 10);
-	//start_y = data->player.pos.y * (data->height / 10);
 	i = 0;
 	j = 0;
 	while (i < 5)
@@ -91,15 +70,13 @@ void draw_player(void) // playeri ciziyor
 	}
 }
 
-void draw_outlines(t_data *data) // kirmizi kutularin tamami icin
+void	draw_outlines(t_data *data) // kirmizi kutularin tamami icin
 {
 	int i;
 	int j;
-	// int k;
+
 	i = 0;
 	j = 0;
-	// k = 0;
-
 	while (i < mapHeight)
 	{
 		while (j < mapWidth)
@@ -114,13 +91,13 @@ void draw_outlines(t_data *data) // kirmizi kutularin tamami icin
 	}
 }
 
-void draw_square(int x, int y, t_data *data) // kirmizi kutular icin
+void	draw_square(int x, int y, t_data *data) // kirmizi kutular icin
 {
+	int start_x;
+	int start_y;
 
-	int start_x, start_y;
 	start_x = x * 64;
 	start_y = y * 64;
-	// printf("x = %d, y = %d\n", x, y);
 	x = 0;
 	y = 0;
 	while (x < 64)
@@ -135,9 +112,9 @@ void draw_square(int x, int y, t_data *data) // kirmizi kutular icin
 	}
 }
 
-void ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color) // image adresine pixel basmak icin
+void	ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color)
 {
-	char *dst;
+	char	*dst;
 
 	dst = img_data->addr + (y * img_data->line_len + x * (img_data->bpp / 8));
 	*(unsigned int *)dst = color;

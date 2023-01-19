@@ -18,7 +18,9 @@
 # define mapWidth 10
 # define mapHeight 10
 # define CELLSIZE 64
-
+# define GAMEWIDTH 600
+# define T_SKY 0x123456
+# define T_floor 0x654321
 # ifdef __APPLE__
 
 typedef enum keys{
