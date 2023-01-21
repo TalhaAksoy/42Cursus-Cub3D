@@ -120,11 +120,11 @@ void	ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-unsigned int	ft_my_get_pixel(t_data *data, int x, int y)
+unsigned int	ft_my_get_pixel(t_data *data, int x, int y, int i)
 {
 	char	*dst;
 
 	// printf("y = %d %d\n", x, y);
-	dst = data->xpm.img_ptr + (y * data->xpm.line_len + x * (data->xpm.bpp / 8));
+	dst = data->xpm[i].img_ptr + (y * data->xpm[i].line_len + x * (data->xpm[i].bpp / 8));
 	return (*(unsigned int *)dst);
 }

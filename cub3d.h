@@ -119,7 +119,7 @@ typedef struct s_data{
   t_imgdata img3;
   t_imgdata img4;
   t_player  player;
-  t_xpm     xpm;
+  t_xpm     xpm[4];
 	t_mapdata m_data;
 	int width;
 	int height;
@@ -133,5 +133,5 @@ void draw_player(void);
 void draw_outlines(t_data *data);
 void draw_square(int x, int y, t_data *data);
 void ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color);
-unsigned int	ft_my_get_pixel(t_data *data, int x, int y);
+unsigned int	ft_my_get_pixel(t_data *data, int x, int y, int i);
 #endif

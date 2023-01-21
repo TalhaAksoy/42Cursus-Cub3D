@@ -206,8 +206,6 @@ int draw_wall_n_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 	int end = (600 + height) / 2;
 	int i = 0;
 
-	data->xpm.img = mlx_xpm_file_to_image(data->mlx, "textures/wall1.xpm", &data->xpm.width, &data->xpm.height);
-	data->xpm.img_ptr = mlx_get_data_addr(data->xpm.img, &data->xpm.bpp, &data->xpm.line_len, &data->xpm.endian);
 	while (i < start)
 	{
 		if (i > 600)
@@ -219,7 +217,7 @@ int draw_wall_n_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 	{
 		if (i > 600)
 			break;
-		unsigned clr = ft_my_get_pixel(data, ((ray_data.for_wall.x - floor(ray_data.for_wall.x))* 64) , ((i - start) * 64) / height);
+		unsigned clr = ft_my_get_pixel(data, ((ray_data.for_wall.x - floor(ray_data.for_wall.x))* 64) , ((i - start) * 64) / height, 0);
 		ft_my_put_pixel(&data->img4, angle, i, clr); // kirmizi
 		i++;
 	}
@@ -247,13 +245,12 @@ int draw_wall_e_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		ft_my_put_pixel(&data->img4, angle, i, T_SKY);
 		i++;
 	}
-	data->xpm.img = mlx_xpm_file_to_image(data->mlx, "textures/wall2.xpm", &data->xpm.width, &data->xpm.height);
-	data->xpm.img_ptr = mlx_get_data_addr(data->xpm.img, &data->xpm.bpp, &data->xpm.line_len, &data->xpm.endian);
+
 	while (i < end)
 	{
 		if (i > 600)
 			break;
-		unsigned clr = ft_my_get_pixel(data, ((ray_data.for_wall.y - floor(ray_data.for_wall.y))* 64) , ((i - start) * 64) / height);
+		unsigned clr = ft_my_get_pixel(data, ((ray_data.for_wall.y - floor(ray_data.for_wall.y))* 64) , ((i - start) * 64) / height, 1);
 		ft_my_put_pixel(&data->img4, angle, i, clr); // yesil
 		i++;
 	}
@@ -281,13 +278,12 @@ int draw_wall_w_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		ft_my_put_pixel(&data->img4, angle, i, T_SKY);
 		i++;
 	}
-	data->xpm.img = mlx_xpm_file_to_image(data->mlx, "textures/wall3.xpm", &data->xpm.width, &data->xpm.height);
-	data->xpm.img_ptr = mlx_get_data_addr(data->xpm.img, &data->xpm.bpp, &data->xpm.line_len, &data->xpm.endian);
+
 	while (i < end)
 	{
 		if (i > 600)
 			break;
-		unsigned clr = ft_my_get_pixel(data, ((ray_data.for_wall.y - floor(ray_data.for_wall.y))* 64) , ((i - start) * 64) / height);
+		unsigned clr = ft_my_get_pixel(data, ((ray_data.for_wall.y - floor(ray_data.for_wall.y))* 64) , ((i - start) * 64) / height, 2);
 		ft_my_put_pixel(&data->img4, angle, i, clr); // mavi
 		i++;
 	}
@@ -313,8 +309,14 @@ int draw_wall_s_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		if (i > 600)
 			break;
 		ft_my_put_pixel(&data->img4, angle, i, T_SKY);
-		i++;B
-		unsigned clr = ft_my_get_pixel(data, ((ray_data.for_wall.x - floor(ray_data.for_wall.x))* 64) , ((i - start) * 64) / height);
+		i++;
+	}
+
+	while (i < end)
+	{
+		if (i > 600)
+			break;
+		unsigned clr = ft_my_get_pixel(data, ((ray_data.for_wall.x - floor(ray_data.for_wall.x))* 64) , ((i - start) * 64) / height, 3);
 		ft_my_put_pixel(&data->img4, angle, i, clr); // acik gri
 		i++;
 	}
@@ -331,7 +333,7 @@ int draw_wall_s_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
 {
 	(void)ray_data; 
-	distance = distance * cos(deg2rad((((double)angle * 0.1) - (data->player.fov / 2))));
+	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
 	int height = (int)(50000 / distance);
 	int start = (600 - height) / 2;
 	int end = (600 + height) / 2;
@@ -502,7 +504,7 @@ int keyPressFunc(int keycode, t_data *data)
 		ray[i] = draw_ray(data, angle);
 		angle -= data->player.fov / GAMEWIDTH;
 	}
-	//draw_screen2(data, ray);
+	draw_screen2(data, ray);
 	draw_screen3(data, ray);
 	draw_screen4(data, ray);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
