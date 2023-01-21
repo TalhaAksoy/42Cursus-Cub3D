@@ -3,7 +3,7 @@
 double		deg2rad(int deg);
 
 int			mapVar[mapHeight][mapWidth] = {
-	{1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 1, 0, 0, 1, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -45,9 +45,10 @@ t_ray_data	draw_ray(t_data *data, double angle)
 				/ mapWidth),
 												.y = (int)ray.y / (data->height
 														/ mapHeight)};
+		ray_data.for_wall = (t_vector2){.x = ray.x / (data->width/mapWidth), .y = ray.y/ (data->width/mapWidth)};
 		wall = mapVar[(int)floor(ray_data.wall_location.x)][(int)floor(ray_data.wall_location.y)];
 	}
-	return ((t_ray_data){.wall_location = ray_data.wall_location,
+	return ((t_ray_data){.for_wall = ray_data.for_wall, .wall_location = ray_data.wall_location,
 		.last_location = ray_data.last_location,
 		.ray_location = (t_vector2){.x = ft_fabs(ray.x - start.x), .y = (ray.y
 			- start.y)}});
@@ -117,4 +118,13 @@ void	ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color)
 
 	dst = img_data->addr + (y * img_data->line_len + x * (img_data->bpp / 8));
 	*(unsigned int *)dst = color;
+}
+
+unsigned int	ft_my_get_pixel(t_data *data, int x, int y)
+{
+	char	*dst;
+
+	// printf("y = %d %d\n", x, y);
+	dst = data->xpm.img_ptr + (y * data->xpm.line_len + x * (data->xpm.bpp / 8));
+	return (*(unsigned int *)dst);
 }

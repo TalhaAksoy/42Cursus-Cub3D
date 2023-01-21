@@ -3,5 +3,8 @@
 
 int main()
 {
-    return (printf("%f fn, %f sn\n",trunc(123.123), trunc(123.88888)));
+    int i = 0;
+    int *ptr;
+    ptr = i;
+    return (printf("%d\n", *ptr));
 }

@@ -74,9 +74,19 @@ typedef struct s_ray_data
   t_vector2   ray_location;
   t_llocation last_location;
   t_llocation wall_location;
-
+  t_vector2   for_wall;
 
 } t_ray_data;
+
+typedef struct s_xpm{
+  void* img;
+  char* img_ptr;
+  int bpp;
+  int line_len;
+  int endian;
+  int width;
+  int height;
+} t_xpm;
 
 typedef struct s_imgdata
 {
@@ -103,10 +113,13 @@ typedef struct s_data{
 	void*	win;
 	void*	win2;
 	void*	win3;
+  void* win4;
   t_imgdata img; 
   t_imgdata img2;
   t_imgdata img3;
-  t_player player;
+  t_imgdata img4;
+  t_player  player;
+  t_xpm     xpm;
 	t_mapdata m_data;
 	int width;
 	int height;
@@ -120,4 +133,5 @@ void draw_player(void);
 void draw_outlines(t_data *data);
 void draw_square(int x, int y, t_data *data);
 void ft_my_put_pixel(t_imgdata *img_data, int x, int y, int color);
+unsigned int	ft_my_get_pixel(t_data *data, int x, int y);
 #endif
