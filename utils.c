@@ -331,7 +331,7 @@ int draw_wall_s_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 int draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
 {
 	(void)ray_data; 
-	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
+	distance = distance * cos(deg2rad((((double)angle * 0.1) - (data->player.fov / 2))));
 	int height = (int)(50000 / distance);
 	int start = (600 - height) / 2;
 	int end = (600 + height) / 2;
