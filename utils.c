@@ -339,11 +339,11 @@ int	draw_screen3(t_data *data, t_ray_data *ray_data)
 void	draw_wall_n_img(int angle, double distance, t_data *data,
 		t_ray_data ray_data)
 {
-	int			height;
-	int			start;
-	int			end;
-	int			i;
-	unsigned	clr;
+	int				height;
+	int				start;
+	int				end;
+	int				i;
+	unsigned int	clr;
 
 	distance = distance * cos(deg2rad((((double)angle * 0.1) - (data->player.fov
 						/ 2))));
@@ -359,7 +359,7 @@ void	draw_wall_n_img(int angle, double distance, t_data *data,
 		clr = ft_my_get_pixel(data, ((ray_data.for_wall.x
 						- floor(ray_data.for_wall.x)) * 64), ((i - start) * 64)
 				/ height, 0);
-		ft_my_put_pixel(&data->img4, angle, i, clr); // kirmizi
+		ft_my_put_pixel(&data->img4, angle, i, clr);
 		i++;
 	}
 	i = draw_floor(angle, i, data);
@@ -368,11 +368,11 @@ void	draw_wall_n_img(int angle, double distance, t_data *data,
 void	draw_wall_e_img(int angle, double distance, t_data *data,
 		t_ray_data ray_data)
 {
-	int			height;
-	int			start;
-	int			end;
-	int			i;
-	unsigned	clr;
+	int				height;
+	int				start;
+	int				end;
+	int				i;
+	unsigned int	clr;
 
 	distance = distance * cos(deg2rad((((double)angle * 0.1) - (data->player.fov
 						/ 2))));
@@ -388,21 +388,21 @@ void	draw_wall_e_img(int angle, double distance, t_data *data,
 		clr = ft_my_get_pixel(data, ((ray_data.for_wall.y
 						- floor(ray_data.for_wall.y)) * 64), ((i - start) * 64)
 				/ height, 1);
-		ft_my_put_pixel(&data->img4, angle, i, clr); // yesil
+		ft_my_put_pixel(&data->img4, angle, i, clr);
 		i++;
 	}
 	i = draw_floor(angle, i, data);
 }
+
 void	draw_wall_w_img(int angle, double distance, t_data *data,
 		t_ray_data ray_data)
 {
-	int			height;
-	int			start;
-	int			end;
-	int			i;
-	unsigned	clr;
+	int				height;
+	int				start;
+	int				end;
+	int				i;
+	unsigned int	clr;
 
-	(void)ray_data;
 	distance = distance * cos(deg2rad((((double)angle * 0.1) - (data->player.fov
 						/ 2))));
 	height = (int)(50000 / distance);
@@ -417,21 +417,21 @@ void	draw_wall_w_img(int angle, double distance, t_data *data,
 		clr = ft_my_get_pixel(data, ((ray_data.for_wall.y
 						- floor(ray_data.for_wall.y)) * 64), ((i - start) * 64)
 				/ height, 2);
-		ft_my_put_pixel(&data->img4, angle, i, clr); // mavi
+		ft_my_put_pixel(&data->img4, angle, i, clr);
 		i++;
 	}
 	i = draw_floor(angle, i, data);
 }
+
 void	draw_wall_s_img(int angle, double distance, t_data *data,
 		t_ray_data ray_data)
 {
-	int			height;
-	int			start;
-	int			end;
-	int			i;
-	unsigned	clr;
+	int				height;
+	int				start;
+	int				end;
+	int				i;
+	unsigned int	clr;
 
-	(void)ray_data;
 	distance = distance * cos(deg2rad((((double)angle * 0.1) - (data->player.fov
 						/ 2))));
 	height = (int)(50000 / distance);
@@ -446,7 +446,7 @@ void	draw_wall_s_img(int angle, double distance, t_data *data,
 		clr = ft_my_get_pixel(data, ((ray_data.for_wall.x
 						- floor(ray_data.for_wall.x)) * 64), ((i - start) * 64)
 				/ height, 3);
-		ft_my_put_pixel(&data->img4, angle, i, clr); // acik gri
+		ft_my_put_pixel(&data->img4, angle, i, clr);
 		i++;
 	}
 	i = draw_floor(angle, i, data);
@@ -459,13 +459,13 @@ void	draw_from_right_line(double distance, int i, t_data *data,
 		&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
 		draw_wall_e_img(data->dray, distance, data, ray_data[i]);
 	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x
-			&& ray_data[i].last_location.y + 1 == ray_data[i].wall_location.y)
+		&& ray_data[i].last_location.y + 1 == ray_data[i].wall_location.y)
 		draw_wall_n_img(data->dray, distance, data, ray_data[i]);
 	else if (ray_data[i].last_location.x + 1 == ray_data[i].wall_location.x
-			&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
+		&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
 		draw_wall_w_img(data->dray, distance, data, ray_data[i]);
 	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x
-			&& ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
+		&& ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
 		draw_wall_s_img(data->dray, distance, data, ray_data[i]);
 	else if (i < 600)
 		draw_from_right_line(distance, i + 1, data, ray_data);
@@ -478,13 +478,13 @@ void	draw_from_left_line(double distance, int i, t_data *data,
 		&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
 		draw_wall_e_img(data->dray, distance, data, ray_data[i]);
 	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x
-			&& ray_data[i].last_location.y + 1 == ray_data[i].wall_location.y)
+		&& ray_data[i].last_location.y + 1 == ray_data[i].wall_location.y)
 		draw_wall_n_img(data->dray, distance, data, ray_data[i]);
 	else if (ray_data[i].last_location.x + 1 == ray_data[i].wall_location.x
-			&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
+		&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
 		draw_wall_w_img(data->dray, distance, data, ray_data[i]);
 	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x
-			&& ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
+		&& ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
 		draw_wall_s_img(data->dray, distance, data, ray_data[i]);
 	else if (i > 0)
 		draw_from_left_line(distance, i - 1, data, ray_data);
@@ -492,29 +492,30 @@ void	draw_from_left_line(double distance, int i, t_data *data,
 
 int	draw_screen4(t_data *data, t_ray_data *ray_data)
 {
-	double distance;
-	t_llocation last_location;
-	t_llocation wall_location;
+	double		distance;
+	t_llocation	last_location;
+	t_llocation	wall_location;
 
 	data->dray = 0;
 	while (data->dray < 600)
 	{
 		last_location = ray_data[data->dray].last_location;
 		wall_location = ray_data[data->dray].wall_location;
-		distance = ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2) 
-		+ ft_pow(ray_data[data->dray].ray_location.y, 2));
-		if (last_location.x == wall_location.x + 1 && last_location.y == wall_location.y)
+		distance = ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2)
+				+ ft_pow(ray_data[data->dray].ray_location.y, 2));
+		if (last_location.x == wall_location.x + 1
+			&& last_location.y == wall_location.y)
 			draw_wall_e_img(data->dray, distance, data, ray_data[data->dray]);
 		else if (last_location.x == wall_location.x
-		&& last_location.y + 1 == wall_location.y)
+			&& last_location.y + 1 == wall_location.y)
 			draw_wall_n_img(data->dray, distance, data, ray_data[data->dray]);
 		else if (last_location.x
-				+ 1 == wall_location.x
-				&& last_location.y == wall_location.y)
+			+ 1 == wall_location.x
+			&& last_location.y == wall_location.y)
 			draw_wall_w_img(data->dray, distance, data, ray_data[data->dray]);
 		else if (last_location.x == wall_location.x
-				&& last_location.y == wall_location.y
-				+ 1)
+			&& last_location.y == wall_location.y
+			+ 1)
 			draw_wall_s_img(data->dray, distance, data, ray_data[data->dray]);
 		else if (data->dray < 300)
 			draw_from_right_line(distance, data->dray + 1, data, ray_data);
