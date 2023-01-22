@@ -123,6 +123,7 @@ typedef struct s_data{
 	t_mapdata m_data;
 	int width;
 	int height;
+  int dray;
 }	t_data;
 
 int keyPressFunc(int keycode, t_data *data);

@@ -28,31 +28,31 @@ void clear_img(t_data *data) // ekrani temizlemek icin
 		j = 0;
 		i++;
 	}
-	// i = 0;
-	// j = 0;
-	// while (i < 600)
-	// {
-	// 	while (j < 600)
-	// 	{
-	// 		ft_my_put_pixel(&data->img2, j, i, 0x0);
-	// 		j++;
-	// 	}
-	// 	j = 0;
-	// 	i++;
-	// }
-	// i = 0;
-	// j = 0;
-	// while (i < 600)
-	// {
-	// 	while (j < 600)
-	// 	{
-	// 		ft_my_put_pixel(&data->img3, j, i, 0x0);
-	// 		j++;
-	// 	}
-	// 	j = 0;
-	// 	i++;
-	// }
-i = 0;
+	i = 0;
+	j = 0;
+	while (i < 600)
+	{
+		while (j < 600)
+		{
+			ft_my_put_pixel(&data->img2, j, i, 0x0);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	i = 0;
+	j = 0;
+	while (i < 600)
+	{
+		while (j < 600)
+		{
+			ft_my_put_pixel(&data->img3, j, i, 0x0);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	i = 0;
 	j = 0;
 	while (i < 600)
 	{
@@ -230,8 +230,8 @@ int draw_wall_n_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 	}
 	return(321);
 };
-int draw_wall_e_img(int angle, double distance, t_data *data, t_ray_data ray_data){
-	(void)ray_data; 
+int draw_wall_e_img(int angle, double distance, t_data *data, t_ray_data ray_data)
+{
 	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
 	int height = (int)(50000 / distance);
 	int start = (600 - height) / 2;
@@ -245,7 +245,6 @@ int draw_wall_e_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		ft_my_put_pixel(&data->img4, angle, i, T_SKY);
 		i++;
 	}
-
 	while (i < end)
 	{
 		if (i > 600)
@@ -262,7 +261,7 @@ int draw_wall_e_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		i++;
 	}
 	return(44242);
-};
+}
 int draw_wall_w_img(int angle, double distance, t_data *data, t_ray_data ray_data){
 	(void)ray_data; 
 	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
@@ -395,21 +394,52 @@ int draw_screen3(t_data *data, t_ray_data *ray_data)
 	return (0); 
 }
 
+void	draw_from_right_line(double distance, int i, t_data *data, t_ray_data *ray_data)
+{
+	if (ray_data[i].last_location.x == ray_data[i].wall_location.x + 1 && ray_data[i].last_location.y == ray_data[i].wall_location.y)
+		draw_wall_e_img(data->dray, distance ,data, ray_data[i]);
+	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x && ray_data[i].last_location.y + 1 == ray_data[i].wall_location.y)
+		draw_wall_n_img(data->dray, distance ,data, ray_data[i]);
+	else if (ray_data[i].last_location.x +1 == ray_data[i].wall_location.x && ray_data[i].last_location.y == ray_data[i].wall_location.y)
+		draw_wall_w_img(data->dray, distance ,data, ray_data[i]);
+	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x && ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
+		draw_wall_s_img(data->dray, distance ,data, ray_data[i]);
+	else
+		draw_from_right_line(distance, i + 1, data, ray_data);
+}
+
+void	draw_from_left_line(double distance, int i, t_data *data, t_ray_data *ray_data)
+{
+	if (ray_data[i].last_location.x == ray_data[i].wall_location.x + 1 && ray_data[i].last_location.y == ray_data[i].wall_location.y)
+		draw_wall_e_img(data->dray, distance ,data, ray_data[i]);
+	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x && ray_data[i].last_location.y + 1 == ray_data[i].wall_location.y)
+		draw_wall_n_img(data->dray, distance ,data, ray_data[i]);
+	else if (ray_data[i].last_location.x +1 == ray_data[i].wall_location.x && ray_data[i].last_location.y == ray_data[i].wall_location.y)
+		draw_wall_w_img(data->dray, distance ,data, ray_data[i]);
+	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x && ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
+		draw_wall_s_img(data->dray, distance ,data, ray_data[i]);
+	else
+		draw_from_left_line(distance, i - 1, data, ray_data);
+}
+
 int draw_screen4(t_data *data, t_ray_data *ray_data)
 {
-	int i = 0;
-	
-	while (i < 600)
+	data->dray = 0;	
+	while (data->dray < 600)
 	{
-		if (ray_data[i].last_location.x == ray_data[i].wall_location.x + 1 && ray_data[i].last_location.y == ray_data[i].wall_location.y)
-			draw_wall_e_img(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2) + ft_pow(ray_data[i].ray_location.y, 2)) ,data, ray_data[i]);
-		else if (ray_data[i].last_location.x == ray_data[i].wall_location.x && ray_data[i].last_location.y + 1 == ray_data[i].wall_location.y)
-			draw_wall_n_img(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2) + ft_pow(ray_data[i].ray_location.y, 2)) ,data, ray_data[i]);
-		else if (ray_data[i].last_location.x +1 == ray_data[i].wall_location.x && ray_data[i].last_location.y == ray_data[i].wall_location.y)
-			draw_wall_w_img(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2) + ft_pow(ray_data[i].ray_location.y, 2)) ,data, ray_data[i]);
-		else if (ray_data[i].last_location.x == ray_data[i].wall_location.x && ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
-			draw_wall_s_img(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2) + ft_pow(ray_data[i].ray_location.y, 2)) ,data, ray_data[i]);
-		i++;
+		if (ray_data[data->dray].last_location.x == ray_data[data->dray].wall_location.x + 1 && ray_data[data->dray].last_location.y == ray_data[data->dray].wall_location.y)
+			draw_wall_e_img(data->dray, ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2) + ft_pow(ray_data[data->dray].ray_location.y, 2)) ,data, ray_data[data->dray]);
+		else if (ray_data[data->dray].last_location.x == ray_data[data->dray].wall_location.x && ray_data[data->dray].last_location.y + 1 == ray_data[data->dray].wall_location.y)
+			draw_wall_n_img(data->dray, ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2) + ft_pow(ray_data[data->dray].ray_location.y, 2)) ,data, ray_data[data->dray]);
+		else if (ray_data[data->dray].last_location.x +1 == ray_data[data->dray].wall_location.x && ray_data[data->dray].last_location.y == ray_data[data->dray].wall_location.y)
+			draw_wall_w_img(data->dray, ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2) + ft_pow(ray_data[data->dray].ray_location.y, 2)) ,data, ray_data[data->dray]);
+		else if (ray_data[data->dray].last_location.x == ray_data[data->dray].wall_location.x && ray_data[data->dray].last_location.y == ray_data[data->dray].wall_location.y + 1)
+			draw_wall_s_img(data->dray, ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2) + ft_pow(ray_data[data->dray].ray_location.y, 2)) ,data, ray_data[data->dray]);
+		else if (data->dray < 300)
+			draw_from_right_line(ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2) + ft_pow(ray_data[data->dray].ray_location.y, 2)), data->dray + 1, data, ray_data);
+		else if (data->dray >= 300)
+			draw_from_left_line(ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2) + ft_pow(ray_data[data->dray].ray_location.y, 2)), data->dray - 1, data, ray_data);
+		data->dray++;
 	}
 	mlx_put_image_to_window(data->mlx, data->win4, data->img4.img, 0, 0);
 	return (0);
@@ -473,28 +503,14 @@ void	ft_move(int keycode, t_data *data)
 		ft_left_right(keycode, data);
 }
 
-
-int keyPressFunc(int keycode, t_data *data)
+void render_window(t_data *data)
 {
 	double angle;
 	t_ray_data *ray;
 	int i = GAMEWIDTH;
 
 	angle = data->player.fov;
-	ray = (t_ray_data *)malloc(sizeof(t_ray_data) * GAMEWIDTH); // leak
-
-	if (keycode == Key_W || keycode == Key_A || keycode == Key_S || keycode == Key_D)
-		ft_move(keycode, data);
-	if (keycode == key_rt)
-		data->player.direction += 6;
-	if (keycode == key_lt)
-		data->player.direction -= 6;
-	if (data->player.direction >= 360)
-		data->player.direction = ft_abs((int)data->player.direction % 360);
-	if (data->player.direction < 0)
-		data->player.direction = 359;
-	if (keycode == Key_ESC)
-		exit(1);
+	ray = (t_ray_data *)malloc(sizeof(t_ray_data) * GAMEWIDTH);
 	mlx_clear_window(data->mlx, data->win);
 	clear_img(data);
 	draw_outlines(data);
@@ -508,5 +524,25 @@ int keyPressFunc(int keycode, t_data *data)
 	draw_screen3(data, ray);
 	draw_screen4(data, ray);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+	free(ray);
+}
+
+int keyPressFunc(int keycode, t_data *data)
+{
+
+	if (keycode == Key_W || keycode == Key_A || keycode == Key_S || keycode == Key_D)
+			ft_move(keycode, data);
+	if (keycode == key_rt)
+		data->player.direction += 3;
+	if (keycode == key_lt)
+		data->player.direction -= 3;
+	if (data->player.direction >= 360)
+		data->player.direction = ft_abs((int)data->player.direction % 360);
+	if (data->player.direction < 0)
+		data->player.direction = 359;
+	if (keycode == Key_ESC)
+		exit(1);
+	render_window(data);
+	
 	return (0);
 }
