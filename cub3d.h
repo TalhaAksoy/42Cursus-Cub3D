@@ -124,6 +124,8 @@ typedef struct s_data{
 	int width;
 	int height;
   int dray;
+  unsigned ceiling_color;
+  unsigned floor_color;
 }	t_data;
 
 int keyPressFunc(int keycode, t_data *data);

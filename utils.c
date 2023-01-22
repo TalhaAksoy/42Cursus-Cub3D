@@ -196,7 +196,32 @@ int draw_wall_s(int angle, double distance, t_data *data, t_ray_data *ray_data){
 		i++;
 	}
 	return (123);
-};
+}
+
+int draw_ceiling(int angle, int i , int start, t_data *data)
+{
+	while (i < start)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img4, angle, i, data->ceiling_color);
+		i++;
+	}
+	return i;
+}
+
+int draw_floor(int angle, int i, t_data *data)
+{
+	while (i < data->height)
+	{
+		if (i > 600)
+			break;
+		ft_my_put_pixel(&data->img4, angle, i, data->floor_color);
+		i++;
+	}
+	return i;	
+}
+
 int draw_wall_n_img(int angle, double distance, t_data *data, t_ray_data ray_data)
 {
 	distance = distance * cos(deg2rad((((double)angle * 0.1) -(data->player.fov / 2))));
@@ -206,13 +231,7 @@ int draw_wall_n_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 	int end = (600 + height) / 2;
 	int i = 0;
 
-	while (i < start)
-	{
-		if (i > 600)
-			break;
-		ft_my_put_pixel(&data->img4, angle, i, T_SKY);
-		i++;
-	}
+	i = draw_ceiling(angle, i, start, data);
 	while (i < end)
 	{
 		if (i > 600)
@@ -221,13 +240,7 @@ int draw_wall_n_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		ft_my_put_pixel(&data->img4, angle, i, clr); // kirmizi
 		i++;
 	}
-	while (i < data->height)
-	{
-		if (i > 600)
-			break;
-		ft_my_put_pixel(&data->img4, angle, i, T_floor);
-		i++;
-	}
+	i = draw_floor(angle,i,data);
 	return(321);
 };
 int draw_wall_e_img(int angle, double distance, t_data *data, t_ray_data ray_data)
@@ -238,13 +251,7 @@ int draw_wall_e_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 	int end = (600 + height) / 2;
 	int i = 0;
 
-	while (i < start)
-	{
-		if (i > 600)
-			break;
-		ft_my_put_pixel(&data->img4, angle, i, T_SKY);
-		i++;
-	}
+	i = draw_ceiling(angle, i, start, data);
 	while (i < end)
 	{
 		if (i > 600)
@@ -253,13 +260,7 @@ int draw_wall_e_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		ft_my_put_pixel(&data->img4, angle, i, clr); // yesil
 		i++;
 	}
-	while (i < data->height)
-	{
-		if (i > 600)
-			break;
-		ft_my_put_pixel(&data->img4, angle, i, T_floor);
-		i++;
-	}
+	i = draw_floor(angle,i,data);
 	return(44242);
 }
 int draw_wall_w_img(int angle, double distance, t_data *data, t_ray_data ray_data){
@@ -270,14 +271,7 @@ int draw_wall_w_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 	int end = (600 + height) / 2;
 	int i = 0;
 
-	while (i < start)
-	{
-		if (i > 600)
-			break;
-		ft_my_put_pixel(&data->img4, angle, i, T_SKY);
-		i++;
-	}
-
+	i = draw_ceiling(angle, i, start, data);
 	while (i < end)
 	{
 		if (i > 600)
@@ -286,13 +280,7 @@ int draw_wall_w_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		ft_my_put_pixel(&data->img4, angle, i, clr); // mavi
 		i++;
 	}
-	while (i < data->height)
-	{
-		if (i > 600)
-			break;
-		ft_my_put_pixel(&data->img4, angle, i, T_floor);
-		i++;
-	}
+	i = draw_floor(angle,i,data);
 	return (443323);
 };
 int draw_wall_s_img(int angle, double distance, t_data *data, t_ray_data ray_data){
@@ -303,14 +291,7 @@ int draw_wall_s_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 	int end = (600 + height) / 2;
 	int i = 0;
 
-	while (i < start)
-	{
-		if (i > 600)
-			break;
-		ft_my_put_pixel(&data->img4, angle, i, T_SKY);
-		i++;
-	}
-
+	i = draw_ceiling(angle, i, start, data);
 	while (i < end)
 	{
 		if (i > 600)
@@ -319,13 +300,7 @@ int draw_wall_s_img(int angle, double distance, t_data *data, t_ray_data ray_dat
 		ft_my_put_pixel(&data->img4, angle, i, clr); // acik gri
 		i++;
 	}
-	while (i < data->height)
-	{
-		if (i > 600)
-			break;
-		ft_my_put_pixel(&data->img4, angle, i, T_floor);
-		i++;
-	}
+	i = draw_floor(angle,i,data);
 	return (123);
 };
 
@@ -404,7 +379,7 @@ void	draw_from_right_line(double distance, int i, t_data *data, t_ray_data *ray_
 		draw_wall_w_img(data->dray, distance ,data, ray_data[i]);
 	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x && ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
 		draw_wall_s_img(data->dray, distance ,data, ray_data[i]);
-	else
+	else if (i < 600)
 		draw_from_right_line(distance, i + 1, data, ray_data);
 }
 
@@ -418,7 +393,7 @@ void	draw_from_left_line(double distance, int i, t_data *data, t_ray_data *ray_d
 		draw_wall_w_img(data->dray, distance ,data, ray_data[i]);
 	else if (ray_data[i].last_location.x == ray_data[i].wall_location.x && ray_data[i].last_location.y == ray_data[i].wall_location.y + 1)
 		draw_wall_s_img(data->dray, distance ,data, ray_data[i]);
-	else
+	else if (i > 0)
 		draw_from_left_line(distance, i - 1, data, ray_data);
 }
 
@@ -445,62 +420,73 @@ int draw_screen4(t_data *data, t_ray_data *ray_data)
 	return (0);
 }
 
-void	ft_left_right(int keycode, t_data *data)
+void	ft_left(t_data *data)
 {
 	t_vector2 w_check;
+	t_vector2 move;
 
-	if (keycode == Key_A)
-	{
-		w_check.y = data->player.pos.y - 0.1 * cos(deg2rad(data->player.direction));
-		w_check.x = data->player.pos.x + 0.1 * sin(deg2rad(data->player.direction));
-		if (mapVar2[(int)w_check.x][(int)w_check.y] == 1)
-			return ;
-		data->player.pos.y -= 0.05 * cos(deg2rad(data->player.direction));
-		data->player.pos.x += 0.05 * sin(deg2rad(data->player.direction));
-	}
-	if (keycode == Key_D)
-	{
-		w_check.y = data->player.pos.y + 0.1 * cos(deg2rad(data->player.direction));
-		w_check.x = data->player.pos.x - 0.1 * sin(deg2rad(data->player.direction));
-		if (mapVar2[(int)w_check.x][(int)w_check.y] == 1)
-			return ;
-		data->player.pos.y += 0.05 * cos(deg2rad(data->player.direction));
-		data->player.pos.x -= 0.05 * sin(deg2rad(data->player.direction));
-	}
-
+	move = (t_vector2){.y = 0.05 * cos(deg2rad(data->player.direction)), .x = 0.05 * sin(deg2rad(data->player.direction))};
+	w_check.y = data->player.pos.y - move.y;
+	w_check.x = data->player.pos.x + move.x;
+	if (mapVar2[(int)w_check.x][(int)w_check.y] == 1 || mapVar2[(int)(w_check.x + move.x)][(int)(w_check.y - move.y)] == 1 )
+		return ;
+	data->player.pos.y -= move.y;
+	data->player.pos.x += move.x;
 }
 
-void	ft_forward_backward(int keycode, t_data *data)
+void	ft_right(t_data *data)
 {
 	t_vector2 w_check;
+	t_vector2 move;
 
-	if (keycode == Key_W)
-	{
-		w_check.y = data->player.pos.y - 0.1 * sin(deg2rad(-data->player.direction));
-		w_check.x = data->player.pos.x + 0.1 * cos(deg2rad(data->player.direction));
-		if (mapVar2[(int)w_check.x][(int)w_check.y] == 1)
-			return ;
-		data->player.pos.y -= 0.05 * sin(deg2rad(-data->player.direction));
-		data->player.pos.x += 0.05 * cos(deg2rad(data->player.direction));
-	}
-	if (keycode == Key_S)
-	{
-		w_check.y = data->player.pos.y + 0.1 * sin(deg2rad(-data->player.direction));
-		w_check.x = data->player.pos.x - 0.1 * cos(deg2rad(data->player.direction));
-		if (mapVar2[(int)w_check.x][(int)w_check.y] == 1)
-			return ;
-		data->player.pos.y += 0.05 * sin(deg2rad(-data->player.direction));
-		data->player.pos.x -= 0.05 * cos(deg2rad(data->player.direction));
-	}
+	move = (t_vector2){.y = 0.05 * cos(deg2rad(data->player.direction)), .x = 0.05 * sin(deg2rad(data->player.direction))};
+	w_check.y = data->player.pos.y + move.y;
+	w_check.x = data->player.pos.x - move.x;
+	if (mapVar2[(int)w_check.x][(int)w_check.y] == 1 || mapVar2[(int)(w_check.x - move.x)][(int)(w_check.y + move.y)] == 1)
+		return ;
+	data->player.pos.y += move.y;
+	data->player.pos.x -= move.x;
+}
+
+void	ft_backward(t_data *data)
+{
+	t_vector2 w_check;
+	t_vector2 move;
+
+	move = (t_vector2){0.05 * cos(deg2rad(data->player.direction)), 0.05 * sin(deg2rad(-data->player.direction))};
+	w_check.y = data->player.pos.y + move.y;
+	w_check.x = data->player.pos.x - move.x;
+	if (mapVar2[(int)w_check.x][(int)w_check.y] == 1 || mapVar2[(int)(w_check.x - move.x)][(int)(w_check.y + move.y)] == 1)
+		return ;
+	data->player.pos.y += move.y;
+	data->player.pos.x -= move.x;
+}
+
+void	ft_forward(t_data *data)
+{
+	t_vector2 w_check;
+	t_vector2 move;
+
+	move = (t_vector2){0.05 * cos(deg2rad(data->player.direction)), 0.05 * sin(deg2rad(-data->player.direction))};
+	w_check.y = data->player.pos.y - move.y;
+	w_check.x = data->player.pos.x + move.x;
+	if (mapVar2[(int)w_check.x][(int)w_check.y] == 1 || mapVar2[(int)(w_check.x + move.x)][(int)(w_check.y - move.y)] == 1)
+		return ;
+	data->player.pos.y -= move.y;
+	data->player.pos.x += move.x;	
 }
 
 void	ft_move(int keycode, t_data *data)
 {
 	
-	if (keycode == Key_W || keycode == Key_S)
-		ft_forward_backward(keycode, data);
-	else if (keycode == Key_A || keycode == Key_D)
-		ft_left_right(keycode, data);
+	if (keycode == Key_W)
+		ft_forward(data);
+	else if (keycode == Key_S)
+		ft_backward(data);
+	else if (keycode == Key_A)
+		ft_left(data);
+	else if (keycode == Key_D)
+		ft_right(data);
 }
 
 void render_window(t_data *data)

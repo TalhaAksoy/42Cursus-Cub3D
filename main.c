@@ -33,7 +33,8 @@ void init_var(t_data *data){
 	data->xpm[2].img_ptr = mlx_get_data_addr(data->xpm[2].img, &data->xpm[2].bpp, &data->xpm[2].line_len, &data->xpm[2].endian);
 	data->xpm[3].img = mlx_xpm_file_to_image(data->mlx, "textures/wall4.xpm", &data->xpm[3].width, &data->xpm[3].height);
 	data->xpm[3].img_ptr = mlx_get_data_addr(data->xpm[3].img, &data->xpm[3].bpp, &data->xpm[3].line_len, &data->xpm[3].endian);
-
+	data->ceiling_color = T_SKY;
+	data->floor_color = T_floor;
 }
 
 int main()
