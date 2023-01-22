@@ -63,6 +63,12 @@ typedef struct s_vector2
   double y;
 } t_vector2;
 
+typedef struct s_int_vector2
+{
+  int x;
+  int y;
+} t_int_vector2;
+
 typedef struct s_llocation
 {
   int x;
@@ -128,7 +134,7 @@ typedef struct s_data{
   unsigned floor_color;
 }	t_data;
 
-int keyPressFunc(int keycode, t_data *data);
+int key_press_func(int keycode, t_data *data);
 void clear_img(t_data *data);
 t_ray_data draw_ray(t_data *data, double angle);
 // void draw_player(t_data *data);

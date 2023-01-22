@@ -44,9 +44,9 @@ int main()
 	init_var(&data);
 	draw_outlines(&data);
 	draw_player();
-	mlx_hook(data.win, 2, 1, keyPressFunc, &data);
-	mlx_hook(data.win2, 2, 1, keyPressFunc, &data);
-	mlx_hook(data.win3, 2, 1, keyPressFunc, &data);
-	mlx_hook(data.win4, 2, 1, keyPressFunc, &data);
+	mlx_hook(data.win, 2, 1, key_press_func, &data);
+	mlx_hook(data.win2, 2, 1, key_press_func, &data);
+	mlx_hook(data.win3, 2, 1, key_press_func, &data);
+	mlx_hook(data.win4, 2, 1, key_press_func, &data);
 	mlx_loop(data.mlx);
 }
