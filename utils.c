@@ -247,6 +247,95 @@ int	draw_floor(int angle, int i, t_data *data)
 	return (i);
 }
 
+
+int	draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
+{
+	int	height;
+	int	start;
+	int	end;
+	int	i;
+
+	(void)ray_data;
+	distance = distance * cos(deg2rad((((double)angle * 0.1) - (data->player.fov
+						/ 2))));
+	height = (int)(50000 / distance);
+	start = (600 - height) / 2;
+	end = (600 + height) / 2;
+	i = 0;
+	while (i < start)
+	{
+		if (i > 600)
+			break ;
+		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
+		i++;
+	}
+	while (i < end)
+	{
+		if (i > 600)
+			break ;
+		ft_my_put_pixel(&data->img2, angle, i, 0x00ff00);
+		i++;
+	}
+	while (i < data->height)
+	{
+		if (i > 600)
+			break ;
+		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
+		i++;
+	}
+	return (0);
+}
+
+int	draw_screen2(t_data *data, t_ray_data *ray_data)
+{
+	int	i;
+
+	i = 0;
+	while (i < 600)
+	{
+		draw_wall(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
+					+ ft_pow(ray_data[i].ray_location.y, 2)), data, ray_data);
+		i++;
+	}
+	mlx_put_image_to_window(data->mlx, data->win2, data->img2.img, 0, 0);
+	return (0);
+}
+
+int	draw_screen3(t_data *data, t_ray_data *ray_data)
+{
+	int	i;
+
+	i = 0;
+	while (i < 600)
+	{
+		if (ray_data[i].last_location.x == ray_data[i].wall_location.x + 1
+			&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
+			draw_wall_e(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
+						+ ft_pow(ray_data[i].ray_location.y, 2)), data,
+					ray_data);
+		else if (ray_data[i].last_location.x == ray_data[i].wall_location.x
+				&& ray_data[i].last_location.y
+				+ 1 == ray_data[i].wall_location.y)
+			draw_wall_n(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
+						+ ft_pow(ray_data[i].ray_location.y, 2)), data,
+					ray_data);
+		if (ray_data[i].last_location.x + 1 == ray_data[i].wall_location.x
+			&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
+			draw_wall_w(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
+						+ ft_pow(ray_data[i].ray_location.y, 2)), data,
+					ray_data);
+		else if (ray_data[i].last_location.x == ray_data[i].wall_location.x
+				&& ray_data[i].last_location.y == ray_data[i].wall_location.y
+				+ 1)
+			draw_wall_s(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
+						+ ft_pow(ray_data[i].ray_location.y, 2)), data,
+					ray_data);
+		i++;
+	}
+	mlx_put_image_to_window(data->mlx, data->win3, data->img3.img, 0, 0);
+	return (0);
+}
+
 void	draw_wall_n_img(int angle, double distance, t_data *data,
 		t_ray_data ray_data)
 {
@@ -361,94 +450,6 @@ void	draw_wall_s_img(int angle, double distance, t_data *data,
 		i++;
 	}
 	i = draw_floor(angle, i, data);
-}
-
-int	draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
-{
-	int	height;
-	int	start;
-	int	end;
-	int	i;
-
-	(void)ray_data;
-	distance = distance * cos(deg2rad((((double)angle * 0.1) - (data->player.fov
-						/ 2))));
-	height = (int)(50000 / distance);
-	start = (600 - height) / 2;
-	end = (600 + height) / 2;
-	i = 0;
-	while (i < start)
-	{
-		if (i > 600)
-			break ;
-		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
-		i++;
-	}
-	while (i < end)
-	{
-		if (i > 600)
-			break ;
-		ft_my_put_pixel(&data->img2, angle, i, 0x00ff00);
-		i++;
-	}
-	while (i < data->height)
-	{
-		if (i > 600)
-			break ;
-		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
-		i++;
-	}
-	return (0);
-}
-
-int	draw_screen2(t_data *data, t_ray_data *ray_data)
-{
-	int	i;
-
-	i = 0;
-	while (i < 600)
-	{
-		draw_wall(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
-					+ ft_pow(ray_data[i].ray_location.y, 2)), data, ray_data);
-		i++;
-	}
-	mlx_put_image_to_window(data->mlx, data->win2, data->img2.img, 0, 0);
-	return (0);
-}
-
-int	draw_screen3(t_data *data, t_ray_data *ray_data)
-{
-	int	i;
-
-	i = 0;
-	while (i < 600)
-	{
-		if (ray_data[i].last_location.x == ray_data[i].wall_location.x + 1
-			&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
-			draw_wall_e(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
-						+ ft_pow(ray_data[i].ray_location.y, 2)), data,
-					ray_data);
-		else if (ray_data[i].last_location.x == ray_data[i].wall_location.x
-				&& ray_data[i].last_location.y
-				+ 1 == ray_data[i].wall_location.y)
-			draw_wall_n(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
-						+ ft_pow(ray_data[i].ray_location.y, 2)), data,
-					ray_data);
-		if (ray_data[i].last_location.x + 1 == ray_data[i].wall_location.x
-			&& ray_data[i].last_location.y == ray_data[i].wall_location.y)
-			draw_wall_w(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
-						+ ft_pow(ray_data[i].ray_location.y, 2)), data,
-					ray_data);
-		else if (ray_data[i].last_location.x == ray_data[i].wall_location.x
-				&& ray_data[i].last_location.y == ray_data[i].wall_location.y
-				+ 1)
-			draw_wall_s(i, ft_sqrt(ft_pow(ray_data[i].ray_location.x, 2)
-						+ ft_pow(ray_data[i].ray_location.y, 2)), data,
-					ray_data);
-		i++;
-	}
-	mlx_put_image_to_window(data->mlx, data->win3, data->img3.img, 0, 0);
-	return (0);
 }
 
 void	draw_from_right_line(double distance, int i, t_data *data,
