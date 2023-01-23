@@ -490,33 +490,52 @@ void	draw_from_left_line(double distance, int i, t_data *data,
 		draw_from_left_line(distance, i - 1, data, ray_data);
 }
 
+int	draw_walls(t_data *data, t_ray_data *ray_data, double distance)
+{
+	t_llocation	last_location;
+	t_llocation	wall_location;
+
+	last_location = ray_data[data->dray].last_location;
+	wall_location = ray_data[data->dray].wall_location;
+	if (last_location.x == wall_location.x + 1
+		&& last_location.y == wall_location.y)
+	{	
+		draw_wall_e_img(data->dray, distance, data, ray_data[data->dray]);
+		return (0);
+	}
+	else if (last_location.x == wall_location.x
+		&& last_location.y + 1 == wall_location.y)
+	{	
+		draw_wall_n_img(data->dray, distance, data, ray_data[data->dray]);
+		return (0);
+	}
+	else if (last_location.x
+		+ 1 == wall_location.x
+		&& last_location.y == wall_location.y)
+	{	
+		draw_wall_w_img(data->dray, distance, data, ray_data[data->dray]);
+		return (0);
+	}
+	else if (last_location.x == wall_location.x
+		&& last_location.y == wall_location.y + 1)
+	{
+		draw_wall_s_img(data->dray, distance, data, ray_data[data->dray]);
+		return (0);
+	}
+	return (1);
+}
+
 int	draw_screen4(t_data *data, t_ray_data *ray_data)
 {
 	double		distance;
-	t_llocation	last_location;
-	t_llocation	wall_location;
 
 	data->dray = 0;
 	while (data->dray < 600)
 	{
-		last_location = ray_data[data->dray].last_location;
-		wall_location = ray_data[data->dray].wall_location;
 		distance = ft_sqrt(ft_pow(ray_data[data->dray].ray_location.x, 2)
 				+ ft_pow(ray_data[data->dray].ray_location.y, 2));
-		if (last_location.x == wall_location.x + 1
-			&& last_location.y == wall_location.y)
-			draw_wall_e_img(data->dray, distance, data, ray_data[data->dray]);
-		else if (last_location.x == wall_location.x
-			&& last_location.y + 1 == wall_location.y)
-			draw_wall_n_img(data->dray, distance, data, ray_data[data->dray]);
-		else if (last_location.x
-			+ 1 == wall_location.x
-			&& last_location.y == wall_location.y)
-			draw_wall_w_img(data->dray, distance, data, ray_data[data->dray]);
-		else if (last_location.x == wall_location.x
-			&& last_location.y == wall_location.y
-			+ 1)
-			draw_wall_s_img(data->dray, distance, data, ray_data[data->dray]);
+		if (!draw_walls(data, ray_data, distance))
+			;
 		else if (data->dray < 300)
 			draw_from_right_line(distance, data->dray + 1, data, ray_data);
 		else if (data->dray >= 300)
