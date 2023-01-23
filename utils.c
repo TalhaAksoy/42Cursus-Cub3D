@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-const int		mapVar2[mapHeight][mapWidth] = {
+const int		mapVar2[MAPHEIGHT][MAPWIDTH] = {
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 {1, 0, 1, 0, 0, 1, 0, 0, 0, 1},
@@ -104,7 +104,7 @@ void	draw_wall_n(int angle, double distance, t_data *data,
 	{
 		if (i > 600)
 			break ;
-		ft_my_put_pixel(&data->img3, angle, i, T_floor);
+		ft_my_put_pixel(&data->img3, angle, i, T_FLOOR);
 		i++;
 	}
 }
@@ -142,7 +142,7 @@ void	draw_wall_e(int angle, double distance, t_data *data,
 	{
 		if (i > 600)
 			break ;
-		ft_my_put_pixel(&data->img3, angle, i, T_floor);
+		ft_my_put_pixel(&data->img3, angle, i, T_FLOOR);
 		i++;
 	}
 }
@@ -180,7 +180,7 @@ void	draw_wall_w(int angle, double distance, t_data *data,
 	{
 		if (i > 600)
 			break ;
-		ft_my_put_pixel(&data->img3, angle, i, T_floor);
+		ft_my_put_pixel(&data->img3, angle, i, T_FLOOR);
 		i++;
 	}
 }
@@ -218,7 +218,7 @@ void	draw_wall_s(int angle, double distance, t_data *data,
 	{
 		if (i > 600)
 			break ;
-		ft_my_put_pixel(&data->img3, angle, i, T_floor);
+		ft_my_put_pixel(&data->img3, angle, i, T_FLOOR);
 		i++;
 	}
 }

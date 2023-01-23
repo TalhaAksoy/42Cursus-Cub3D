@@ -1,7 +1,7 @@
 #include "cub3d.h"
 
 
-int			mapVar[mapHeight][mapWidth] = {
+int			mapVar[MAPHEIGHT][MAPWIDTH] = {
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 {1, 0, 1, 0, 0, 1, 0, 0, 0, 1},
@@ -17,8 +17,8 @@ int			mapVar[mapHeight][mapWidth] = {
 void	init_req(t_vector2 *start, t_data *data,
 			t_vector2 *sin_cos, double angle)
 {
-	*start = (t_vector2){.x = data->player.pos.x * (data->width / mapWidth),
-		data->player.pos.y * (data->height / mapHeight)};
+	*start = (t_vector2){.x = data->player.pos.x * (data->width / MAPWIDTH),
+		data->player.pos.y * (data->height / MAPHEIGHT)};
 	*sin_cos = (t_vector2){.x = cos((angle + data->player.direction \
 	- (data->player.fov / 2)) * M_PI / 180), .y = sin((angle \
 	+ data->player.direction - (data->player.fov / 2)) * M_PI / 180)};
@@ -37,10 +37,10 @@ void	draw_ray(t_ray_data *ray_data, t_vector2 *ray,
 		(*ray).x += sin_cos.x;
 		ft_my_put_pixel(&data->img, (*ray).x, (*ray).y, 0xffffff);
 		(*ray_data).wall_location = (t_llocation){.x = (int)(*ray).x / \
-		(data->width / mapWidth), .y = (int)(*ray).y / (data->height / \
-		mapHeight)};
+		(data->width / MAPWIDTH), .y = (int)(*ray).y / (data->height / \
+		MAPHEIGHT)};
 		(*ray_data).for_wall = (t_vector2){.x = (*ray).x / \
-		(data->width / mapWidth), .y = (*ray).y / (data->width / mapWidth)};
+		(data->width / MAPWIDTH), .y = (*ray).y / (data->width / MAPWIDTH)};
 		wall = mapVar[(int)floor((*ray_data).wall_location.x)] \
 		[(int)floor((*ray_data).wall_location.y)];
 	}
@@ -56,7 +56,7 @@ t_ray_data	calculate_ray(t_data *data, double angle)
 	init_req(&start, data, &sin_cos, angle);
 	ray = (t_vector2){.y = start.y, .x = start.x};
 	ray_data.wall_location = (t_llocation){.x = (int)ray.x / (data->width
-			/ mapWidth), .y = (int)ray.y / (data->height / mapHeight)};
+			/ MAPWIDTH), .y = (int)ray.y / (data->height / MAPHEIGHT)};
 	draw_ray(&ray_data, &ray, data, sin_cos);
 	ray_data.ray_location = (t_vector2){.x = ft_fabs(ray.x - start.x),
 		.y = (ray.y - start.y)};
@@ -88,9 +88,9 @@ void	draw_outlines(t_data *data)
 
 	i = 0;
 	j = 0;
-	while (i < mapHeight)
+	while (i < MAPHEIGHT)
 	{
-		while (j < mapWidth)
+		while (j < MAPWIDTH)
 		{
 			if (mapVar[i][j] == 1)
 				draw_square(i, j, data);

@@ -9,8 +9,8 @@ void init_var(t_data *data){
 	data->player.fov = 60;
 	data->player.direction = 60;
 	data->mlx = mlx_init();
-	data->m_data.map_height = mapHeight;
-	data->m_data.map_width = mapWidth;
+	data->m_data.map_height = MAPHEIGHT;
+	data->m_data.map_width = MAPWIDTH;
 	data->width = data->m_data.map_width * 64;
 	data->height = data->m_data.map_height * 64;
 	data->win = mlx_new_window(data->mlx, data->width, data->height, "UwU");
@@ -34,7 +34,7 @@ void init_var(t_data *data){
 	data->xpm[3].img = mlx_xpm_file_to_image(data->mlx, "textures/wall4.xpm", &data->xpm[3].width, &data->xpm[3].height);
 	data->xpm[3].img_ptr = mlx_get_data_addr(data->xpm[3].img, &data->xpm[3].bpp, &data->xpm[3].line_len, &data->xpm[3].endian);
 	data->ceiling_color = T_SKY;
-	data->floor_color = T_floor;
+	data->floor_color = T_FLOOR;
 }
 
 int main()
@@ -44,9 +44,8 @@ int main()
 	init_var(&data);
 	// initBisiler
 	// initBaskaBisilerFalan
-	// draw_outlines(&data);
-	// draw_player();
-	render_window(&data);
+	draw_outlines(&data);
+	draw_player();
 	mlx_hook(data.win, 2, 1, key_press_func, &data);
 	mlx_hook(data.win2, 2, 1, key_press_func, &data);
 	mlx_hook(data.win3, 2, 1, key_press_func, &data);
