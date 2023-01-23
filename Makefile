@@ -1,5 +1,5 @@
 NAME			= Cub3D
-CC				= clang
+CC				= gcc
 CFLAGS			= -Wall -Wextra -Werror -O3
 OUTFILE			= -o $(NAME)
 OS 				:= $(shell uname)
@@ -10,9 +10,10 @@ else
 	MLXFLAGS 	= -lm -lXext -lX11
 endif
 
-INC_LIBS		= -I./mathlib $(LIB_MATH) -I./libft $(LIB_FT)  -I./mlx $(LIB_MLX)
+INC_LIBS		= -I./mathlib $(LIB_MATH) -I./libft $(LIB_FT)  -I./mlx $(LIB_MLX) $(LIB_CONTROL)
 LIB_MLX			= ./mlx/libmlx.a
 LIB_MATH		= ./mathlib/mathlib.a
+LIB_CONTROL		= ./mapcontrol/mapcontrol.a
 LIB_FT			= ./libft/libft.a 
 SRCS_FILE		= utils.c main.c get_next_line.c get_next_line_utils.c draw.c
 OBJS_FILE		= $(SRCS_FILE:.c=.o)
@@ -24,11 +25,14 @@ REMOVEME 		= -g
 
 all: $(NAME)
 
-$(NAME): $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(OBJS) 
-	$(CC) $(CFLAGS) $(OBJS) $(REMOVEME) $(OUTFILE) $(LIB_MATH) $(LIB_MLX) $(LIB_FT)  $(MLXFLAGS)
+$(NAME): $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(OBJS) $(LIB_CONTROL)
+	$(CC) $(CFLAGS) $(OBJS) $(REMOVEME) $(OUTFILE) $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(LIB_CONTROL)  $(MLXFLAGS)
 
 $(LIB_MATH) :
 	make -C ./mathlib
+
+$(LIB_CONTROL):
+	make -C ./mapcontrol
 
 $(LIB_MLX) :
 ifeq ($(OS), Darwin)
@@ -61,6 +65,7 @@ fclean: clean
 	$(RM) $(NAME)
 	$(RM) ./mlx
 	make fclean -C ./mathlib
+	make fclean -C ./mapcontrol
 
 re: fclean all
 

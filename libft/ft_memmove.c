@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 15:17:45 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/25 04:26:48 by eerdem           ###   ########.tr       */
+/*   Created: 2022/01/07 12:33:14 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/13 15:01:29 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,19 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
+	char	*dest;
+	char	*src2;
 	size_t	i;
 
-	if (!dst && !src)
-		return (0);
 	i = 0;
-	if ((size_t)dst -(size_t)src < len)
-	{
-		i = len - 1;
-		while (i < len)
-		{
-			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-			i--;
-		}
-	}
+	dest = (char *)dst;
+	src2 = (char *)src;
+	if (!dst && !src)
+		return (NULL);
+	if (src2 < dest)
+		while (++i <= len)
+			dest[len - i] = src2[len - i];
 	else
-	{
-		while (i < len)
-		{
-			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-			i++;
-		}
-	}
+		return (ft_memcpy(dst, src, len));
 	return (dst);
 }

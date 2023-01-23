@@ -3,20 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 19:29:18 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/29 01:40:14 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/07 14:08:38 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/07 16:22:25 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	ft_putendl_fd(char const *s, int fd)
 {
-	if (s != NULL)
+	if (s)
 	{
-		ft_putstr_fd(s, fd);
+		while (*s)
+		{
+			ft_putchar_fd(*s, fd);
+			s++;
+		}
 		ft_putchar_fd('\n', fd);
 	}
 }

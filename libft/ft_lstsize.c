@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 17:54:08 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/29 18:37:12 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/09 02:47:31 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/09 16:00:47 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	int	count;
+	int	i;
 
-	count = 0;
+	i = 0;
 	while (lst)
 	{
-		lst = lst -> next;
-		count++;
+		lst = lst->next;
+		i++;
 	}
-	return (count);
+	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/17 16:50:24 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/28 17:40:24 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/06 17:18:43 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/12 17:34:29 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
-	size_t	i;
 	char	*str;
+	size_t	i;
+	size_t	strsayac;
 
+	i = -1;
+	strsayac = -1;
 	if (!s)
-		return (NULL);
+		return (0);
+	if (start >= ft_strlen((char *)s))
+		return (ft_strdup(""));
 	if (len > ft_strlen(s))
-		len = ft_strlen(s);
-	str = malloc(sizeof(char) * len + 1);
+		str = malloc(sizeof(char) * ft_strlen(s) + 1);
+	else
+		str = malloc(sizeof(char) * len + 1);
 	if (!str)
-		return (NULL);
-	i = 0;
-	if (start >= ft_strlen(s))
+		return (0);
+	while (s[start] && ++i <= len)
 	{
-		str[i] = 0;
-		return (str);
+		str[++strsayac] = (char)s[start];
+		start++;
 	}
-	while (i < len)
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	str[i] = '\0';
+	str[len] = '\0';
 	return (str);
 }

@@ -3,57 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 16:07:34 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/29 22:29:22 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/07 17:29:36 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/12 16:41:14 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	int	ft_abs(int nb)
-{
-	if (nb < 0)
-		nb *= -1;
-	return (nb);
-}
-
-static	int	ft_intlen(int nb)
+static int	intlen(int c)
 {
 	int	i;
 
 	i = 0;
-	if (nb == 0)
-		return (1);
-	while (nb)
+	if (c <= 0)
 	{
-		nb /= 10;
+		i = 1;
+	}
+	while (c)
+	{
 		i++;
+		c = c / 10;
+		if (c == 0)
+			break ;
 	}
 	return (i);
 }
 
-char	*ft_itoa(int nb)
+static char	*sayiyapici(int n, int struzunluk, int rakam, char *str)
 {
-	int		len;
-	char	*return_val;
-	int		is_neg;
-
-	is_neg = nb < 0;
-	len = ft_intlen(nb) + is_neg;
-	return_val = (char *)malloc ((len + 1) * sizeof(*return_val));
-	if (!return_val)
-		return (NULL);
-	return_val[len] = '\0';
-	len--;
-	while (len >= 0)
+	while (struzunluk >= 0)
 	{
-		return_val[len] = ((char)ft_abs(nb % 10) + 48);
-		nb /= 10;
-		len--;
+		rakam = n % 10;
+		str[struzunluk--] = rakam + 48;
+		n = n / 10;
 	}
-	if (is_neg)
-		return_val[0] = '-';
-	return (return_val);
+	return (str);
+}
+
+char	*ft_itoa(int n)
+{
+	int		struzunlugumuz;
+	char	*str;
+	int		rakamimiz;
+	int		sign;
+
+	struzunlugumuz = intlen(n);
+	rakamimiz = 0;
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	str = (char *)malloc(sizeof(char) * struzunlugumuz + 1);
+	if (!str)
+		return (0);
+	sign = 0;
+	if (n < 0)
+	{
+		n = -n;
+		sign = -1;
+	}
+	str[struzunlugumuz--] = '\0';
+	sayiyapici(n, struzunlugumuz, rakamimiz, str);
+	if (sign == -1 && str[0] == '0')
+		str[0] = '-';
+	return (str);
 }

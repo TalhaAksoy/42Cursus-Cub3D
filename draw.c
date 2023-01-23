@@ -63,24 +63,6 @@ t_ray_data	calculate_ray(t_data *data, double angle)
 	return (ray_data);
 }
 
-void	draw_player(void)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (i < 5)
-	{
-		while (j < 5)
-		{
-			++j;
-		}
-		j = 0;
-		i++;
-	}
-}
-
 void	draw_outlines(t_data *data)
 {
 	int	i;

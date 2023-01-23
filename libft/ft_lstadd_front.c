@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 17:37:29 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/30 13:58:54 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/09 02:28:54 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/09 02:45:33 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	new->next = *lst;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	if (!new)
+		return ;
+	new -> next = *lst;
 	*lst = new;
 }

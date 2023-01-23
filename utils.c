@@ -88,21 +88,21 @@ void	draw_wall_n(int angle, double distance, t_data *data,
 	i = 0;
 	while (i < start)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, T_SKY);
 		i++;
 	}
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, 0xff0000); // kirmizi
 		i++;
 	}
 	while (i < data->height)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, T_FLOOR);
 		i++;
@@ -126,21 +126,21 @@ void	draw_wall_e(int angle, double distance, t_data *data,
 	i = 0;
 	while (i < start)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, T_SKY);
 		i++;
 	}
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, 0x00ff00); // yesil
 		i++;
 	}
 	while (i < data->height)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, T_FLOOR);
 		i++;
@@ -164,21 +164,21 @@ void	draw_wall_w(int angle, double distance, t_data *data,
 	i = 0;
 	while (i < start)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, T_SKY);
 		i++;
 	}
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, 0x0000ff); // mavi
 		i++;
 	}
 	while (i < data->height)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, T_FLOOR);
 		i++;
@@ -202,21 +202,21 @@ void	draw_wall_s(int angle, double distance, t_data *data,
 	i = 0;
 	while (i < start)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, T_SKY);
 		i++;
 	}
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, 0xaaaaaa); // acik gri
 		i++;
 	}
 	while (i < data->height)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img3, angle, i, T_FLOOR);
 		i++;
@@ -227,7 +227,7 @@ int	draw_ceiling(int angle, int i, int start, t_data *data)
 {
 	while (i < start)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img4, angle, i, data->ceiling_color);
 		i++;
@@ -239,7 +239,7 @@ int	draw_floor(int angle, int i, t_data *data)
 {
 	while (i < data->height)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img4, angle, i, data->floor_color);
 		i++;
@@ -264,21 +264,21 @@ int	draw_wall(int angle, double distance, t_data *data, t_ray_data *ray_data)
 	i = 0;
 	while (i < start)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
 		i++;
 	}
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img2, angle, i, 0x00ff00);
 		i++;
 	}
 	while (i < data->height)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		ft_my_put_pixel(&data->img2, angle, i, 0x000000);
 		i++;
@@ -354,7 +354,7 @@ void	draw_wall_n_img(int angle, double distance, t_data *data,
 	i = draw_ceiling(angle, i, start, data);
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		clr = ft_my_get_pixel(data, ((ray_data.for_wall.x
 						- floor(ray_data.for_wall.x)) * 64), ((i - start) * 64)
@@ -383,7 +383,7 @@ void	draw_wall_e_img(int angle, double distance, t_data *data,
 	i = draw_ceiling(angle, i, start, data);
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		clr = ft_my_get_pixel(data, ((ray_data.for_wall.y
 						- floor(ray_data.for_wall.y)) * 64), ((i - start) * 64)
@@ -412,7 +412,7 @@ void	draw_wall_w_img(int angle, double distance, t_data *data,
 	i = draw_ceiling(angle, i, start, data);
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		clr = ft_my_get_pixel(data, ((ray_data.for_wall.y
 						- floor(ray_data.for_wall.y)) * 64), ((i - start) * 64)
@@ -441,7 +441,7 @@ void	draw_wall_s_img(int angle, double distance, t_data *data,
 	i = draw_ceiling(angle, i, start, data);
 	while (i < end)
 	{
-		if (i > 600)
+		if (i >= 600)
 			break ;
 		clr = ft_my_get_pixel(data, ((ray_data.for_wall.x
 						- floor(ray_data.for_wall.x)) * 64), ((i - start) * 64)
@@ -634,7 +634,6 @@ void	render_window(t_data *data)
 	mlx_clear_window(data->mlx, data->win);
 	clear_img(data);
 	draw_outlines(data);
-	draw_player();
 	while (i--)
 	{
 		ray[i] = calculate_ray(data, angle);

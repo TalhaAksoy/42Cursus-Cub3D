@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/09 17:57:11 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/28 17:23:06 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/03 10:32:27 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/08 14:45:30 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
+	int		i;
+	char	*ptr;
 
 	i = 0;
+	ptr = 0;
 	while (s[i])
-		i++;
-	while (i >= 0)
 	{
 		if (s[i] == (char)c)
-			return ((char *)(s + i));
-		i--;
+			ptr = (char *)(s + i);
+		i++;
 	}
-	return (NULL);
+	if (s[i] == (char)c)
+		ptr = (char *)(s + i);
+	return (ptr);
 }

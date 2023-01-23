@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/09 17:08:51 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/28 17:20:18 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/03 20:20:56 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/13 11:46:17 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	h;
-	size_t	n;
+	size_t	hayint;
+	size_t	needint;
 
-	h = 0;
-	if (needle[0] == '\0')
+	hayint = 0;
+	if (*needle == 0)
 		return ((char *)haystack);
-	while (haystack[h] != '\0')
+	while (haystack[hayint] != 0 && hayint < len)
 	{
-		n = 0;
-		while (haystack[h + n] == needle[n] && (h + n) < len)
-		{
-			if (haystack[h + n] == '\0' || needle[n] == '\0')
-				return ((char *)&haystack[h]);
-			n++;
-		}
-		if (needle[n] == '\0')
-			return ((char *)haystack + h);
-		h++;
+		needint = 0;
+		while (haystack[hayint + needint] == needle[needint]
+			&& needle[needint] != 0 && needint + hayint < len)
+			needint++;
+		if (!needle[needint])
+			return ((char *)&haystack[hayint]);
+		hayint++;
 	}
-	return (0);
+	return (NULL);
 }

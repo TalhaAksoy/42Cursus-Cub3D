@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBD3D_H
-# define CUBD3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 # include "mathlib/mathlib.h"
+# include "get_next_line.h"
 # include "mlx/mlx.h"
+# include "./libft/libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdarg.h>
@@ -28,6 +30,7 @@
 # define MAPHEIGHT 10
 # define CELLSIZE 64
 # define GAMEWIDTH 600
+# define GAMEHEIGHT 600
 # define T_SKY 0x123456
 # define T_FLOOR 0x654321
 # ifdef __APPLE__
@@ -61,6 +64,14 @@ typedef enum e_keys
 }					t_keys;
 
 # endif
+
+typedef enum e_side
+{
+	north,
+	east,
+	west,
+	south
+}	t_side;
 
 //https://www.youtube.com/watch?v=gYRrGTC7GtA
 //https://eastmanreference.com/complete-list-of-applescript-key-codes
@@ -122,9 +133,25 @@ typedef struct s_player
 
 typedef struct s_mapdata
 {
-	int				map_height;
-	int				map_width;
-}					t_mapdata;
+	char **map;
+	char p_dic;
+	t_vector2 p_start;
+	int map_height;
+	int map_width;
+	char *xpm_dir[4];
+	int f_c;
+	int c_c;
+}	t_mapdata;
+
+typedef struct s_check
+{
+	int n;
+	int w;
+	int e;
+	int s;
+	int f;
+	int c;
+}	t_check;
 
 typedef struct s_data
 {
@@ -139,7 +166,8 @@ typedef struct s_data
 	t_imgdata		img4;
 	t_player		player;
 	t_xpm			xpm[4];
-	t_mapdata		m_data;
+	t_check			check;
+	t_mapdata		map_data;
 	int				width;
 	int				height;
 	int				dray;
@@ -150,8 +178,7 @@ typedef struct s_data
 int					key_press_func(int keycode, t_data *data);
 void				clear_img(t_data *data);
 t_ray_data			calculate_ray(t_data *data, double angle);
-// void draw_player(t_data *data);
-void				draw_player(void);
+
 void				draw_outlines(t_data *data);
 void				draw_square(int x, int y, t_data *data);
 void				ft_my_put_pixel(t_imgdata *img_data, int x, int y,
@@ -159,5 +186,6 @@ void				ft_my_put_pixel(t_imgdata *img_data, int x, int y,
 unsigned int		ft_my_get_pixel(t_data *data, int x, int y, int i);
 void				render_window(t_data *data);
 double				deg2rad(int deg);
+int 				read_file(t_data *data , char *path);
 
 #endif

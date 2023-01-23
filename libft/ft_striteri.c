@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/22 15:29:23 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/28 15:20:35 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/08 13:15:34 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/12 18:08:38 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	unsigned int	i;
+	size_t	i;
 
-	if (!s || !f)
-	{
-		return ;
-	}
 	i = 0;
-	while (s[i])
-	{	
-		f(i, s + i);
+	if (!s)
+		return ;
+	while (i < ft_strlen(s))
+	{
+		f(i, &s[i]);
 		i++;
 	}
 }
