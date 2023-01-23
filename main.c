@@ -82,7 +82,6 @@ int main()
 	init_color(&data);
 	// initBisiler
 	// initBaskaBisilerFalan
-	draw_outlines(&data);
 	render_window(&data);
 	mlx_hook(data.win, 2, 1, key_press_func, &data);
 	mlx_hook(data.win2, 2, 1, key_press_func, &data);
