@@ -637,7 +637,7 @@ void	render_window(t_data *data)
 	draw_player();
 	while (i--)
 	{
-		ray[i] = draw_ray(data, angle);
+		ray[i] = calculate_ray(data, angle);
 		angle -= data->player.fov / GAMEWIDTH;
 	}
 	draw_screen2(data, ray);
