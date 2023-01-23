@@ -9,7 +9,7 @@ char *ft_is_space(char *s)
     return (s);
 }
 
-int ft_check_value(char *s, char **find, int size, t_data *data)
+int ft_check_xpm(char *s, char **find, int size, t_data *data)
 {
     int fd;
     char *tmp;
@@ -28,12 +28,25 @@ int ft_check_value(char *s, char **find, int size, t_data *data)
             if (data->map_data.xpm_dir[i])
                 return (-1);
             tmp = ft_substr(s, 0, ft_strlen(s) - 1);
-            printf("%s tmp\n", tmp);
             data->map_data.xpm_dir[i] = ft_strdup(tmp);
-            printf("%s\n", data->map_data.xpm_dir[i]);
+            data->map_data.xpm_dir[i] = last_trim(data->map_data.xpm_dir[i]);
             free(tmp);
             break ;
         }
+        i++;
+    }
+    return (0);
+}
+
+int check_null(t_data *data)
+{
+    int i;
+
+    i = 0;
+    while(i < 4)
+    {
+        if (data->map_data.xpm_dir[i] == NULL)
+            return (-1);
         i++;
     }
     return (0);
@@ -51,7 +64,8 @@ int read_file(t_data *data , char *path)
 
     while(line)
     {
-        if (ft_check_value(line, (char*[]){"NO", "EA", "WE", "SO"}, 4,data) == -1)
+        if (ft_check_xpm(line, (char*[]){"NO", "EA", "WE", "SO"}, 4,data) == -1
+        && ft_check_rgb(line, (char*[]){"F","C"}, 2, data))
         {
             free(line);
             return (-1);
@@ -60,7 +74,7 @@ int read_file(t_data *data , char *path)
         line = get_next_line(fd);
     }
     free(line);
-    if (data->map_data.xpm_dir[0] == NULL)
+    if (check_null(data) == -1)
         return (-1);
     return (0);
 }

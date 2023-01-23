@@ -63,7 +63,7 @@ clean:
 fclean: clean
 	$(RM) ./libft/libft.a
 	$(RM) $(NAME)
-	$(RM) ./mlx
+#	$(RM) ./mlx
 	make fclean -C ./mathlib
 	make fclean -C ./mapcontrol
 

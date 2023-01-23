@@ -73,6 +73,12 @@ typedef enum e_side
 	south
 }	t_side;
 
+typedef enum e_color
+{
+	flooor,
+	ceiling
+}	t_color;
+
 //https://www.youtube.com/watch?v=gYRrGTC7GtA
 //https://eastmanreference.com/complete-list-of-applescript-key-codes
 //https://github.com/Saxsori/ray-cast
@@ -139,19 +145,8 @@ typedef struct s_mapdata
 	int map_height;
 	int map_width;
 	char *xpm_dir[4];
-	int f_c;
-	int c_c;
+	int colors[2][3];
 }	t_mapdata;
-
-typedef struct s_check
-{
-	int n;
-	int w;
-	int e;
-	int s;
-	int f;
-	int c;
-}	t_check;
 
 typedef struct s_data
 {
@@ -166,7 +161,6 @@ typedef struct s_data
 	t_imgdata		img4;
 	t_player		player;
 	t_xpm			xpm[4];
-	t_check			check;
 	t_mapdata		map_data;
 	int				width;
 	int				height;
@@ -187,5 +181,8 @@ unsigned int		ft_my_get_pixel(t_data *data, int x, int y, int i);
 void				render_window(t_data *data);
 double				deg2rad(int deg);
 int 				read_file(t_data *data , char *path);
+char    			*last_trim(char *str);
+int 				ft_check_rgb(char *s, char **find, int size, t_data *data);
+char				*ft_is_space(char *s);
 
 #endif
