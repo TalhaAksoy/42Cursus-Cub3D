@@ -44,8 +44,8 @@ int main()
 	init_var(&data);
 	// initBisiler
 	// initBaskaBisilerFalan
-	// draw_outlines(&data);
-	// draw_player();
+	draw_outlines(&data);
+	draw_player();
 	render_window(&data);
 	mlx_hook(data.win, 2, 1, key_press_func, &data);
 	mlx_hook(data.win2, 2, 1, key_press_func, &data);
