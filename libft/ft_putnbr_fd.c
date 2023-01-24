@@ -3,40 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 19:29:07 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/29 01:46:12 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/07 16:21:36 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/08 13:16:37 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int nb, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	unsigned int	nbr;
-
-	if (nb < 0)
-	{
-		ft_putchar_fd('-', fd);
-		nbr = (unsigned int)(nb * -1);
-	}
+	if (n == -2147483648)
+		ft_putstr_fd("-2147483648", fd);
 	else
-		nbr = (unsigned int)nb;
-	if (nbr >= 10)
-		ft_putnbr_fd(nbr / 10, fd);
-	ft_putchar_fd((char)(nbr % 10 + 48), fd);
+	{
+		if (n < 0)
+		{
+			n = n * -1;
+			ft_putchar_fd('-', fd);
+		}
+		if (n > 9)
+			ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd(n % 10 + '0', fd);
+	}
 }
-/*
-#include <stdio.h>
-#include <fcntl.h>
-
-int	main()
-{
-	int	i;
-	int	fd;
-
-	fd = open("deneme.txt", O_CREAT | O_RDWR, 0777 );
-	i = 5;
-	ft_putnbr_fd(i, fd);
-}*/	

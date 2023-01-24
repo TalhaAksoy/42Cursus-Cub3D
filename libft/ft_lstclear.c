@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 18:15:59 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/30 14::49 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/09 13:49:59 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/09 14:08:04 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list	*aux;
+	t_list	*array;
 
-	if (!*lst)
-		return ;
-	while (*lst)
+	while ((*lst))
 	{
-		aux = (*lst)->next;
+		array = (*lst)->next;
 		ft_lstdelone(*lst, del);
-		*lst = aux;
+		(*lst) = array;
 	}
-	*lst = 0;
 }

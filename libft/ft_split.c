@@ -3,61 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 23:12:56 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/29 23:19:53 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/07 13:12:59 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/12 12:51:16 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ftcount(char const *s, char c)
+static int	wordcounter(const char *s, char c)
 {
 	int	i;
-	int	count;
 
-	count = 1;
 	i = 0;
-	while (s[i])
+	while (*s)
 	{
-		if (s[i] != c)
-		{
-			count++;
-			while (s[i] && s[i] != c)
-				i++;
-		}
-		else
-			i++;
+		while (*s == c && *s)
+			s++;
+		if (*s == '\0')
+			return (i);
+		while (*s != c && *s)
+			s++;
+		i++;
 	}
-	return (count);
+	return (i);
+}
+
+static int	charcounter(const char *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while (*s && (*s != c))
+	{
+		i++;
+		s++;
+	}
+	return (i);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		i;
-	int		st;
-	char	**str;
+	char	**ret;
+	int		retindex;
 
-	i = 0;
-	st = 0;
 	if (!s)
-		return (NULL);
-	str = malloc((ftcount(s, c)) * sizeof(char *));
-	if (!str)
-		return (NULL);
+		return (0);
+	retindex = 0;
+	ret = malloc(sizeof(char *) * wordcounter(s, c) + 1);
+	if (!ret)
+		return (0);
 	while (*s)
 	{
-		if (*s != c)
-		{
-			st = 0;
-			while (*s && *s != c && ++st)
-				++s;
-			str[i++] = ft_substr(s - st, 0, st);
-		}
-		else
-			++s;
+		while (*s == c && *s)
+			s++;
+		if (*s == '\0')
+			break ;
+		ret[retindex] = ft_substr(s, 0, charcounter(s, c));
+		retindex++;
+		s = s + charcounter(s, c);
 	}
-	str[i] = 0;
-	return (str);
+	ret[retindex] = NULL;
+	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/06 01:30:37 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/29 22:21:10 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/04 11:50:07 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/07 12:23:44 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,25 @@
 
 int	ft_atoi(const char *str)
 {
-	int			i;
-	int			is_neg;
-	long int	res;
+	long long int	number;
+	int				sign;
 
-	if (!*str)
-		return (0);
-	i = 0;
-	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
-		i++;
-	if (str[i] == '-')
-		is_neg = -1;
-	else
-		is_neg = 1;
-	if (is_neg == -1 || str[i] == '+')
-		i++;
-	res = 0;
-	while (str[i] >= '0' && str[i] <= '9')
-		res = (res * 10) + (str[i++] - '0');
-	if (res > 2147483648 && is_neg == -1)
-		return (0);
-	if (res > 2147483648 && is_neg == 1)
-		return (-1);
-	return ((int)res * is_neg);
+	number = 0;
+	sign = 1;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-')
+		sign = -1;
+	if (*str == '+' || *str == '-')
+		str++;
+	while (ft_isdigit(*str))
+	{
+		number = (number * 10) + (*str - '0') * sign;
+		str++;
+		if (number > 2147483647)
+			return (-1);
+		if (number < -2147483648)
+			return (0);
+	}
+	return (number);
 }

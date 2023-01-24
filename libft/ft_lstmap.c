@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: saksoy <saksoy@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 18:27:08 by faydin            #+#    #+#             */
-/*   Updated: 2022/01/30 14:27:01 by faydin           ###   ########.tr       */
+/*   Created: 2022/01/09 14:38:32 by saksoy            #+#    #+#             */
+/*   Updated: 2022/01/13 12:43:00 by saksoy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*new_lst;
-	t_list	*elem;
+	t_list	*result;
+	t_list	*node;
 
-	if (!lst)
-		return (0);
-	new_lst = 0;
+	if (!lst || !f)
+		return (NULL);
+	result = 0;
 	while (lst)
 	{
-		elem = ft_lstnew(f(lst->content));
-		if (!elem)
+		node = ft_lstnew(f(lst->content));
+		if (!node)
 		{
-			ft_lstclear(&new_lst, del);
+			ft_lstclear(&result, del);
 			return (0);
 		}
-		ft_lstadd_back(&new_lst, elem);
+		ft_lstadd_back(&result, node);
 		lst = lst->next;
 	}
-	return (new_lst);
+	return (result);
 }
