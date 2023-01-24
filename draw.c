@@ -27,8 +27,8 @@ void	draw_ray(t_ray_data *ray_data, t_vector2 *ray,
 		MAPHEIGHT)};
 		(*ray_data).for_wall = (t_vector2){.x = (*ray).x / \
 		(data->width / MAPWIDTH), .y = (*ray).y / (data->width / MAPWIDTH)};
-		wall = data->map_data.int_map[(int)floor((*ray_data).wall_location.x)] \
-		[(int)floor((*ray_data).wall_location.y)];
+		wall = data->map_data.int_map[(int)floor((*ray_data).wall_location.y)] \
+		[(int)floor((*ray_data).wall_location.x)];
 	}
 }
 
@@ -56,9 +56,9 @@ void	draw_outlines(t_data *data)
 
 	i = 0;
 	j = 0;
-	while (i < MAPHEIGHT)
+	while (i < array_len(data->map_data.map))
 	{
-		while (j < MAPWIDTH)
+		while (j < longest_line(data))
 		{
 			if (data->map_data.int_map[i][j] == 1)
 				draw_square(i, j, data);
@@ -69,7 +69,7 @@ void	draw_outlines(t_data *data)
 	}
 }
 
-void	draw_square(int x, int y, t_data *data)
+void	draw_square(int y, int x, t_data *data)
 {
 	int	start_x;
 	int	start_y;

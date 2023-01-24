@@ -54,3 +54,19 @@ char *ft_is_space(char *s)
     }
     return (s);
 }
+
+int longest_line(t_data *data)
+{
+	int i;
+	int max;
+
+	i = 0;
+	max = 0;
+	while (data->map_data.map[i])
+	{
+		if (ft_strlen(data->map_data.map[i]) > max)
+			max = ft_strlen(data->map_data.map[i]);
+		i++;
+	}
+	return (max);
+}

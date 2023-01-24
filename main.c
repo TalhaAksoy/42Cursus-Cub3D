@@ -1,8 +1,7 @@
 #include "cub3d.h"
 
-
-
-void init_var(t_data *data){
+void init_var(t_data *data)
+{
 
 	data->player.pos.x = PX;
 	data->player.pos.y = PY;
@@ -25,7 +24,7 @@ void init_var(t_data *data){
 	data->img4.addr = mlx_get_data_addr(data->img4.img, &data->img4.bpp, &data->img4.line_len, &data->img4.endian);
 	ft_bzero(data->xpm, sizeof(t_xpm) * 4);
 	ft_bzero(&data->map_data, sizeof(t_mapdata));
-	data->ceiling_color = data->map_data.colors[flooor][0]* 0x010000+data->map_data.colors[flooor][1]*0x0100+data->map_data.colors[flooor][2]*0x01;
+	data->ceiling_color = data->map_data.colors[flooor][0] * 0x010000 + data->map_data.colors[flooor][1] * 0x0100 + data->map_data.colors[flooor][2] * 0x01;
 	data->floor_color = data->map_data.colors[ceiling][0] * 0x010000 + data->map_data.colors[ceiling][1] * 0x0100 + data->map_data.colors[ceiling][2] * 0x01;
 }
 
@@ -46,9 +45,50 @@ int array_len(char **str)
 	int i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
 	return (i);
+}
+
+int init_direction(t_data *data, int i, int j)
+{
+	static int flags;
+
+	if (data->map_data.map[i][j] == 'N')
+	{
+		data->player.direction = 270;
+		flags += 1;
+		data->player.pos.x = (double)j + .5;
+		data->player.pos.y = (double)i + .5;
+		data->map_data.map[i][j] = '0';
+	}
+	else if (data->map_data.map[i][j] == 'W')
+	{
+		data->player.direction = 180;
+		flags += 1;
+		data->player.pos.x = (double)j + .5;
+		data->player.pos.y = (double)i + .5;
+		data->map_data.map[i][j] = '0';
+	}
+	else if (data->map_data.map[i][j] == 'E')
+	{
+		data->player.direction = 0;
+		flags += 1;
+		data->player.pos.x = (double)j + .5;
+		data->player.pos.y = (double)i + .5;
+		data->map_data.map[i][j] = '0';
+	}
+	else if (data->map_data.map[i][j] == 'S')
+	{
+		data->player.direction = 90;
+		flags += 1;
+		data->player.pos.x = (double)j + .5;
+		data->player.pos.y = (double)i + .5;
+		data->map_data.map[i][j] = '0';
+	}
+	if (flags > 1)
+		return (-1);
+	return (0);
 }
 
 int ft_set_map(t_data *data)
@@ -58,19 +98,23 @@ int ft_set_map(t_data *data)
 
 	i = 0;
 	j = 0;
-	data->map_data.int_map = ft_calloc(array_len(data->map_data.map), sizeof(int *));
-	while(data->map_data.map[i])
+	data->map_data.int_map = (int **)ft_calloc(array_len(data->map_data.map), sizeof(int *));
+	while (i <= data->map_data.map_end - data->map_data.map_start)
 	{
-		data->map_data.int_map[i] = ft_calloc(ft_strlen(data->map_data.map[i]), sizeof(int));
-		while(data->map_data.map[i][j])
+		data->map_data.int_map[i] = (int *)ft_calloc(longest_line(data), sizeof(int));
+		while (j < longest_line(data))
 		{
-			if (data->map_data.map[i][j] == 32)
-				data->map_data.map[i][j] = '1';
-			else if (data->map_data.map[i][j] == '\n')
+			if (data->map_data.map[i][j] == '\n')
 				break;
+			else if (data->map_data.map[i][j] == 32)
+				data->map_data.map[i][j] = '1';
+			if (init_direction(data, i, j) == -1)
+				return (-1);
 			data->map_data.int_map[i][j] = data->map_data.map[i][j] - 48;
 			j++;
+			printf("%c", data->map_data.map[i][j-1]);
 		}
+		printf("\n");
 		i++;
 		j = 0;
 	}
@@ -84,7 +128,7 @@ int check_wall_xpm(t_data *data)
 
 	i = 0;
 	fd = 0;
-	while(i < 4)
+	while (i < 4)
 	{
 		fd = open(data->map_data.xpm_dir[i], O_RDONLY);
 		if (fd == -1)
@@ -119,7 +163,7 @@ int main()
 	}
 	if (ft_set_map(&data) == -1)
 	{
-		printf("Error\n");
+		printf("Error asd\n");
 		return (1);
 	}
 	init_xpm(&data);

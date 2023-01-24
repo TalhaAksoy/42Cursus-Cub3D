@@ -24,6 +24,8 @@ int check_all_num(char **code)
 
 int color_nbr_check(char **code)
 {
+    if (array_len(code) != 3)
+        return (-1);
     if (check_all_num(code) == -1)
         return (-1);
     if (ft_atoi(code[0]) < 0 || ft_atoi(code[0]) > 255)

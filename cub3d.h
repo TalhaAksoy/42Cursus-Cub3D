@@ -140,6 +140,7 @@ typedef struct s_player
 typedef struct s_mapdata
 {
 	char **map;
+	char **map_clone;
 	char p_dic;
 	t_vector2 p_start;
 	int map_height;
@@ -191,5 +192,7 @@ void				array_cleaner(char **arr);
 int					color_bitwise(int r, int g, int b);
 int					check_null(t_data *data);
 int					ft_get_map(t_data *data, char *path);
+int 				array_len(char **str);
+int 				longest_line(t_data *data);
 
 #endif
