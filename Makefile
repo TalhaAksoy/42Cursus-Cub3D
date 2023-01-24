@@ -1,6 +1,6 @@
 NAME			= Cub3D
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -O3 #-fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -O3
 OUTFILE			= -o $(NAME)
 OS 				:= $(shell uname)
 
@@ -15,17 +15,7 @@ LIB_MLX			= ./mlx/libmlx.a
 LIB_MATH		= ./mathlib/mathlib.a
 LIB_CONTROL		= ./mapcontrol/mapcontrol.a
 LIB_FT			= ./libft/libft.a
-SRCS_FILE		= 	draw.c \
-draw_others.c \
-draw_walls.c \
-get_next_line.c \
-get_next_line_utils.c \
-init.c \
-keys.c \
-main.c \
-move.c \
-utils.c \
-utils2.c
+SRCS_FILE		= 	draw.c draw_others.c draw_walls.c get_next_line.c get_next_line_utils.c init.c keys.c main.c move.c utils.c utils2.c
 
 OBJS_FILE		= $(SRCS_FILE:.c=.o)
 OBJS_DIR		= ./obj/

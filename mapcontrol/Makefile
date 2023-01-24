@@ -1,7 +1,7 @@
 NAME		= mapcontrol.a
 CC			= gcc
-CFLAGS		= -g -Wall -Wextra -Werror #-fsanitize=address
-SRCS		= $(wildcard ./*.c)
+CFLAGS		= -Wall -Wextra -Werror
+SRCS		= color_check.c map_control_utils.c read_map_utils.c read_map.c valid_map.c
 OBJS		= $(SRCS:.c=.o)
 OBJ_DIR		= ./obj/
 OBJS_FILE	= $(addprefix $(OBJ_DIR), $(OBJS))
@@ -9,7 +9,7 @@ RM			= rm -rf
 
 all:$(NAME)
 
-$(NAME): $(OBJS_FILE) 
+$(NAME): $(OBJS_FILE)
 	ar rcs $(NAME) $(OBJS_FILE)
 
 
