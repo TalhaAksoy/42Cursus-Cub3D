@@ -14,7 +14,7 @@ INC_LIBS		= -I./mathlib $(LIB_MATH) -I./libft $(LIB_FT)  -I./mlx $(LIB_MLX) $(LI
 LIB_MLX			= ./mlx/libmlx.a
 LIB_MATH		= ./mathlib/mathlib.a
 LIB_CONTROL		= ./mapcontrol/mapcontrol.a
-LIB_FT			= ./libft/libft.a 
+LIB_FT			= ./libft/libft.a
 SRCS_FILE		= utils.c main.c get_next_line.c get_next_line_utils.c draw.c
 OBJS_FILE		= $(SRCS_FILE:.c=.o)
 OBJS_DIR		= ./obj/
@@ -41,7 +41,7 @@ ifeq ($(OS), Darwin)
 	$(RM) mlx.tgz
 	mv ./minilibx_opengl_20191021 ./mlx
 	make -C ./mlx
-else 
+else
 	curl https://projects.intra.42.fr/uploads/document/document/12154/minilibx-linux.tgz -o mlx.tgz
 	tar -xf mlx.tgz
 	$(RM) mlx.tgz
@@ -63,7 +63,7 @@ clean:
 fclean: clean
 	$(RM) ./libft/libft.a
 	$(RM) $(NAME)
-#	$(RM) ./mlx
+	$(RM) ./mlx
 	make fclean -C ./mathlib
 	make fclean -C ./mapcontrol
 

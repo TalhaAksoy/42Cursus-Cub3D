@@ -1,20 +1,32 @@
-# include "../cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_control_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/25 00:22:12 by Lil_Dicks         #+#    #+#             */
+/*   Updated: 2023/01/25 00:32:02 by Lil_Dicks        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-char    *last_trim(char *str)
+#include "../cub3d.h"
+
+char	*last_trim(char *str)
 {
-    int i;
+	int	i;
 
-    i = ft_strlen(str) - 1;
-    while(str[i])
-    {
-        if (ft_isprint(str[i]) == 1 && str[i] != 32)
-        {
-            break;
-        }
-        str[i] = 0;
-        i--;
-    }
-    return (str);
+	i = ft_strlen(str) - 1;
+	while (str[i])
+	{
+		if (ft_isprint(str[i]) == 1 && str[i] != 32)
+		{
+			break ;
+		}
+		str[i] = 0;
+		i--;
+	}
+	return (str);
 }
 
 void	array_cleaner(void **arr)
@@ -32,33 +44,33 @@ void	array_cleaner(void **arr)
 	free(arr);
 }
 
-int check_null(t_data *data)
+int	check_null(t_data *data)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while(i < 4)
-    {
-        if (data->map_data.xpm_dir[i] == NULL)
-            return (-1);
-        i++;
-    }
-    return (0);
+	i = 0;
+	while (i < 4)
+	{
+		if (data->map_data.xpm_dir[i] == NULL)
+			return (-1);
+		i++;
+	}
+	return (0);
 }
 
-char *ft_is_space(char *s)
+char	*ft_is_space(char *s)
 {
-    while(*s == ' ' || (*s >= 9 && *s <= 13 && *s != 10))
-    {
-        s++;
-    }
-    return (s);
+	while (*s == ' ' || (*s >= 9 && *s <= 13 && *s != 10))
+	{
+		s++;
+	}
+	return (s);
 }
 
-int longest_line(t_data *data)
+int	longest_line(t_data *data)
 {
-	int i;
-	size_t max;
+	int		i;
+	size_t	max;
 
 	i = 0;
 	max = 0;

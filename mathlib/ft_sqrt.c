@@ -1,15 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/25 00:34:53 by Lil_Dicks         #+#    #+#             */
+/*   Updated: 2023/01/25 00:35:17 by Lil_Dicks        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mathlib.h"
 
-double ft_sqrt(double var)
+double	ft_sqrt(double var)
 {
-    double i = 0;
-    double j = var / 2;
+	double	i;
+	double	j;
 
-    while (j != i)
-    {
-        i = j;
-        j = (var / i + i) / 2;
-    }
-
-    return j;
+	i = 0;
+	j = var / 2;
+	while (j != i)
+	{
+		i = j;
+		j = (var / i + i) / 2;
+	}
+	return (j);
 }

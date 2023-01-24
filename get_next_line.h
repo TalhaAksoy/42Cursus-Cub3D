@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faydin <42istanbul.com.tr>                 +#+  +:+       +#+        */
+/*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:01:13 by faydin            #+#    #+#             */
-/*   Updated: 2022/02/07 20:01:17 by faydin           ###   ########.tr       */
+/*   Updated: 2023/01/24 23:55:48 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-int     ft_strlenn(char *buf);
+int		ft_strlenn(char *buf);
 char	*get_next_line(int fd);
 char	*get_new_line(char *buffer);
 char	*first_line(int fd, char *buffer);

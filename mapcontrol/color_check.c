@@ -1,19 +1,30 @@
-# include "../cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color_check.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/25 00:21:43 by Lil_Dicks         #+#    #+#             */
+/*   Updated: 2023/01/25 00:21:44 by Lil_Dicks        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../cub3d.h"
 
-int check_all_num(char **code)
+int	check_all_num(char **code)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
 	while (code[i])
 	{
-		while(code[i][j])
+		while (code[i][j])
 		{
 			if (ft_isdigit(code[i][j]) == 0)
-				return(-1);
+				return (-1);
 			j++;
 		}
 		i++;
@@ -22,7 +33,7 @@ int check_all_num(char **code)
 	return (0);
 }
 
-int color_nbr_check(char **code)
+int	color_nbr_check(char **code)
 {
 	if (array_len(code) != 3)
 		return (-1);
@@ -37,17 +48,17 @@ int color_nbr_check(char **code)
 	return (0);
 }
 
-int check_f(char *s, t_data *data)
+int	check_f(char *s, t_data *data)
 {
-	char *tmp;
-	char **code;
+	char	*tmp;
+	char	**code;
 
 	s = s + 1;
 	s = ft_is_space(s);
 	tmp = ft_substr(s, 0, ft_strlen(s) - 1);
 	tmp = last_trim(tmp);
 	code = ft_split(tmp, ',');
-	printf("%s %s %s\n", code[0],code[1],code[2]);
+	printf("%s %s %s\n", code[0], code[1], code[2]);
 	if (color_nbr_check(code) == -1)
 	{
 		free(tmp);
@@ -62,17 +73,17 @@ int check_f(char *s, t_data *data)
 	return (0);
 }
 
-int check_c(char *s, t_data *data)
+int	check_c(char *s, t_data *data)
 {
-	char *tmp;
-	char **code;
+	char	*tmp;
+	char	**code;
 
 	s = s + 1;
 	s = ft_is_space(s);
 	tmp = ft_substr(s, 0, ft_strlen(s) - 1);
 	tmp = last_trim(tmp);
 	code = ft_split(tmp, ',');
-	printf("%s %s %s\n", code[0],code[1],code[2]);
+	printf("%s %s %s\n", code[0], code[1], code[2]);
 	if (color_nbr_check(code) == -1)
 	{
 		free(tmp);
@@ -87,15 +98,13 @@ int check_c(char *s, t_data *data)
 	return (0);
 }
 
-int ft_check_rgb(char *s, char **find, int size, t_data *data)
+int	ft_check_rgb(char *s, char **find, int size, t_data *data)
 {
-	int fd;
-	int i;
+	int	i;
 
-	fd = 0;
 	i = 0;
 	s = ft_is_space(s);
-	while(i < size)
+	while (i < size)
 	{
 		if (!ft_strncmp(s, find[i], 1))
 		{

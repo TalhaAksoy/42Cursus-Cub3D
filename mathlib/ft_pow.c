@@ -1,11 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pow.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/25 00:34:16 by Lil_Dicks         #+#    #+#             */
+/*   Updated: 2023/01/25 00:34:35 by Lil_Dicks        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mathlib.h"
 
-double  ft_pow(double var, int pow){
-    int i = 0;
-    double ret = 1;
-    while (i < pow){
-        ret *= var;
-        i++;
-    }
-    return (ret);
+double	ft_pow(double var, int pow)
+{
+	int		i;
+	double	ret;
+
+	i = 0;
+	ret = 1;
+	while (i < pow)
+	{
+		ret *= var;
+		i++;
+	}
+	return (ret);
 }
