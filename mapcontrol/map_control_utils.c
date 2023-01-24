@@ -17,7 +17,7 @@ char    *last_trim(char *str)
     return (str);
 }
 
-void	array_cleaner(char **arr)
+void	array_cleaner(void **arr)
 {
 	int	i;
 
@@ -58,7 +58,7 @@ char *ft_is_space(char *s)
 int longest_line(t_data *data)
 {
 	int i;
-	int max;
+	size_t max;
 
 	i = 0;
 	max = 0;

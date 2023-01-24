@@ -1,6 +1,6 @@
 NAME		= mathlib.a
 CC			= gcc
-CFLAGS		= -g #-Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -g #-fsanitize=address
 SRCS		= $(wildcard ./*.c)
 OBJS		= $(SRCS:.c=.o)
 OBJ_DIR		= ./obj/
@@ -15,7 +15,7 @@ $(NAME): $(OBJS_FILE)
 
 $(OBJ_DIR)%.o : %.c
 	mkdir -p ./obj/
-	gcc -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 clean:
 	$(RM) $(OBJ_DIR)

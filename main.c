@@ -3,8 +3,8 @@
 void init_var(t_data *data)
 {
 
-	data->player.pos.x = PX;
-	data->player.pos.y = PY;
+	data->player.pos.x = 0;
+	data->player.pos.y = 0;
 	data->player.fov = 60;
 	data->player.direction = 60;
 	data->mlx = mlx_init();
@@ -45,8 +45,13 @@ int array_len(char **str)
 	int i;
 
 	i = 0;
-	while (str[i])
+	printf("%s %s %s\n", str[0],str[1],str[2]);
+	while (str[i] != NULL)
+	{
+		printf("%d\n", i);
 		i++;
+	}
+	printf("zamazingo\n");
 	return (i);
 }
 
@@ -55,32 +60,18 @@ int init_direction(t_data *data, int i, int j)
 	static int flags;
 
 	if (data->map_data.map[i][j] == 'N')
-	{
 		data->player.direction = 270;
-		flags += 1;
-		data->player.pos.x = (double)j + .5;
-		data->player.pos.y = (double)i + .5;
-		data->map_data.map[i][j] = '0';
-	}
 	else if (data->map_data.map[i][j] == 'W')
-	{
 		data->player.direction = 180;
-		flags += 1;
-		data->player.pos.x = (double)j + .5;
-		data->player.pos.y = (double)i + .5;
-		data->map_data.map[i][j] = '0';
-	}
 	else if (data->map_data.map[i][j] == 'E')
-	{
 		data->player.direction = 0;
-		flags += 1;
-		data->player.pos.x = (double)j + .5;
-		data->player.pos.y = (double)i + .5;
-		data->map_data.map[i][j] = '0';
-	}
 	else if (data->map_data.map[i][j] == 'S')
-	{
 		data->player.direction = 90;
+	else if ((data->map_data.map[i][j] != '0' && data->map_data.map[i][j] != '1' && data->map_data.map[i][j] != 0) && ft_isascii(data->map_data.map[i][j]))
+		return (-1);
+	if (data->map_data.map[i][j] == 'N' || data->map_data.map[i][j] == 'W' 
+	|| data->map_data.map[i][j] == 'E' ||data->map_data.map[i][j] == 'S')
+	{
 		flags += 1;
 		data->player.pos.x = (double)j + .5;
 		data->player.pos.y = (double)i + .5;
@@ -102,19 +93,17 @@ int ft_set_map(t_data *data)
 	while (i <= data->map_data.map_end - data->map_data.map_start)
 	{
 		data->map_data.int_map[i] = (int *)ft_calloc(longest_line(data), sizeof(int));
-		while (j < longest_line(data))
+		while (j < longest_line(data) && data->map_data.map[i][j])
 		{
-			if (data->map_data.map[i][j] == '\n')
-				break;
-			else if (data->map_data.map[i][j] == 32)
+			if(data->map_data.map[i][j] == '\n')
+				break ;
+			if (data->map_data.map[i][j] == 32)
 				data->map_data.map[i][j] = '1';
 			if (init_direction(data, i, j) == -1)
-				return (-1);
+				return (map | int_map);
 			data->map_data.int_map[i][j] = data->map_data.map[i][j] - 48;
 			j++;
-			printf("%c", data->map_data.map[i][j-1]);
 		}
-		printf("\n");
 		i++;
 		j = 0;
 	}
@@ -133,7 +122,7 @@ int check_wall_xpm(t_data *data)
 		fd = open(data->map_data.xpm_dir[i], O_RDONLY);
 		if (fd == -1)
 		{
-			return (-1);
+			return (xpm);
 		}
 		close(fd);
 		i++;
@@ -141,40 +130,115 @@ int check_wall_xpm(t_data *data)
 	return (0);
 }
 
-int main()
+int extension_check(char *path)
+{
+	if (ft_strlen(path) > 4 
+	&& path[ft_strlen(path) - 1] == 'b' 
+	&& path[ft_strlen(path) - 2] == 'u' 
+	&& path[ft_strlen(path) - 3] == 'c' 
+	&& path[ft_strlen(path) - 4] == '.')
+		return (0);
+	return (-1);
+}
+
+t_control ft_recontrol(t_control control)
+{
+	t_control ret;
+
+	ret = (t_control){
+		.read_file = control.read_file * (control.read_file != -1),
+		.check_wall =  control.check_wall * (control.check_wall != -1),
+		.get_map = control.get_map * (control.get_map != -1),
+		.set_map = control.set_map * (control.set_map != -1),
+		.player_pos = control.player_pos
+	};
+	return (ret);
+}
+
+void ft_xpm_cleaner(t_data *data)
+{
+	if (data->map_data.xpm_dir[0])
+		free(data->map_data.xpm_dir[0]);
+	if (data->map_data.xpm_dir[1])
+		free(data->map_data.xpm_dir[1]);
+	if (data->map_data.xpm_dir[2])
+		free(data->map_data.xpm_dir[2]);
+	if (data->map_data.xpm_dir[3])
+		free(data->map_data.xpm_dir[3]);
+}
+
+void	free_func(t_data *data,int control_data)
+{
+	if (control_data & xpm)
+		ft_xpm_cleaner(data);
+	if (control_data & int_map)
+		array_cleaner((void **)data->map_data.int_map);
+	if (control_data & map)
+		array_cleaner((void **)data->map_data.map);
+}
+
+int error_check(t_data *data, char *path)
+{
+	int fd;
+	t_control control;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0 || extension_check(path) == -1)
+	{
+		printf("Error\n");
+		return (-8);
+	}
+	control = (t_control){read_file(data, fd), check_wall_xpm(data),
+		ft_get_map(data, path), ft_set_map(data),
+		.player_pos = (data->player.pos.x == 0 && data->player.pos.y == 0) * (xpm | map | int_map)};
+	if (control.read_file != 0 || control.check_wall 
+	!= 0 ||  control.get_map != 0 || control.set_map
+	!= 0 || control.player_pos != 0)
+	{
+		control = ft_recontrol(control);
+		free_func(data, control.check_wall | control.get_map | control.player_pos | control.read_file  | control.set_map);
+		printf("Error\n");
+		return (-1);
+	}
+	return (0);
+}
+
+void	ft_exit(t_data *data)
+{
+	free_func(data, map | xpm);
+	mlx_destroy_image(data->mlx, data->img4.img);
+	mlx_destroy_window(data->mlx, data->win4);
+	system("leaks Cub3D");
+	exit(1);
+}
+
+int main(int ac, char *av[])
 {
 	t_data data;
 
-	init_var(&data);
-	if (read_file(&data, "./map.cub") == -1)
+	if (ac == 2)
+	{
+		init_var(&data);
+		if (error_check(&data, av[1]) == -1)
+		{
+			return (1);
+		}
+		init_xpm(&data);
+		data.floor_color = data.map_data.colors[flooor][0] * 0x010000 + data.map_data.colors[flooor][1] * 0x0100 + data.map_data.colors[flooor][2] * 0x01;
+		data.ceiling_color = data.map_data.colors[ceiling][0] * 0x010000 + data.map_data.colors[ceiling][1] * 0x0100 + data.map_data.colors[ceiling][2] * 0x01;
+		// initBisiler
+		// initBaskaBisilerFalan
+		render_window(&data);
+		mlx_hook(data.win, 2, 1, key_press_func, &data);
+		mlx_hook(data.win2, 2, 1, key_press_func, &data);
+		mlx_hook(data.win3, 2, 1, key_press_func, &data);
+		mlx_hook(data.win4, 2, 1, key_press_func, &data);
+		mlx_loop(data.mlx);
+	}
+	else
 	{
 		printf("Error\n");
 		return (1);
 	}
-	if (check_wall_xpm(&data) == -1)
-	{
-		printf("Error\n");
-		return (1);
-	}
-	if (ft_get_map(&data, "./map.cub") == -1)
-	{
-		printf("Error\n");
-		return (1);
-	}
-	if (ft_set_map(&data) == -1)
-	{
-		printf("Error asd\n");
-		return (1);
-	}
-	init_xpm(&data);
-	data.floor_color = data.map_data.colors[flooor][0] * 0x010000 + data.map_data.colors[flooor][1] * 0x0100 + data.map_data.colors[flooor][2] * 0x01;
-	data.ceiling_color = data.map_data.colors[ceiling][0] * 0x010000 + data.map_data.colors[ceiling][1] * 0x0100 + data.map_data.colors[ceiling][2] * 0x01;
-	// initBisiler
-	// initBaskaBisilerFalan
-	render_window(&data);
-	mlx_hook(data.win, 2, 1, key_press_func, &data);
-	mlx_hook(data.win2, 2, 1, key_press_func, &data);
-	mlx_hook(data.win3, 2, 1, key_press_func, &data);
-	mlx_hook(data.win4, 2, 1, key_press_func, &data);
-	mlx_loop(data.mlx);
+	return (0);
 }

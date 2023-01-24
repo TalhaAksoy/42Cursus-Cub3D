@@ -37,53 +37,59 @@ int color_nbr_check(char **code)
     return (0);
 }
 
-int check_f(char *s, char *tmp,char **code, t_data *data)
+int check_f(char *s, t_data *data)
 {
+    char *tmp;
+    char **code;
+
     s = s + 1;
     s = ft_is_space(s);
     tmp = ft_substr(s, 0, ft_strlen(s) - 1);
     tmp = last_trim(tmp);
     code = ft_split(tmp, ',');
+    printf("%s %s %s\n", code[0],code[1],code[2]);
     if (color_nbr_check(code) == -1)
     {
         free(tmp);
-        array_cleaner(code);
+        array_cleaner((void **)code);
         return (-1);
     }
     data->map_data.colors[flooor][0] = ft_atoi(code[0]);
     data->map_data.colors[flooor][1] = ft_atoi(code[1]);
     data->map_data.colors[flooor][2] = ft_atoi(code[2]);
     free(tmp);
-    array_cleaner(code);
+    array_cleaner((void **)code);
     return (0);
 }
 
-int check_c(char *s, char *tmp, char **code, t_data *data)
+int check_c(char *s, t_data *data)
 {
+    char *tmp;
+    char **code;
+
     s = s + 1;
     s = ft_is_space(s);
     tmp = ft_substr(s, 0, ft_strlen(s) - 1);
     tmp = last_trim(tmp);
     code = ft_split(tmp, ',');
+    printf("%s %s %s\n", code[0],code[1],code[2]);
     if (color_nbr_check(code) == -1)
     {
         free(tmp);
-        array_cleaner(code);
+        array_cleaner((void **)code);
         return (-1);
     }
     data->map_data.colors[ceiling][0] = ft_atoi(code[0]);
     data->map_data.colors[ceiling][1] = ft_atoi(code[1]);
     data->map_data.colors[ceiling][2] = ft_atoi(code[2]);
     free(tmp);
-    array_cleaner(code);
+    array_cleaner((void **)code);
     return (0);
 }
 
 int ft_check_rgb(char *s, char **find, int size, t_data *data)
 {
     int fd;
-    char *tmp;
-    char **code;
     int i;
 
     fd = 0;
@@ -94,10 +100,10 @@ int ft_check_rgb(char *s, char **find, int size, t_data *data)
         if (!ft_strncmp(s, find[i], 1))
         {
             if (!ft_strncmp(s, "F", 1))
-                if (check_f(s, tmp, code, data) == -1)
+                if (check_f(s, data) == -1)
                     return (-1);
             if (!ft_strncmp(s, "C", 1))
-                if (check_c(s, tmp, code, data) == -1)
+                if (check_c(s, data) == -1)
                     return (-1);
         }
         i++;

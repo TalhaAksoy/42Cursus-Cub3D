@@ -35,6 +35,13 @@
 # define T_FLOOR 0x654321
 # ifdef __APPLE__
 
+typedef enum e_map_xpm
+{
+	map = 1,
+	int_map = 2,
+	xpm = 4
+}			t_map_xpm;
+
 typedef enum e_keys
 {
 	Key_W = 13,
@@ -82,6 +89,15 @@ typedef enum e_color
 //https://www.youtube.com/watch?v=gYRrGTC7GtA
 //https://eastmanreference.com/complete-list-of-applescript-key-codes
 //https://github.com/Saxsori/ray-cast
+
+typedef struct s_control
+{
+	int read_file;
+	int check_wall;
+	int get_map;
+	int set_map;
+	int player_pos;
+}					t_control;
 
 typedef struct s_vector2
 {
@@ -184,15 +200,19 @@ void				ft_my_put_pixel(t_imgdata *img_data, int x, int y,
 unsigned int		ft_my_get_pixel(t_data *data, int x, int y, int i);
 void				render_window(t_data *data);
 double				deg2rad(int deg);
-int 				read_file(t_data *data , char *path);
+int 				read_file(t_data *data , int fd);
 char    			*last_trim(char *str);
 int 				ft_check_rgb(char *s, char **find, int size, t_data *data);
 char				*ft_is_space(char *s);
-void				array_cleaner(char **arr);
+void				array_cleaner(void **arr);
 int					color_bitwise(int r, int g, int b);
 int					check_null(t_data *data);
 int					ft_get_map(t_data *data, char *path);
 int 				array_len(char **str);
 int 				longest_line(t_data *data);
+int					top_wall(t_data *data);
+int					bottom_wall(t_data *data);
+int					left_wall(t_data *data);
+void				ft_exit(t_data *data);
 
 #endif

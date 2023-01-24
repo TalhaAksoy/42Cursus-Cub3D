@@ -1,6 +1,6 @@
 NAME		= mapcontrol.a
 CC			= gcc
-CFLAGS		= -g -Wall -Wextra -Werror -g
+CFLAGS		= -g -Wall -Wextra -Werror #-fsanitize=address
 SRCS		= $(wildcard ./*.c)
 OBJS		= $(SRCS:.c=.o)
 OBJ_DIR		= ./obj/
@@ -15,7 +15,7 @@ $(NAME): $(OBJS_FILE)
 
 $(OBJ_DIR)%.o : %.c
 	mkdir -p ./obj/
-	gcc -c $^ -o $@ -g
+	$(CC) $(CFLAGS) -c $^ -o $@ -g
 
 clean:
 	$(RM) $(OBJ_DIR)

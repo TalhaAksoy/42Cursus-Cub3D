@@ -647,7 +647,7 @@ int	key_press_func(int keycode, t_data *data)
 	if (data->player.direction < 0)
 		data->player.direction = 359;
 	if (keycode == Key_ESC)
-		exit(1);
+		ft_exit(data);
 	render_window(data);
 	return (0);
 }

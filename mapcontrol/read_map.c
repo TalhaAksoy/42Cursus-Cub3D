@@ -1,6 +1,6 @@
 # include "../cub3d.h"
 
-int ft_check_xpm(char *s, char **find, int size, t_data *data)
+int ft_check_xpm(char *s, char **find, t_data *data)
 {
     int fd;
     char *tmp;
@@ -17,7 +17,7 @@ int ft_check_xpm(char *s, char **find, int size, t_data *data)
             s = s + 2;
             s = ft_is_space(s);
             if (data->map_data.xpm_dir[i])
-                return (-1);
+                return (-(xpm));
             tmp = ft_substr(s, 0, ft_strlen(s) - 1);
             data->map_data.xpm_dir[i] = ft_strdup(tmp);
             data->map_data.xpm_dir[i] = last_trim(data->map_data.xpm_dir[i]);
@@ -29,21 +29,13 @@ int ft_check_xpm(char *s, char **find, int size, t_data *data)
     return (0);
 }
 
-char *ft_clearline(char *line)
-{
-    char *ret;
-
-    ret = ft_clearline(line);
-    free(line);
-    return (ret);
-}
-
 int ft_count_line(char *path)
 {
     int     fd;
     char    *line;
     int     line_count;
 
+    line_count = 0;
     fd = open(path, O_RDONLY);
     if (fd < 0)
         return(-1);
@@ -102,11 +94,10 @@ int control(char *tmp, int flags, t_data *data, int i)
         else
             data->map_data.map_end = i - 1;
     }
-    printf("%d => start | %d => end | burada2\n", data->map_data.map_start, data->map_data.map_end);
     return (flags + 1);
 }
 
-int ft_multi_map(t_data *data, int total_line, char **lines)
+int ft_multi_map(t_data *data, char **lines)
 {
     int flag;
     int i;
@@ -129,18 +120,68 @@ int ft_multi_map(t_data *data, int total_line, char **lines)
     return (0);
 }
 
+int check_all_way(t_data *data, int i, int j)
+{
+    if (data->map_data.map[i - 1][j] == 32 || (data->map_data.map[i - 1][j] >= 9 && data->map_data.map[i - 1][j] <= 13))
+        return (-1);
+    if (data->map_data.map[i + 1][j] == 32 || (data->map_data.map[i + 1][j] >= 9 && data->map_data.map[i + 1][j] <= 13))
+        return (-1);
+    if (data->map_data.map[i][j - 1] == 32 || (data->map_data.map[i][j - 1] >= 9 && data->map_data.map[i][j - 1] <= 13))
+        return (-1);
+    if (data->map_data.map[i][j + 1] == 32 || (data->map_data.map[i][j + 1] >= 9 && data->map_data.map[i][j + 1] <= 13))
+        return (-1);
+    if (data->map_data.map[i+1][j+1] == 32 || (data->map_data.map[i+1][j+1] >= 9 && data->map_data.map[i+1][j+1] <= 13))
+        return (-1);
+    if (data->map_data.map[i-1][j-1] == 32 || (data->map_data.map[i-1][j-1] >= 9 && data->map_data.map[i-1][j-1] <= 13))
+        return (-1);
+    if (data->map_data.map[i-1][j+1] == 32 || (data->map_data.map[i-1][j+1] >= 9 && data->map_data.map[i-1][j+1] <= 13))
+        return (-1);
+    if (data->map_data.map[i+1][j-1] == 32 || (data->map_data.map[i+1][j-1] >= 9 && data->map_data.map[i+1][j-1] <= 13))
+        return (-1);
+    return (0);
+}
+
+int check_wall(t_data *data)
+{
+    int i;
+    int j;
+
+    i= 1;
+    j = 1;
+    if (left_wall(data) == -1 || top_wall(data) == -1 || bottom_wall(data) == -1)
+        return (-(map));
+    while (data->map_data.map[i])
+    {
+        while(data->map_data.map[i][j])
+        {
+            if (data->map_data.map[i][j] == '0' || data->map_data.map[i][j] == 'N' 
+            || data->map_data.map[i][j] == 'S' || data->map_data.map[i][j] == 'E' 
+            || data->map_data.map[i][j] == 'W')
+            {
+                if (check_all_way(data, i, j) == -1)
+                    return (-1);
+            }
+            j++;
+        }
+        i++;
+        j=1;
+    }
+    return (0);
+}
+
 int put_map(t_data *data, char **lines)
 {
     int i;
     
     i = 0;
-    printf("%d => start | %d => end | burada\n", data->map_data.map_start, data->map_data.map_end);
     while(data->map_data.map_start + i <= data->map_data.map_end)
     {
         data->map_data.map[i] = ft_strdup(lines[data->map_data.map_start + i - 1]);
-        printf("%s map data\n", data->map_data.map[i]);
         i++;
     }
+    array_cleaner((void **)lines);
+    if (check_wall(data) == -1)
+        return (-1);
     return (0);
 }
 
@@ -156,19 +197,18 @@ int ft_get_map(t_data *data, char *path)
     lines = get_lines(path, total_line);
     if (!lines)
         return (-1);
-    if (ft_multi_map(data, total_line, lines) == -1)
-        return (-1);
-    for (int i = 0; i < total_line; i++)
+    if (ft_multi_map(data, lines) == -1)
     {
-        printf("%s => line\n", lines[i]);
+        array_cleaner((void **)lines);
+        return (-1);
     }
     if (put_map(data, lines) == -1)
-        return (-1);
+        return (map);
     return (0);
 }
 
 
-int get_map_height(t_data *data, char *path)
+int get_map_height(char *path)
 {
     char *line;
     char *tmp;
@@ -189,22 +229,18 @@ int get_map_height(t_data *data, char *path)
     return (ret);
 }
 
-int read_file(t_data *data , char *path)
+int read_file(t_data *data , int fd)
 {
     char    *line;
-    int     fd;
 
-    fd = open(path, O_RDONLY);
-    if (fd < 0)
-        exit(1);
     line = get_next_line(fd);
     while(line)
     {
-        if (ft_check_xpm(line, (char*[]){"NO", "EA", "WE", "SO"}, 4,data) == -1
+        if (ft_check_xpm(line, (char*[]){"NO", "EA", "WE", "SO"}, data) == -1
         || ft_check_rgb(line, (char*[]){"F","C"}, 2, data) == -1)
         {
             free(line);
-            return (-1);
+            return (xpm);
         }
         free(line);
         line = get_next_line(fd);
@@ -212,6 +248,6 @@ int read_file(t_data *data , char *path)
     free(line);
     close(fd);
     if (check_null(data) == -1)
-        return (-1);
+        return (xpm);
     return (0);
 }
