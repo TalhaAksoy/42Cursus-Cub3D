@@ -68,7 +68,7 @@ void	ft_forward(t_data *data)
 	t_vector2	w_check;
 	t_vector2	move;
 
-	printf("distance: %f %f\n", data.dist_r, data.dist_l);
+	printf("distance: %f %f\n", data->dist_r, data->dist_l);
 	move = (t_vector2){0.05 * cos(deg2rad(data->player.direction)), 0.05
 		* sin(deg2rad(-data->player.direction))};
 	w_check.y = data->player.pos.y - move.y;

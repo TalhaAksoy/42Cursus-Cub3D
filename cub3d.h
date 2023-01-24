@@ -50,13 +50,6 @@ typedef enum e_keys
 }					t_keys;
 # else
 
-typedef enum e_map_xpm
-{
-	map = 1,
-	int_map = 2,
-	xpm = 4
-}					t_map_xpm;
-
 typedef enum e_keys
 {
 	Key_W = 119,
@@ -70,6 +63,13 @@ typedef enum e_keys
 	key_rt = 65363
 }					t_keys;
 # endif
+
+typedef enum e_map_xpm
+{
+	map = 1,
+	int_map = 2,
+	xpm = 4
+}					t_map_xpm;
 
 typedef enum e_side
 {
@@ -185,7 +185,6 @@ typedef struct s_data
 }					t_data;
 
 int					key_press_func(int keycode, t_data *data);
-void				clear_img(t_data *data);
 t_ray_data			calculate_ray(t_data *data, double angle);
 void				draw_outlines(t_data *data);
 void				draw_square(int x, int y, t_data *data);
@@ -231,4 +230,15 @@ int					draw_screen4(t_data *data, t_ray_data *ray_data);
 int					check_wall_xpm(t_data *data);
 int					ft_set_map(t_data *data);
 int					control(char *tmp, int flags, t_data *data, int i);
+int					draw_wall_n_img(int angle, double distance, t_data *data,
+						t_ray_data ray_data);
+int					draw_wall_e_img(int angle, double distance, t_data *data,
+						t_ray_data ray_data);
+int					draw_wall_w_img(int angle, double distance, t_data *data,
+						t_ray_data ray_data);
+int					draw_wall_s_img(int angle, double distance, t_data *data,
+						t_ray_data ray_data);
+int					draw_floor(int angle, int i, t_data *data);
+int					draw_ceiling(int angle, int i, int start, t_data *data);
+void				ft_move(int keycode, t_data *data);
 #endif

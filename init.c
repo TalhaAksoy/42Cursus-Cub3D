@@ -78,7 +78,6 @@ void	init_var(t_data *data)
 	data->mlx = mlx_init();
 	data->width = MAPWIDTH * 64;
 	data->height = MAPHEIGHT * 64;
-	data->win = mlx_new_window(data->mlx, data->width, data->height, "UwU");
 	data->win4 = mlx_new_window(data->mlx, GAMEWIDTH, GAMEHEIGHT,
 			"Real super Lil Dicks");
 	data->img4.img = mlx_new_image(data->mlx, GAMEWIDTH, GAMEHEIGHT);
@@ -96,10 +95,10 @@ void	init_var(t_data *data)
 
 void	init_color(t_data *data)
 {
-	data.floor_color = data.map_data.colors[flooor][0] * 0x010000
-		+ data.map_data.colors[flooor][1] * 0x0100
-		+ data.map_data.colors[flooor][2] * 0x01;
-	data.ceiling_color = data.map_data.colors[ceiling][0] * 0x010000
-		+ data.map_data.colors[ceiling][1] * 0x0100
-		+ data.map_data.colors[ceiling][2] * 0x01;
+	data->floor_color = data->map_data.colors[flooor][0] * 0x010000
+		+ data->map_data.colors[flooor][1] * 0x0100
+		+ data->map_data.colors[flooor][2] * 0x01;
+	data->ceiling_color = data->map_data.colors[ceiling][0] * 0x010000
+		+ data->map_data.colors[ceiling][1] * 0x0100
+		+ data->map_data.colors[ceiling][2] * 0x01;
 }

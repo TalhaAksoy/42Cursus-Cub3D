@@ -27,7 +27,6 @@ void	render_window(t_data *data)
 	angle = data->player.fov;
 	ray = (t_ray_data *)malloc(sizeof(t_ray_data) * GAMEWIDTH);
 	mlx_clear_window(data->mlx, data->win4);
-	clear_img(data);
 	while (i--)
 	{
 		ray[i] = calculate_ray(data, angle);

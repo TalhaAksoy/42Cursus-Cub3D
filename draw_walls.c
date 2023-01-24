@@ -39,6 +39,7 @@ int	draw_wall_n_img(int angle, double distance, t_data *data,
 		i++;
 	}
 	i = draw_floor(angle, i, data);
+	return (0);
 }
 
 int	draw_wall_e_img(int angle, double distance, t_data *data,
@@ -68,6 +69,7 @@ int	draw_wall_e_img(int angle, double distance, t_data *data,
 		i++;
 	}
 	i = draw_floor(angle, i, data);
+	return (0);
 }
 
 int	draw_wall_w_img(int angle, double distance, t_data *data,
@@ -97,6 +99,7 @@ int	draw_wall_w_img(int angle, double distance, t_data *data,
 		i++;
 	}
 	i = draw_floor(angle, i, data);
+	return (0);
 }
 
 int	draw_wall_s_img(int angle, double distance, t_data *data,
@@ -126,6 +129,7 @@ int	draw_wall_s_img(int angle, double distance, t_data *data,
 		i++;
 	}
 	i = draw_floor(angle, i, data);
+	return (0);
 }
 
 int	draw_walls(t_data *data, t_ray_data *ray_data, double distance)
