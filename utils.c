@@ -1,18 +1,5 @@
 #include "cub3d.h"
 
-const int		mapVar2[MAPHEIGHT][MAPWIDTH] = {
-{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 1, 0, 0, 1, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-};
-
 void	clear_img(t_data *data) // ekrani temizlemek icin
 {
 	int i = 0;
@@ -555,7 +542,7 @@ void	ft_left(t_data *data)
 		.x = 0.05 * sin(deg2rad(data->player.direction))};
 	w_check.y = data->player.pos.y - move.y;
 	w_check.x = data->player.pos.x + move.x;
-	if (mapVar2[(int)w_check.x][(int)w_check.y] == 1 || mapVar2[(int)(w_check.x
+	if (data->map_data.int_map[(int)w_check.x][(int)w_check.y] == 1 || data->map_data.int_map[(int)(w_check.x
 			+ move.x)][(int)(w_check.y - move.y)] == 1)
 		return ;
 	data->player.pos.y -= move.y;
@@ -571,7 +558,7 @@ void	ft_right(t_data *data)
 		.x = 0.05 * sin(deg2rad(data->player.direction))};
 	w_check.y = data->player.pos.y + move.y;
 	w_check.x = data->player.pos.x - move.x;
-	if (mapVar2[(int)w_check.x][(int)w_check.y] == 1 || mapVar2[(int)(w_check.x
+	if (data->map_data.int_map[(int)w_check.x][(int)w_check.y] == 1 || data->map_data.int_map[(int)(w_check.x
 			- move.x)][(int)(w_check.y + move.y)] == 1)
 		return ;
 	data->player.pos.y += move.y;
@@ -587,7 +574,7 @@ void	ft_backward(t_data *data)
 		* sin(deg2rad(-data->player.direction))};
 	w_check.y = data->player.pos.y + move.y;
 	w_check.x = data->player.pos.x - move.x;
-	if (mapVar2[(int)w_check.x][(int)w_check.y] == 1 || mapVar2[(int)(w_check.x
+	if (data->map_data.int_map[(int)w_check.x][(int)w_check.y] == 1 || data->map_data.int_map[(int)(w_check.x
 			- move.x)][(int)(w_check.y + move.y)] == 1)
 		return ;
 	data->player.pos.y += move.y;
@@ -603,7 +590,7 @@ void	ft_forward(t_data *data)
 		* sin(deg2rad(-data->player.direction))};
 	w_check.y = data->player.pos.y - move.y;
 	w_check.x = data->player.pos.x + move.x;
-	if (mapVar2[(int)w_check.x][(int)w_check.y] == 1 || mapVar2[(int)(w_check.x
+	if (data->map_data.int_map[(int)w_check.x][(int)w_check.y] == 1 || data->map_data.int_map[(int)(w_check.x
 			+ move.x)][(int)(w_check.y - move.y)] == 1)
 		return ;
 	data->player.pos.y -= move.y;

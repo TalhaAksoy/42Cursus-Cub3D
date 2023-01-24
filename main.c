@@ -41,6 +41,42 @@ void init_xpm(t_data *data)
 	data->xpm[south].img_ptr = mlx_get_data_addr(data->xpm[south].img, &data->xpm[south].bpp, &data->xpm[south].line_len, &data->xpm[south].endian);
 }
 
+int array_len(char **str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+		i++;
+	return (i);
+}
+
+int ft_set_map(t_data *data)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	data->map_data.int_map = ft_calloc(array_len(data->map_data.map), sizeof(int *));
+	while(data->map_data.map[i])
+	{
+		data->map_data.int_map[i] = ft_calloc(ft_strlen(data->map_data.map[i]), sizeof(int));
+		while(data->map_data.map[i][j])
+		{
+			if (data->map_data.map[i][j] == 32)
+				data->map_data.map[i][j] = '1';
+			else if (data->map_data.map[i][j] == '\n')
+				break;
+			data->map_data.int_map[i][j] = data->map_data.map[i][j] - 48;
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	return (0);
+}
+
 int check_wall_xpm(t_data *data)
 {
 	int i;
@@ -77,6 +113,11 @@ int main()
 		return (1);
 	}
 	if (ft_get_map(&data, "./map.cub") == -1)
+	{
+		printf("Error\n");
+		return (1);
+	}
+	if (ft_set_map(&data) == -1)
 	{
 		printf("Error\n");
 		return (1);

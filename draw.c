@@ -1,19 +1,5 @@
 #include "cub3d.h"
 
-
-int			mapVar[MAPHEIGHT][MAPWIDTH] = {
-{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 1, 0, 0, 1, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-};
-
 void	init_req(t_vector2 *start, t_data *data,
 			t_vector2 *sin_cos, double angle)
 {
@@ -41,7 +27,7 @@ void	draw_ray(t_ray_data *ray_data, t_vector2 *ray,
 		MAPHEIGHT)};
 		(*ray_data).for_wall = (t_vector2){.x = (*ray).x / \
 		(data->width / MAPWIDTH), .y = (*ray).y / (data->width / MAPWIDTH)};
-		wall = mapVar[(int)floor((*ray_data).wall_location.x)] \
+		wall = data->map_data.int_map[(int)floor((*ray_data).wall_location.x)] \
 		[(int)floor((*ray_data).wall_location.y)];
 	}
 }
@@ -74,7 +60,7 @@ void	draw_outlines(t_data *data)
 	{
 		while (j < MAPWIDTH)
 		{
-			if (mapVar[i][j] == 1)
+			if (data->map_data.int_map[i][j] == 1)
 				draw_square(i, j, data);
 			j++;
 		}

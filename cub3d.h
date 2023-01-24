@@ -24,8 +24,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define PX 7.12
-# define PY 6.32
+# define PX 1.3
+# define PY 1.3
 # define MAPWIDTH 10
 # define MAPHEIGHT 10
 # define CELLSIZE 64
@@ -148,6 +148,7 @@ typedef struct s_mapdata
 	int colors[2][3];
 	int map_start;
 	int map_end;
+	int **int_map;
 }	t_mapdata;
 
 typedef struct s_data
