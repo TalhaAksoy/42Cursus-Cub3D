@@ -146,6 +146,8 @@ typedef struct s_mapdata
 	int map_width;
 	char *xpm_dir[4];
 	int colors[2][3];
+	int map_start;
+	int map_end;
 }	t_mapdata;
 
 typedef struct s_data
@@ -184,5 +186,9 @@ int 				read_file(t_data *data , char *path);
 char    			*last_trim(char *str);
 int 				ft_check_rgb(char *s, char **find, int size, t_data *data);
 char				*ft_is_space(char *s);
+void				array_cleaner(char **arr);
+int					color_bitwise(int r, int g, int b);
+int					check_null(t_data *data);
+int					ft_get_map(t_data *data, char *path);
 
 #endif

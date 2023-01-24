@@ -15,7 +15,7 @@ $(NAME): $(OBJS_FILE)
 
 $(OBJ_DIR)%.o : %.c
 	mkdir -p ./obj/
-	gcc -c $^ -o $@
+	gcc -c $^ -o $@ -g
 
 clean:
 	$(RM) $(OBJ_DIR)

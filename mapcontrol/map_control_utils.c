@@ -17,41 +17,40 @@ char    *last_trim(char *str)
     return (str);
 }
 
-int ft_check_rgb(char *s, char **find, int size, t_data *data)
+void	array_cleaner(char **arr)
 {
-    int fd;
-    char *tmp;
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+int check_null(t_data *data)
+{
     int i;
-    int j;
 
-
-    fd = 0;
     i = 0;
-    j = 0;
-    s = ft_is_space(s);
     while(i < 4)
     {
-        if (!ft_strncmp(s, find[i], 1))
-        {
-            s = s + 1;
-            s = ft_is_space(s);
-            while (data->map_data.colors[i])
-            {
-                while(data->map_data.colors[i][j])
-                {
-                    if (data->map_data.colors[i][j] > 256 && data->map_data.colors[i][j] < 0)
-                        return (-1);
-                    j++;
-                }
-                i++;
-            }
-            tmp = ft_substr(s, 0, ft_strlen(s) - 1);
-            data->map_data.xpm_dir[i] = ft_strdup(tmp);
-            data->map_data.xpm_dir[i] = last_trim(data->map_data.xpm_dir[i]);
-            free(tmp);
-            break ;
-        }
+        if (data->map_data.xpm_dir[i] == NULL)
+            return (-1);
         i++;
     }
     return (0);
+}
+
+char *ft_is_space(char *s)
+{
+    while(*s == ' ' || (*s >= 9 && *s <= 13 && *s != 10))
+    {
+        s++;
+    }
+    return (s);
 }

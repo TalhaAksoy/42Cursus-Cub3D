@@ -25,8 +25,8 @@ void init_var(t_data *data){
 	data->img4.addr = mlx_get_data_addr(data->img4.img, &data->img4.bpp, &data->img4.line_len, &data->img4.endian);
 	ft_bzero(data->xpm, sizeof(t_xpm) * 4);
 	ft_bzero(&data->map_data, sizeof(t_mapdata));
-	data->ceiling_color = T_SKY;
-	data->floor_color = T_FLOOR;
+	data->ceiling_color = data->map_data.colors[flooor][0]* 0x010000+data->map_data.colors[flooor][1]*0x0100+data->map_data.colors[flooor][2]*0x01;
+	data->floor_color = data->map_data.colors[ceiling][0] * 0x010000 + data->map_data.colors[ceiling][1] * 0x0100 + data->map_data.colors[ceiling][2] * 0x01;
 }
 
 void init_xpm(t_data *data)
@@ -41,16 +41,6 @@ void init_xpm(t_data *data)
 	data->xpm[south].img_ptr = mlx_get_data_addr(data->xpm[south].img, &data->xpm[south].bpp, &data->xpm[south].line_len, &data->xpm[south].endian);
 }
 
-void init_color(t_data *data)
-{
-	data->map_data.colors[0][0] = 256;
-	data->map_data.colors[0][1] = 256;
-	data->map_data.colors[0][2] = 256;
-	data->map_data.colors[1][0] = 256;
-	data->map_data.colors[1][1] = 256;
-	data->map_data.colors[1][2] = 256;
-}
-
 int check_wall_xpm(t_data *data)
 {
 	int i;
@@ -58,11 +48,13 @@ int check_wall_xpm(t_data *data)
 
 	i = 0;
 	fd = 0;
-	while(data->map_data.xpm_dir[i])
+	while(i < 4)
 	{
 		fd = open(data->map_data.xpm_dir[i], O_RDONLY);
 		if (fd == -1)
+		{
 			return (-1);
+		}
 		close(fd);
 		i++;
 	}
@@ -75,11 +67,23 @@ int main()
 
 	init_var(&data);
 	if (read_file(&data, "./map.cub") == -1)
+	{
+		printf("Error\n");
 		return (1);
+	}
 	if (check_wall_xpm(&data) == -1)
+	{
+		printf("Error\n");
 		return (1);
+	}
+	if (ft_get_map(&data, "./map.cub") == -1)
+	{
+		printf("Error\n");
+		return (1);
+	}
 	init_xpm(&data);
-	init_color(&data);
+	data.floor_color = data.map_data.colors[flooor][0] * 0x010000 + data.map_data.colors[flooor][1] * 0x0100 + data.map_data.colors[flooor][2] * 0x01;
+	data.ceiling_color = data.map_data.colors[ceiling][0] * 0x010000 + data.map_data.colors[ceiling][1] * 0x0100 + data.map_data.colors[ceiling][2] * 0x01;
 	// initBisiler
 	// initBaskaBisilerFalan
 	render_window(&data);
