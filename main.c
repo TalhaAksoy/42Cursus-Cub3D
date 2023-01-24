@@ -186,7 +186,7 @@ int error_check(t_data *data, char *path)
 	if (fd < 0 || extension_check(path) == -1)
 	{
 		printf("Error\n");
-		return (-8);
+		return (-1);
 	}
 	control = (t_control){read_file(data, fd), check_wall_xpm(data),
 		ft_get_map(data, path), ft_set_map(data),
