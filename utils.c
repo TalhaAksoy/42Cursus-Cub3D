@@ -55,7 +55,6 @@ int	error_check(t_data *data, char *path)
 		ft_get_map(data, path), ft_set_map(data),
 		.player_pos = (data->player.pos.x == 0 && data->player.pos.y == 0)
 		* (xpm | map | int_map)};
-	printf("%d, %d, %d, %d, %d\n", control.check_wall, control.get_map,  control.player_pos, control.read_file, control.set_map);
 	if (control.read_file != 0 || control.check_wall != 0
 		|| control.get_map != 0 || control.set_map != 0
 		|| control.player_pos != 0)
