@@ -6,7 +6,7 @@
 /*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:31:58 by Lil_Dicks         #+#    #+#             */
-/*   Updated: 2023/01/25 04:47:34 by Lil_Dicks        ###   ########.fr       */
+/*   Updated: 2023/01/25 09:44:37 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ int	put_map(t_data *data, char **lines)
 	int	i;
 
 	i = 0;
-	printf("%d %d xyz\n", data->map_data.map_end, data->map_data.map_start);
 	while (data->map_data.map_start + i <= data->map_data.map_end)
 	{
 		data->map_data.map[i] = ft_strdup(lines[data->map_data.map_start + i]);
 		i++;
 	}
-	printf("%s\n",lines[data->map_data.map_start + i - 1]);
 	array_cleaner((void **)lines);
 	if (check_wall(data) == -1)
 		return (-1);

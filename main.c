@@ -6,7 +6,7 @@
 /*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:01:42 by Lil_Dicks         #+#    #+#             */
-/*   Updated: 2023/01/25 04:49:31 by Lil_Dicks        ###   ########.fr       */
+/*   Updated: 2023/01/25 09:52:57 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_set_map_in(t_data *data, int i, int j)
 {
-	printf("%d %d abc\n", data->map_data.map_end, data->map_data.map_start);
 	while (i <= data->map_data.map_end - data->map_data.map_start)
 	{
 		data->map_data.int_map[i] = (int *)ft_calloc(longest_line(data),
@@ -48,12 +47,13 @@ int	ft_set_map(t_data *data)
 	return (ft_set_map_in(data, i, j));
 }
 
-void	ft_exit(t_data *data)
+int	ft_exit(t_data *data)
 {
 	free_func(data, map | xpm);
 	mlx_destroy_image(data->mlx, data->img4.img);
 	mlx_destroy_window(data->mlx, data->win4);
-	exit(1);
+	exit(0);
+	return (0);
 }
 
 int	main(int ac, char *av[])
@@ -71,6 +71,7 @@ int	main(int ac, char *av[])
 		init_color(&data);
 		render_window(&data);
 		mlx_hook(data.win4, 2, 1, key_press_func, &data);
+		mlx_hook(data.win4, 17, 0, ft_exit, &data);
 		mlx_loop(data.mlx);
 	}
 	else

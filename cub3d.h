@@ -6,7 +6,7 @@
 /*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 01:30:37 by Lil_dicks         #+#    #+#             */
-/*   Updated: 2023/01/25 01:02:00 by Lil_Dicks        ###   ########.fr       */
+/*   Updated: 2023/01/25 09:43:03 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int					longest_line(t_data *data);
 int					top_wall(t_data *data);
 int					bottom_wall(t_data *data);
 int					left_wall(t_data *data);
-void				ft_exit(t_data *data);
+int					ft_exit(t_data *data);
 int					draw_walls(t_data *data, t_ray_data *ray_data,
 						double distance);
 int					error_check(t_data *data, char *path);

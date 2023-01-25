@@ -6,7 +6,7 @@
 /*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:22:27 by Lil_Dicks         #+#    #+#             */
-/*   Updated: 2023/01/25 01:42:50 by Lil_Dicks        ###   ########.fr       */
+/*   Updated: 2023/01/25 09:51:21 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	control(char *tmp, int flags, t_data *data, int i)
 		if (*tmp != '0' && *tmp != '1')
 			return (flags);
 	}
-	printf("%d %d asd\n", data->map_data.map_end , data->map_data.map_start);
 	return (flags + 1);
 }
 
