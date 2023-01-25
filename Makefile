@@ -20,12 +20,11 @@ OBJS_DIR		= ./obj/
 OBJS			= $(addprefix $(OBJS_DIR), $(OBJS_FILE))
 
 RM				= rm -rf
-REMOVEME 		= -g
 
 all: $(NAME)
 
 $(NAME): $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(REMOVEME) $(OUTFILE) $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(MLXFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) $(OUTFILE) $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(MLXFLAGS)
 
 $(LIB_MATH) :
 	make -C ./mathlib
@@ -50,14 +49,14 @@ $(LIB_FT) :
 
 $(OBJS_DIR)%.o:%.c
 	mkdir -p $(OBJS_DIR)
-	$(CC) -c $(CFLAGS) $^ -o $@ $(REMOVEME)
+	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
 	$(RM) $(OBJS_DIR)
-	$(RM) ./libft/*.o
+	make clean -C ./libft
 
 fclean: clean
-	$(RM) ./libft/libft.a
+	make fclean -C ./libft
 	$(RM) $(NAME)
 	$(RM) ./mlx
 	make fclean -C ./mathlib
