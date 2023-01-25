@@ -6,7 +6,7 @@
 /*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:01:42 by Lil_Dicks         #+#    #+#             */
-/*   Updated: 2023/01/25 01:00:28 by Lil_Dicks        ###   ########.fr       */
+/*   Updated: 2023/01/25 04:49:31 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_set_map_in(t_data *data, int i, int j)
 {
-	printf("%d %d abc\n",data->map_data.map_end , data->map_data.map_start);
+	printf("%d %d abc\n", data->map_data.map_end, data->map_data.map_start);
 	while (i <= data->map_data.map_end - data->map_data.map_start)
 	{
 		data->map_data.int_map[i] = (int *)ft_calloc(longest_line(data),
