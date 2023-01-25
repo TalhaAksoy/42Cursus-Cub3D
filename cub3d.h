@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lil_dicks <42istanbul.com.tr>              +#+  +:+       +#+        */
+/*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 01:30:37 by Lil_dicks         #+#    #+#             */
-/*   Updated: 2022/01/29 22:21:10 by Lil_dicks        ###   ########.tr       */
+/*   Updated: 2023/01/25 09:43:03 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-# include "mathlib/mathlib.h"
-# include "get_next_line.h"
-# include "mlx/mlx.h"
 # include "./libft/libft.h"
+# include "get_next_line.h"
+# include "mathlib/mathlib.h"
+# include "mlx/mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdarg.h>
@@ -33,14 +33,8 @@
 # define GAMEHEIGHT 600
 # define T_SKY 0x123456
 # define T_FLOOR 0x654321
-# ifdef __APPLE__
 
-typedef enum e_map_xpm
-{
-	map = 1,
-	int_map = 2,
-	xpm = 4
-}			t_map_xpm;
+# ifdef __APPLE__
 
 typedef enum e_keys
 {
@@ -54,7 +48,6 @@ typedef enum e_keys
 	key_lt = 123,
 	key_rt = 124
 }					t_keys;
-
 # else
 
 typedef enum e_keys
@@ -69,8 +62,14 @@ typedef enum e_keys
 	key_lt = 65361,
 	key_rt = 65363
 }					t_keys;
-
 # endif
+
+typedef enum e_map_xpm
+{
+	map = 1,
+	int_map = 2,
+	xpm = 4
+}					t_map_xpm;
 
 typedef enum e_side
 {
@@ -78,13 +77,13 @@ typedef enum e_side
 	east,
 	west,
 	south
-}	t_side;
+}					t_side;
 
 typedef enum e_color
 {
 	flooor,
 	ceiling
-}	t_color;
+}					t_color;
 
 //https://www.youtube.com/watch?v=gYRrGTC7GtA
 //https://eastmanreference.com/complete-list-of-applescript-key-codes
@@ -92,11 +91,11 @@ typedef enum e_color
 
 typedef struct s_control
 {
-	int read_file;
-	int check_wall;
-	int get_map;
-	int set_map;
-	int player_pos;
+	int				read_file;
+	int				check_wall;
+	int				get_map;
+	int				set_map;
+	int				player_pos;
 }					t_control;
 
 typedef struct s_vector2
@@ -155,26 +154,26 @@ typedef struct s_player
 
 typedef struct s_mapdata
 {
-	char **map;
-	char **map_clone;
-	char p_dic;
-	t_vector2 p_start;
-	int map_height;
-	int map_width;
-	char *xpm_dir[4];
-	int colors[2][3];
-	int map_start;
-	int map_end;
-	int **int_map;
-}	t_mapdata;
+	char			**map;
+	char			**map_clone;
+	char			p_dic;
+	t_vector2		p_start;
+	int				map_height;
+	int				map_width;
+	char			*xpm_dir[4];
+	int				colors[2][3];
+	int				map_start;
+	int				map_end;
+	int				**int_map;
+}					t_mapdata;
 
 typedef struct s_data
 {
 	void			*mlx;
+	void			*win4;
 	void			*win;
 	void			*win2;
 	void			*win3;
-	void			*win4;
 	t_imgdata		img;
 	t_imgdata		img2;
 	t_imgdata		img3;
@@ -187,12 +186,12 @@ typedef struct s_data
 	int				dray;
 	unsigned int	ceiling_color;
 	unsigned int	floor_color;
+	double			dist_l;
+	double			dist_r;
 }					t_data;
 
 int					key_press_func(int keycode, t_data *data);
-void				clear_img(t_data *data);
 t_ray_data			calculate_ray(t_data *data, double angle);
-
 void				draw_outlines(t_data *data);
 void				draw_square(int x, int y, t_data *data);
 void				ft_my_put_pixel(t_imgdata *img_data, int x, int y,
@@ -200,19 +199,52 @@ void				ft_my_put_pixel(t_imgdata *img_data, int x, int y,
 unsigned int		ft_my_get_pixel(t_data *data, int x, int y, int i);
 void				render_window(t_data *data);
 double				deg2rad(int deg);
-int 				read_file(t_data *data , int fd);
-char    			*last_trim(char *str);
-int 				ft_check_rgb(char *s, char **find, int size, t_data *data);
+int					read_file(t_data *data, int fd);
+char				*last_trim(char *str);
+int					ft_check_rgb(char *s, char **find, int size, t_data *data);
 char				*ft_is_space(char *s);
 void				array_cleaner(void **arr);
 int					color_bitwise(int r, int g, int b);
 int					check_null(t_data *data);
 int					ft_get_map(t_data *data, char *path);
-int 				array_len(char **str);
-int 				longest_line(t_data *data);
+int					array_len(char **str);
+int					longest_line(t_data *data);
 int					top_wall(t_data *data);
 int					bottom_wall(t_data *data);
 int					left_wall(t_data *data);
-void				ft_exit(t_data *data);
-
+int					ft_exit(t_data *data);
+int					draw_walls(t_data *data, t_ray_data *ray_data,
+						double distance);
+int					error_check(t_data *data, char *path);
+t_control			ft_recontrol(t_control control);
+int					extension_check(char *path);
+void				ft_xpm_cleaner(t_data *data);
+void				free_func(t_data *data, int control_data);
+int					array_len(char **str);
+void				render_window(t_data *data);
+void				init_color(t_data *data);
+void				init_var(t_data *data);
+void				init_xpm(t_data *data);
+int					init_direction(t_data *data, int i, int j);
+int					get_map_height(char *path);
+int					put_map(t_data *data, char **lines);
+int					check_wall(t_data *data);
+int					check_all_way(t_data *data, int i, int j);
+int					ft_count_line(char *path);
+int					ft_multi_map(t_data *data, char **lines);
+int					draw_screen4(t_data *data, t_ray_data *ray_data);
+int					check_wall_xpm(t_data *data);
+int					ft_set_map(t_data *data);
+int					control(char *tmp, int flags, t_data *data, int i);
+int					draw_wall_n_img(int angle, double distance, t_data *data,
+						t_ray_data ray_data);
+int					draw_wall_e_img(int angle, double distance, t_data *data,
+						t_ray_data ray_data);
+int					draw_wall_w_img(int angle, double distance, t_data *data,
+						t_ray_data ray_data);
+int					draw_wall_s_img(int angle, double distance, t_data *data,
+						t_ray_data ray_data);
+int					draw_floor(int angle, int i, t_data *data);
+int					draw_ceiling(int angle, int i, int start, t_data *data);
+void				ft_move(int keycode, t_data *data);
 #endif

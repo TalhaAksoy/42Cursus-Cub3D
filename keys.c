@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,22 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "cub3d.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-
-# include <stdlib.h>
-# include <unistd.h>
-
-int		ft_strlenn(char *buf);
-char	*get_next_line(int fd);
-char	*get_new_line(char *buffer);
-char	*first_line(int fd, char *buffer);
-char	*strjoin(char *buffer, char *new_buffer);
-char	*get_new_buffer(char *buffer);
-int		find_nl_char(char *buffer);
-
-#endif
+int	key_press_func(int keycode, t_data *data)
+{
+	if (keycode == Key_W || keycode == Key_A || keycode == Key_S
+		|| keycode == Key_D)
+		ft_move(keycode, data);
+	if (keycode == key_rt)
+		data->player.direction += 3;
+	if (keycode == key_lt)
+		data->player.direction -= 3;
+	if (data->player.direction >= 360)
+		data->player.direction = ft_abs((int)data->player.direction % 360);
+	if (data->player.direction < 0)
+		data->player.direction = 359;
+	if (keycode == Key_ESC)
+		ft_exit(data);
+	render_window(data);
+	return (0);
+}

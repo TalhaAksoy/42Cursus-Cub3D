@@ -1,6 +1,6 @@
 NAME			= Cub3D
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -O3 #-fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -O3
 OUTFILE			= -o $(NAME)
 OS 				:= $(shell uname)
 
@@ -10,29 +10,24 @@ else
 	MLXFLAGS 	= -lm -lXext -lX11
 endif
 
-INC_LIBS		= -I./mathlib $(LIB_MATH) -I./libft $(LIB_FT)  -I./mlx $(LIB_MLX) $(LIB_CONTROL)
+INC_LIBS		= -I./mathlib $(LIB_MATH) -I./libft $(LIB_FT)  -I./mlx $(LIB_MLX)
 LIB_MLX			= ./mlx/libmlx.a
 LIB_MATH		= ./mathlib/mathlib.a
-LIB_CONTROL		= ./mapcontrol/mapcontrol.a
-LIB_FT			= ./libft/libft.a 
-SRCS_FILE		= utils.c main.c get_next_line.c get_next_line_utils.c draw.c
+LIB_FT			= ./libft/libft.a
+SRCS_FILE		= color_check.c draw.c draw_others.c draw_walls.c get_next_line.c get_next_line_utils.c init.c keys.c main.c map_control_utils.c move.c read_map.c read_map_utils.c utils2.c utils.c valid_map.c
 OBJS_FILE		= $(SRCS_FILE:.c=.o)
 OBJS_DIR		= ./obj/
 OBJS			= $(addprefix $(OBJS_DIR), $(OBJS_FILE))
 
 RM				= rm -rf
-REMOVEME 		= -g
 
 all: $(NAME)
 
-$(NAME): $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(OBJS) $(LIB_CONTROL)
-	$(CC) $(CFLAGS) $(OBJS) $(REMOVEME) $(OUTFILE) $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(LIB_CONTROL)  $(MLXFLAGS)
+$(NAME): $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(OUTFILE) $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(MLXFLAGS)
 
 $(LIB_MATH) :
 	make -C ./mathlib
-
-$(LIB_CONTROL):
-	make -C ./mapcontrol
 
 $(LIB_MLX) :
 ifeq ($(OS), Darwin)
@@ -41,7 +36,7 @@ ifeq ($(OS), Darwin)
 	$(RM) mlx.tgz
 	mv ./minilibx_opengl_20191021 ./mlx
 	make -C ./mlx
-else 
+else
 	curl https://projects.intra.42.fr/uploads/document/document/12154/minilibx-linux.tgz -o mlx.tgz
 	tar -xf mlx.tgz
 	$(RM) mlx.tgz
@@ -54,18 +49,17 @@ $(LIB_FT) :
 
 $(OBJS_DIR)%.o:%.c
 	mkdir -p $(OBJS_DIR)
-	$(CC) -c $(CFLAGS) $^ -o $@ $(REMOVEME)
+	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
 	$(RM) $(OBJS_DIR)
-	$(RM) ./libft/*.o
+	make clean -C ./libft
 
 fclean: clean
-	$(RM) ./libft/libft.a
+	make fclean -C ./libft
 	$(RM) $(NAME)
-#	$(RM) ./mlx
+	$(RM) ./mlx
 	make fclean -C ./mathlib
-	make fclean -C ./mapcontrol
 
 re: fclean all
 
