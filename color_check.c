@@ -58,7 +58,6 @@ int	check_f(char *s, t_data *data)
 	tmp = ft_substr(s, 0, ft_strlen(s) - 1);
 	tmp = last_trim(tmp);
 	code = ft_split(tmp, ',');
-	printf("%s %s %s\n", code[0], code[1], code[2]);
 	if (color_nbr_check(code) == -1)
 	{
 		free(tmp);
@@ -83,7 +82,6 @@ int	check_c(char *s, t_data *data)
 	tmp = ft_substr(s, 0, ft_strlen(s) - 1);
 	tmp = last_trim(tmp);
 	code = ft_split(tmp, ',');
-	printf("%s %s %s\n", code[0], code[1], code[2]);
 	if (color_nbr_check(code) == -1)
 	{
 		free(tmp);

@@ -38,12 +38,13 @@ int	put_map(t_data *data, char **lines)
 	int	i;
 
 	i = 0;
-	while (data->map_data.map_start + i <= data->map_data.map_end)
+	printf("%d %d xyz\n", data->map_data.map_end, data->map_data.map_start);
+	while (data->map_data.map_start + i <= data->map_data.map_end + 1)
 	{
-		data->map_data.map[i] = ft_strdup(lines[data->map_data.map_start + i
-				- 1]);
+		data->map_data.map[i] = ft_strdup(lines[data->map_data.map_start + i]);
 		i++;
 	}
+	printf("%s\n",lines[data->map_data.map_start + i - 1]);
 	array_cleaner((void **)lines);
 	if (check_wall(data) == -1)
 		return (-1);
@@ -59,7 +60,7 @@ int	check_wall(t_data *data)
 	j = 0;
 	if (left_wall(data) == -1 || top_wall(data) == -1 || bottom_wall(data)
 		== -1)
-		return (-(map));
+		return (-1);
 	while (data->map_data.map[++i])
 	{
 		while (data->map_data.map[i][++j])

@@ -65,20 +65,28 @@ char	**get_lines(char *path, int total_line)
 
 int	control(char *tmp, int flags, t_data *data, int i)
 {
-	if (flags == 0 || flags == 2)
+	if (flags == 0)
 	{
 		if (*tmp != '0' && *tmp != '1')
-			return (flags);
-		else if (flags == 0)
+		{
 			data->map_data.map_start = i + 1;
+			return (flags);
+		}
 	}
 	if (flags == 1)
 	{
 		if (*tmp == '0' || *tmp == '1')
+		{
+			data->map_data.map_end = i;
 			return (flags);
-		else
-			data->map_data.map_end = i - 1;
+		}
 	}
+	if (flags == 2)
+	{
+		if (*tmp != '0' && *tmp != '1')
+			return (flags);
+	}
+	printf("%d %d asd\n", data->map_data.map_end , data->map_data.map_start);
 	return (flags + 1);
 }
 

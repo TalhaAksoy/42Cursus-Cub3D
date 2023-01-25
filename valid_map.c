@@ -34,7 +34,9 @@ int	bottom_wall(t_data *data)
 	while (data->map_data.map[array_len(data->map_data.map) - 1][i])
 	{
 		if (data->map_data.map[array_len(data->map_data.map) - 1][i] == '0')
+		{
 			return (-1);
+		}
 		i++;
 	}
 	return (0);
@@ -72,6 +74,8 @@ int	ft_multi_map(t_data *data, char **lines)
 		i++;
 	}
 	if (flag == 1)
+	{
 		data->map_data.map_end = i;
+	}
 	return (0);
 }

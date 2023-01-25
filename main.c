@@ -14,6 +14,7 @@
 
 int	ft_set_map_in(t_data *data, int i, int j)
 {
+	printf("%d %d abc\n",data->map_data.map_end , data->map_data.map_start);
 	while (i <= data->map_data.map_end - data->map_data.map_start)
 	{
 		data->map_data.int_map[i] = (int *)ft_calloc(longest_line(data),
