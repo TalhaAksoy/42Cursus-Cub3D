@@ -26,7 +26,7 @@ int	ft_check_xpm(char *s, char **find, t_data *data)
 			s = s + 2;
 			s = ft_is_space(s);
 			if (data->map_data.xpm_dir[i])
-				return (-(xpm));
+				return (-1);
 			tmp = ft_substr(s, 0, ft_strlen(s) - 1);
 			data->map_data.xpm_dir[i] = ft_strdup(tmp);
 			data->map_data.xpm_dir[i] = last_trim(data->map_data.xpm_dir[i]);
