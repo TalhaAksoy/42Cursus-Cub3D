@@ -6,11 +6,11 @@
 /*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:22:27 by Lil_Dicks         #+#    #+#             */
-/*   Updated: 2023/01/25 00:30:50 by Lil_Dicks        ###   ########.fr       */
+/*   Updated: 2023/01/25 01:42:50 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "cub3d.h"
 
 int	ft_check_xpm(char *s, char **find, t_data *data)
 {

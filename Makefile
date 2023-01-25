@@ -10,13 +10,11 @@ else
 	MLXFLAGS 	= -lm -lXext -lX11
 endif
 
-INC_LIBS		= -I./mathlib $(LIB_MATH) -I./libft $(LIB_FT)  -I./mlx $(LIB_MLX) $(LIB_CONTROL)
+INC_LIBS		= -I./mathlib $(LIB_MATH) -I./libft $(LIB_FT)  -I./mlx $(LIB_MLX)
 LIB_MLX			= ./mlx/libmlx.a
 LIB_MATH		= ./mathlib/mathlib.a
-LIB_CONTROL		= ./mapcontrol/mapcontrol.a
 LIB_FT			= ./libft/libft.a
-SRCS_FILE		= 	draw.c draw_others.c draw_walls.c get_next_line.c get_next_line_utils.c init.c keys.c main.c move.c utils.c utils2.c
-
+SRCS_FILE		= color_check.c draw.c draw_others.c draw_walls.c get_next_line.c get_next_line_utils.c init.c keys.c main.c map_control_utils.c move.c read_map.c read_map_utils.c utils2.c utils.c valid_map.c
 OBJS_FILE		= $(SRCS_FILE:.c=.o)
 OBJS_DIR		= ./obj/
 OBJS			= $(addprefix $(OBJS_DIR), $(OBJS_FILE))
@@ -26,14 +24,11 @@ REMOVEME 		= -g
 
 all: $(NAME)
 
-$(NAME): $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(OBJS) $(LIB_CONTROL)
-	$(CC) $(CFLAGS) $(OBJS) $(REMOVEME) $(OUTFILE) $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(LIB_CONTROL)  $(MLXFLAGS)
+$(NAME): $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(REMOVEME) $(OUTFILE) $(LIB_MATH) $(LIB_MLX) $(LIB_FT) $(MLXFLAGS)
 
 $(LIB_MATH) :
 	make -C ./mathlib
-
-$(LIB_CONTROL):
-	make -C ./mapcontrol
 
 $(LIB_MLX) :
 ifeq ($(OS), Darwin)
@@ -66,7 +61,6 @@ fclean: clean
 	$(RM) $(NAME)
 	$(RM) ./mlx
 	make fclean -C ./mathlib
-	make fclean -C ./mapcontrol
 
 re: fclean all
 
