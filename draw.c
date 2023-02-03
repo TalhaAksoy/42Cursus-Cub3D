@@ -6,20 +6,21 @@
 /*   By: Lil_Dicks <.>                              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:57:28 by Lil_Dicks         #+#    #+#             */
-/*   Updated: 2023/01/25 00:37:09 by Lil_Dicks        ###   ########.fr       */
+/*   Updated: 2023/02/03 19:07:54 by Lil_Dicks        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_req(t_vector2 *start, t_data *data,
-			t_vector2 *sin_cos, double angle)
+void	init_req(t_vector2 *start, t_data *data, t_vector2 *sin_cos,
+		double angle)
 {
 	*start = (t_vector2){.x = data->player.pos.x * (data->width / MAPWIDTH),
-		data->player.pos.y * (data->height / MAPHEIGHT)};
-	*sin_cos = (t_vector2){.x = cos((angle + data->player.direction \
-	- (data->player.fov / 2)) * M_PI / 180), .y = sin((angle \
-	+ data->player.direction - (data->player.fov / 2)) * M_PI / 180)};
+							data->player.pos.y * (data->height / MAPHEIGHT)};
+	*sin_cos = (t_vector2){.x = cos((angle + data->player.direction
+				- (data->player.fov / 2)) * M_PI / 180), .y = sin((angle
+				+ data->player.direction - (data->player.fov / 2)) * M_PI
+			/ 180)};
 }
 /*dis duvarlari kontrol eder 2d de*/
 void	draw_outlines(t_data *data)
@@ -51,6 +52,8 @@ void	draw_square(int y, int x, t_data *data)
 	start_y = y * 64;
 	x = 0;
 	y = 0;
+	if (start_x >= data->width || start_y >= data->height)
+		return ;
 	while (x < 64)
 	{
 		while (y < 64)
@@ -63,8 +66,8 @@ void	draw_square(int y, int x, t_data *data)
 	}
 }
 /*rayleri cizer*/
-void	draw_ray(t_ray_data *ray_data, t_vector2 *ray,
-		t_data *data, t_vector2 sin_cos)
+void	draw_ray(t_ray_data *ray_data, t_vector2 *ray, t_data *data,
+		t_vector2 sin_cos)
 {
 	int	wall;
 
@@ -74,14 +77,19 @@ void	draw_ray(t_ray_data *ray_data, t_vector2 *ray,
 		(*ray_data).last_location = (*ray_data).wall_location;
 		(*ray).y += sin_cos.y;
 		(*ray).x += sin_cos.x;
-		ft_my_put_pixel(&data->img, (*ray).x, (*ray).y, 0xffffff);
-		(*ray_data).wall_location = (t_llocation){.x = (int)(*ray).x / \
-		(data->width / MAPWIDTH), .y = (int)(*ray).y / (data->height / \
-		MAPHEIGHT)};
-		(*ray_data).for_wall = (t_vector2){.x = (*ray).x / \
-		(data->width / MAPWIDTH), .y = (*ray).y / (data->width / MAPWIDTH)};
-		wall = data->map_data.int_map[(int)floor((*ray_data).wall_location.y)] \
-		[(int)floor((*ray_data).wall_location.x)];
+		//ft_my_put_pixel(&data->img, (*ray).x, (*ray).y, 0xffffff);
+		(*ray_data).wall_location = (t_llocation){.x = (int)(*ray).x /
+														(data->width
+																/ MAPWIDTH),
+													.y = (int)(*ray).y
+														/ (data->height
+															/ MAPHEIGHT)};
+		(*ray_data).for_wall = (t_vector2){.x = (*ray).x /
+												(data->width / MAPWIDTH),
+											.y = (*ray).y / (data->width
+													/ MAPWIDTH)};
+		wall = data->map_data.int_map[(int)floor((*ray_data).wall_location.y)]
+										[(int)floor((*ray_data).wall_location.x)];
 	}
 }
 /*rayleri hespaler*/
@@ -98,7 +106,7 @@ t_ray_data	calculate_ray(t_data *data, double angle)
 			/ MAPWIDTH), .y = (int)ray.y / (data->height / MAPHEIGHT)};
 	draw_ray(&ray_data, &ray, data, sin_cos);
 	ray_data.ray_location = (t_vector2){.x = ft_fabs(ray.x - start.x),
-		.y = (ray.y - start.y)};
+										.y = (ray.y - start.y)};
 	return (ray_data);
 }
 

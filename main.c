@@ -41,7 +41,7 @@ int	ft_set_map(t_data *data)
 	int	j;
 
 	i = 0;
-	j = 0;̦
+	j = 0;
 	data->map_data.int_map = (int **)ft_calloc(array_len(data->map_data.map),
 			sizeof(int *));
 	return (ft_set_map_in(data, i, j));
